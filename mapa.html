@@ -10,24 +10,26 @@
         content="Mapa interactivo de Plaza Carso, Polanco. Ubica tiendas en nuestros dos niveles." />
     <link rel="shortcut icon" type="image/x-icon" href="logos/icono.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/carso.css">
     <style>
         :root {
-            --white: #FFFFFF;
-            --off-white: #F8F8F8;
-            --silver-light: #EBEBEB;
-            --silver: #C8C8C8;
-            --grey: #8A8A8A;
-            --charcoal: #2C2C2C;
-            --black: #111111;
-            --font-display: 'Bebas Neue', sans-serif;
-            --font-head: 'Space Grotesk', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
+            --white: var(--warm-white);
+            --off-white: #F0EDE6;
+            --silver-light: var(--smoke);
+            --silver: var(--silver);
+            --grey: var(--grey);
+            --charcoal: var(--mid);
+            --black: var(--ink);
+            --font-display: var(--serif);
+            --font-head: var(--sans);
+            --font-body: var(--sans);
         }
 
         *,
@@ -53,159 +55,12 @@
             flex-direction: column;
         }
 
-        #main-header {
-            flex-shrink: 0;
-            height: 72px;
-            background: rgba(255, 255, 255, .97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--silver-light);
-        }
-
-        .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 100%;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo-text {
-            font-family: var(--font-display);
-            font-size: 22px;
-            letter-spacing: .12em;
-            color: var(--black);
-        }
-
-        nav.main-nav {
-            display: flex;
-            align-items: center;
-            gap: 36px;
-        }
-
-        nav.main-nav a {
-            font-family: var(--font-head);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            color: var(--charcoal);
-            text-decoration: none;
+        /* Navigation overrides for map layout */
+        nav#nav {
             position: relative;
-            padding-bottom: 3px;
-            transition: color .25s;
         }
 
-        nav.main-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--black);
-            transition: width .3s;
-        }
-
-        nav.main-nav a:hover {
-            color: var(--black);
-        }
-
-        nav.main-nav a:hover::after {
-            width: 100%;
-        }
-
-        nav.main-nav a.active {
-            color: var(--black);
-        }
-
-        nav.main-nav a.active::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            color: var(--white) !important;
-            background: var(--black);
-            padding: 9px 20px;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            font-family: var(--font-head);
-            text-decoration: none;
-            transition: background .25s !important;
-        }
-
-        .nav-cta:hover {
-            background: var(--charcoal) !important;
-        }
-
-        .nav-cta::after {
-            display: none !important;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-            background: none;
-            border: none;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--black);
-        }
-
-        #mobile-menu {
-            position: fixed;
-            inset: 0;
-            background: var(--white);
-            z-index: 200;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .4s;
-        }
-
-        #mobile-menu.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #mobile-menu nav {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            text-align: center;
-        }
-
-        #mobile-menu nav a {
-            font-family: var(--font-display);
-            font-size: 36px;
-            letter-spacing: .08em;
-            color: var(--black);
-            text-decoration: none;
-        }
-
-        .menu-close {
-            position: absolute;
-            top: 24px;
-            right: 32px;
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--black);
-            background: none;
-            border: none;
-        }
+        /* since map body is flex column */
 
         /* Map layout: takes remaining height */
         .map-wrapper {
@@ -225,54 +80,58 @@
         }
 
         .sidebar-head {
-            padding: 24px 20px;
-            border-bottom: 1px solid var(--silver-light);
+            padding: 32px 28px;
+            background: var(--ink);
+            color: var(--warm-white);
+            border-bottom: none;
         }
 
         .sidebar-head h2 {
-            font-family: var(--font-display);
-            font-size: 28px;
-            color: var(--black);
+            font-family: var(--serif);
+            font-size: 38px;
+            font-style: italic;
+            color: var(--warm-white);
             line-height: 1;
         }
 
         .sidebar-head p {
-            font-family: var(--font-body);
+            font-family: var(--sans);
             font-size: 11px;
             font-weight: 300;
-            color: var(--grey);
-            margin-top: 6px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 8px;
+            letter-spacing: .05em;
         }
 
         /* Floor tabs */
         .floor-tabs {
             display: flex;
-            border-bottom: 1px solid var(--silver-light);
+            background: var(--mid);
+            border-bottom: none;
         }
 
         .floor-tab {
             flex: 1;
-            font-family: var(--font-head);
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: .2em;
+            font-family: var(--sans);
+            font-size: 8px;
+            font-weight: 400;
+            letter-spacing: .25em;
             text-transform: uppercase;
-            color: var(--grey);
-            background: none;
+            color: rgba(255, 255, 255, 0.5);
+            background: transparent;
             border: none;
             cursor: pointer;
-            padding: 14px 8px;
-            border-bottom: 2px solid transparent;
-            transition: color .2s, border-color .2s;
+            padding: 16px 8px;
+            transition: color .3s, background .3s;
         }
 
         .floor-tab:hover {
-            color: var(--charcoal);
+            color: var(--warm-white);
         }
 
         .floor-tab.active {
-            color: var(--black);
-            border-bottom-color: var(--black);
+            color: var(--warm-white);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* Category filters */
@@ -283,14 +142,15 @@
 
         .sidebar-filters select {
             width: 100%;
-            font-family: var(--font-head);
+            font-family: var(--sans);
             font-size: 10px;
             font-weight: 500;
-            letter-spacing: .1em;
+            letter-spacing: .15em;
+            text-transform: uppercase;
             color: var(--charcoal);
             background: var(--off-white);
-            border: 1px solid var(--silver-light);
-            padding: 8px 12px;
+            border: none;
+            padding: 14px 20px;
             outline: none;
             cursor: pointer;
             appearance: none;
@@ -332,15 +192,14 @@
         }
 
         .store-list-num {
-            font-family: var(--font-display);
-            font-size: 16px;
-            color: var(--silver);
+            font-family: var(--serif);
+            font-size: 18px;
+            font-style: italic;
+            color: var(--grey);
             width: 28px;
             flex-shrink: 0;
             text-align: center;
         }
-
-        .store-list-info {}
 
         .store-list-name {
             font-family: var(--font-head);
@@ -484,21 +343,25 @@
         .panel-btn {
             margin-top: 16px;
             display: inline-block;
-            font-family: var(--font-head);
+            font-family: var(--sans);
             font-size: 9px;
-            font-weight: 600;
-            letter-spacing: .2em;
+            font-weight: 500;
+            letter-spacing: .22em;
             text-transform: uppercase;
-            color: var(--white);
-            background: var(--black);
-            padding: 8px 16px;
+            color: var(--warm-white);
+            background: var(--ink);
+            padding: 12px 24px;
             text-decoration: none;
-            transition: background .2s;
+            transition: background .25s, transform .15s;
             cursor: pointer;
         }
 
         .panel-btn:hover {
-            background: var(--charcoal);
+            background: var(--mid);
+        }
+
+        .panel-btn:active {
+            transform: scale(.97);
         }
 
         /* Legend */
@@ -575,30 +438,25 @@
 </head>
 
 <body>
-    <header id="main-header">
-        <div class="header-inner">
-            <a href="index.html" class="nav-logo" style="text-decoration:none;"><img
-                    src="images/logos/logo-carso-big.png" alt="Plaza Carso"
-                    style="height:32px; width:auto; filter:brightness(0);"></a>
-            <nav class="main-nav">
-                <a href="index.html">Inicio</a>
-                <a href="directorio.html">Directorio</a>
-                <a href="mapa.html" class="active">Mapa</a>
-                <a href="eventosypromociones.html">Novedades</a>
-                <a href="contacto.html" class="nav-cta">Contacto</a>
-            </nav>
-            <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <nav id="nav">
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:32px; width:auto; filter:brightness(0);"></a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a><a href="directorio.html">Directorio</a>
+            <a href="mapa.html" class="active">Mapa</a><a href="eventosypromociones.html">Novedades</a>
+            <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
-    </header>
-    <div id="mobile-menu">
-        <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <nav id="nav">
-            <a href="index.html" onclick="toggleMenu()">Inicio</a>
-            <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
-            <a href="mapa.html" onclick="toggleMenu()">Mapa</a>
-            <a href="eventosypromociones.html" onclick="toggleMenu()">Novedades</a>
-            <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
-        </nav>
+        <button class="nav-ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+    </nav>
+    <div id="mob-menu">
+        <button class="mob-close" onclick="toggleMob()">✕</button>
+        <a href="index.html" onclick="toggleMob()">Inicio</a><a href="directorio.html"
+            onclick="toggleMob()">Directorio</a>
+        <a href="mapa.html" onclick="toggleMob()">Mapa</a><a href="eventosypromociones.html"
+            onclick="toggleMob()">Novedades</a>
+        <a href="contacto.html" onclick="toggleMob()">Contacto</a>
     </div>
 
     <div class="map-wrapper">

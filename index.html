@@ -3,29 +3,28 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Plaza Carso | Polanco · Ciudad de México</title>
     <meta name="description"
-        content="Plaza Carso – El destino de moda, gastronomía y cultura de Polanco. Boutiques exclusivas, alta cocina y el Roof Garden con vista al Museo Soumaya." />
+        content="Plaza Carso – El destino de moda, gastronomía y cultura en el corazón de Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         :root {
-            --ink: #0A0909;
-            --warm-white: #F6F4F0;
-            --smoke: #EEEBE5;
-            --silver: #C2BBB2;
-            --grey: #857F78;
-            --mid: #3A3632;
+            --ink: #080706;
+            --warm: #F5F3EF;
+            --smoke: #EDEBE6;
+            --silver: #C0B9B0;
+            --grey: #857E76;
+            --mid: #3A3530;
             --serif: 'Cormorant Garamond', serif;
             --sans: 'Outfit', sans-serif;
+            --ease-out: cubic-bezier(.16, 1, .3, 1);
         }
 
         *,
@@ -37,15 +36,14 @@
         }
 
         html {
-            font-size: 16px;
+            scroll-behavior: auto;
         }
 
         body {
             font-family: var(--sans);
-            background: var(--warm-white);
+            background: var(--warm);
             color: var(--ink);
             overflow-x: hidden;
-            cursor: none;
         }
 
         a {
@@ -55,100 +53,129 @@
 
         img {
             display: block;
-            max-width: 100%;
+            width: 100%;
+            object-fit: cover;
         }
 
-        /* CURSOR */
-        #cursor {
+        /* ─── LOADER ─────────────────────────────────── */
+        #loader {
             position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--ink);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform .15s ease, width .25s ease, height .25s ease, border-color .25s ease, background .25s ease;
-            transform: translate(-50%, -50%);
-            top: 0;
+            inset: 0;
+            z-index: 2000;
+            background: var(--warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+        }
+
+        #loader.gone {
+            display: none;
+        }
+
+        .loader-word {
+            font-family: var(--serif);
+            font-size: clamp(28px, 5vw, 52px);
+            font-weight: 300;
+            letter-spacing: .12em;
+            color: var(--ink);
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .loader-bar {
+            position: absolute;
+            bottom: 0;
             left: 0;
-        }
-
-        #cursor.hover {
-            width: 60px;
-            height: 60px;
-            background: rgba(10, 9, 9, .08);
-            border-color: var(--mid);
-        }
-
-        #cursor.click {
-            width: 24px;
-            height: 24px;
-        }
-
-        #cursor-dot {
-            position: fixed;
-            width: 4px;
-            height: 4px;
+            height: 2px;
+            width: 0;
             background: var(--ink);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            top: 0;
-            left: 0;
-            transition: opacity .2s;
         }
 
-        /* NAV */
-        nav#nav {
+        /* ─── CURSOR ─────────────────────────────────── */
+        #cur {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(8, 7, 6, .5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9000;
+            transform: translate(-50%, -50%) scale(1);
+            will-change: transform;
+            transition: width .3s var(--ease-out), height .3s var(--ease-out), border-color .3s, background .3s;
+        }
+
+        #cur.h {
+            width: 56px;
+            height: 56px;
+            background: rgba(8, 7, 6, .07);
+            border-color: var(--ink);
+        }
+
+        #cur.c {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media(pointer:coarse) {
+            #cur {
+                display: none;
+            }
+        }
+
+        /* ─── NAV ─────────────────────────────────────── */
+        #nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 500;
-            padding: 0 52px;
-            height: 72px;
+            z-index: 800;
+            height: 68px;
+            padding: 0 48px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background .4s, box-shadow .4s, height .35s;
+            transition: background .5s, box-shadow .5s, height .4s;
         }
 
-        nav#nav.scrolled {
-            background: rgba(246, 244, 240, .95);
-            backdrop-filter: blur(16px);
+        #nav.s {
+            background: rgba(245, 243, 239, .96);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             box-shadow: 0 1px 0 var(--smoke);
-            height: 60px;
+            height: 58px;
         }
 
         .nav-logo {
             font-family: var(--serif);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 300;
-            letter-spacing: .08em;
+            letter-spacing: .1em;
             color: var(--ink);
-            line-height: 1;
+            opacity: 0;
         }
 
-        .nav-logo span {
+        .nav-logo em {
             font-style: italic;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 36px;
+            opacity: 0;
         }
 
         .nav-links a {
             font-family: var(--sans);
             font-size: 10px;
             font-weight: 400;
-            letter-spacing: .22em;
+            letter-spacing: .2em;
             text-transform: uppercase;
             color: var(--mid);
-            padding: 4px 0;
             position: relative;
+            padding-bottom: 2px;
             transition: color .25s;
         }
 
@@ -157,240 +184,351 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            height: 1px;
             width: 0;
+            height: 1px;
             background: var(--ink);
-            transition: width .3s ease;
+            transition: width .3s;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.act {
             color: var(--ink);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.act::after {
             width: 100%;
         }
 
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .nav-cta-link {
-            font-family: var(--sans);
+        .nav-cta {
+            border: 1px solid var(--ink);
+            padding: 9px 20px;
             font-size: 10px;
             font-weight: 500;
-            letter-spacing: .2em;
+            letter-spacing: .18em;
             text-transform: uppercase;
-            border: 1px solid var(--ink);
-            padding: 10px 22px;
-            color: var(--ink) !important;
-            transition: background .25s, color .25s !important;
+            color: var(--ink);
+            transition: background .25s, color .25s;
         }
 
-        .nav-cta-link:hover {
+        .nav-cta:hover {
             background: var(--ink);
-            color: var(--warm-white) !important;
+            color: var(--warm);
         }
 
-        .nav-cta-link::after {
+        .nav-cta::after {
             display: none !important;
         }
 
         .nav-ham {
             display: none;
             flex-direction: column;
-            gap: 6px;
-            cursor: none;
+            gap: 5px;
             background: none;
             border: none;
             padding: 4px;
+            cursor: pointer;
         }
 
         .nav-ham span {
             display: block;
-            width: 24px;
+            width: 22px;
             height: 1px;
             background: var(--ink);
-            transition: all .3s;
+            transition: all .35s;
         }
 
-        #mob-menu {
+        .nav-ham.open span:first-child {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .nav-ham.open span:last-child {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        .nav-ham.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #mob-nav {
             position: fixed;
             inset: 0;
+            z-index: 700;
             background: var(--ink);
-            z-index: 800;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity .4s;
+            transition: opacity .45s var(--ease-out);
         }
 
-        #mob-menu.open {
+        #mob-nav.open {
             opacity: 1;
             pointer-events: all;
         }
 
-        #mob-menu a {
+        #mob-nav a {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(40px, 7vw, 72px);
-            color: var(--warm-white);
+            font-size: clamp(36px, 8vw, 68px);
+            color: var(--warm);
             display: block;
-            margin-bottom: 20px;
-            opacity: .8;
+            margin: 8px 0;
+            opacity: .75;
             transition: opacity .2s;
+            text-align: center;
         }
 
-        #mob-menu a:hover {
+        #mob-nav a:hover {
             opacity: 1;
         }
 
-        .mob-close {
-            position: absolute;
-            top: 24px;
-            right: 32px;
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: var(--warm-white);
-            cursor: none;
-        }
-
-        /* HERO */
+        /* ─── HERO ────────────────────────────────────── */
         #hero {
             position: relative;
-            height: 100vh;
-            min-height: 600px;
+            height: 100svh;
+            min-height: 580px;
             overflow: hidden;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
-        .hero-img {
+        /* Full-bleed image */
+        .h-img {
             position: absolute;
             inset: 0;
             background: url('images/home/hero.jpg') center/cover no-repeat;
-            transform-origin: center;
+            transform: scale(1.08);
             will-change: transform;
         }
 
-        .hero-gradient {
+        /* Sophisticated overlay: warm gradient left + cinematic vignette */
+        .h-ov {
             position: absolute;
             inset: 0;
-            background: linear-gradient(105deg, rgba(246, 244, 240, 1) 0%, rgba(246, 244, 240, .85) 32%, rgba(246, 244, 240, .3) 58%, transparent 80%), linear-gradient(to top, rgba(10, 9, 9, .5) 0%, transparent 40%);
+            background:
+                linear-gradient(115deg, rgba(245, 243, 239, .95) 0%, rgba(245, 243, 239, .82) 28%, rgba(245, 243, 239, .4) 52%, rgba(245, 243, 239, .05) 72%, transparent 88%),
+                radial-gradient(ellipse at 85% 50%, transparent 40%, rgba(8, 7, 6, .25) 100%);
         }
 
-        .hero-content {
+        /* Grain texture */
+        .h-grain {
+            position: absolute;
+            inset: 0;
+            opacity: .035;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        /* Content */
+        .h-content {
             position: relative;
-            z-index: 2;
-            padding: 0 52px 72px;
-            max-width: 680px;
+            z-index: 4;
+            padding: 0 48px 72px;
+            max-width: 720px;
         }
 
-        .hero-kicker {
+        /* Kicker line with animated bar */
+        .h-kicker {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .h-kicker-bar {
+            width: 0;
+            height: 1px;
+            background: var(--grey);
+            flex-shrink: 0;
+            transition: width .8s var(--ease-out);
+        }
+
+        .h-kicker-bar.in {
+            width: 32px;
+        }
+
+        .h-kicker-text {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
             letter-spacing: .45em;
             text-transform: uppercase;
             color: var(--grey);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 28px;
+            transform: translateX(-12px);
             opacity: 0;
-            transform: translateY(20px);
+            transition: transform .7s var(--ease-out), opacity .7s;
+            transition-delay: .2s;
         }
 
-        .hero-kicker::before {
-            content: '';
-            display: inline-block;
-            width: 28px;
-            height: 1px;
-            background: var(--grey);
+        .h-kicker-text.in {
+            transform: translateX(0);
+            opacity: 1;
         }
 
-        .hero-h1 {
+        /* Headline: each line wrapped for clip animation */
+        .h-headline {
+            margin-bottom: 28px;
+        }
+
+        .h-line {
+            overflow: hidden;
+            display: block;
+            line-height: 1;
+        }
+
+        .h-line-inner {
+            display: block;
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(68px, 9.5vw, 148px);
+            font-size: clamp(58px, 9.5vw, 148px);
             font-weight: 300;
-            line-height: .9;
             color: var(--ink);
-            margin-bottom: 36px;
+            transform: translateY(110%);
             opacity: 0;
-            transform: translateY(40px);
         }
 
-        .hero-h1 strong {
+        .h-line-inner.strong {
             font-style: normal;
             font-weight: 400;
         }
 
-        .hero-sub {
+        /* Divider */
+        .h-divider {
+            width: 0;
+            height: 1px;
+            background: rgba(8, 7, 6, .2);
+            margin-bottom: 28px;
+            transition: width 1s var(--ease-out);
+        }
+
+        .h-divider.in {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .h-sub {
             font-family: var(--sans);
             font-size: 13px;
             font-weight: 300;
             color: var(--grey);
-            line-height: 1.8;
-            max-width: 400px;
-            margin-bottom: 44px;
-            opacity: 0;
+            line-height: 1.85;
+            max-width: 380px;
+            margin-bottom: 40px;
             transform: translateY(20px);
+            opacity: 0;
         }
 
-        .hero-btns {
+        .h-btns {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
+            transform: translateY(18px);
             opacity: 0;
-            transform: translateY(20px);
         }
 
-        .btn-primary {
+        .btn-p {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
-            letter-spacing: .25em;
+            letter-spacing: .22em;
             text-transform: uppercase;
             background: var(--ink);
-            color: var(--warm-white);
-            padding: 15px 34px;
+            color: var(--warm);
+            padding: 14px 32px;
             border: none;
-            cursor: none;
-            transition: background .25s;
+            cursor: pointer;
+            display: inline-block;
+            transition: background .25s, transform .2s;
         }
 
-        .btn-primary:hover {
+        .btn-p:hover {
             background: var(--mid);
         }
 
-        .btn-ghost {
+        .btn-p:active {
+            transform: scale(.97);
+        }
+
+        .btn-g {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 400;
-            letter-spacing: .25em;
+            letter-spacing: .22em;
             text-transform: uppercase;
-            border: 1px solid rgba(10, 9, 9, .35);
+            border: 1px solid rgba(8, 7, 6, .3);
             color: var(--ink);
-            padding: 15px 34px;
-            cursor: none;
-            transition: border-color .25s, background .25s;
+            padding: 14px 32px;
+            display: inline-block;
+            cursor: pointer;
+            transition: border-color .25s, background .25s, transform .2s;
         }
 
-        .btn-ghost:hover {
+        .btn-g:hover {
             border-color: var(--ink);
-            background: rgba(10, 9, 9, .05);
+            background: rgba(8, 7, 6, .06);
         }
 
-        .hero-scroll-ind {
+        .btn-g:active {
+            transform: scale(.97);
+        }
+
+        /* Info strip at hero bottom */
+        .h-strip {
             position: absolute;
-            right: 52px;
-            bottom: 48px;
-            z-index: 3;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 4;
+            background: rgba(8, 7, 6, .88);
+            backdrop-filter: blur(10px);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        .h-strip-item {
+            padding: 18px 28px;
+            border-right: 1px solid rgba(255, 255, 255, .07);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .h-strip-item:last-child {
+            border-right: none;
+        }
+
+        .h-strip-label {
+            font-family: var(--sans);
+            font-size: 8px;
+            font-weight: 400;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .3);
+        }
+
+        .h-strip-val {
+            font-family: var(--serif);
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(245, 243, 239, .85);
+        }
+
+        /* Scroll progress line */
+        .h-scroll {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 4;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -398,23 +536,23 @@
             opacity: 0;
         }
 
-        .hero-scroll-ind span {
+        .h-scroll span {
             font-family: var(--sans);
             font-size: 8px;
-            letter-spacing: .35em;
+            letter-spacing: .4em;
             text-transform: uppercase;
-            color: #fff;
+            color: rgba(8, 7, 6, .4);
             writing-mode: vertical-rl;
         }
 
-        .scroll-line {
+        .h-scroll-line {
             width: 1px;
-            height: 56px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, .6), transparent);
-            animation: scrollAnim 2.2s ease infinite;
+            height: 52px;
+            background: linear-gradient(to bottom, rgba(8, 7, 6, .35), transparent);
+            animation: pulse 2.4s ease infinite;
         }
 
-        @keyframes scrollAnim {
+        @keyframes pulse {
             0% {
                 transform: scaleY(0);
                 transform-origin: top;
@@ -436,114 +574,103 @@
             }
         }
 
-        /* MARQUEE */
-        .marquee-band {
+        /* ─── MARQUEE ─────────────────────────────────── */
+        .marquee {
             background: var(--ink);
+            padding: 16px 0;
             overflow: hidden;
-            padding: 18px 0;
-            border-top: 1px solid rgba(255, 255, 255, .06);
         }
 
         .marquee-track {
             display: flex;
-            gap: 0;
             white-space: nowrap;
-            animation: marqueeScroll 28s linear infinite;
+            animation: mq 30s linear infinite;
         }
 
         .marquee-track:hover {
             animation-play-state: paused;
         }
 
-        .marquee-item {
+        .mi {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 400;
-            letter-spacing: .5em;
+            letter-spacing: .45em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .45);
-            padding: 0 36px;
+            color: rgba(255, 255, 255, .35);
+            padding: 0 32px;
             flex-shrink: 0;
         }
 
-        .marquee-dot {
-            color: var(--silver);
-            opacity: .3;
+        .md {
+            color: rgba(255, 255, 255, .12);
         }
 
-        @keyframes marqueeScroll {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
+        @keyframes mq {
+            to {
                 transform: translateX(-50%);
             }
         }
 
-        /* STATEMENT */
-        .statement-section {
-            padding: 140px 52px;
-            background: var(--warm-white);
+        /* ─── STATEMENT ───────────────────────────────── */
+        .stmt {
+            padding: 120px 48px;
+            background: var(--warm);
             text-align: center;
-            overflow: hidden;
         }
 
-        .stmt-label {
+        .stmt-tag {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
             letter-spacing: .4em;
             text-transform: uppercase;
             color: var(--grey);
-            margin-bottom: 40px;
+            display: block;
+            margin-bottom: 36px;
         }
 
-        .stmt-text {
+        .stmt-q {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(32px, 4.5vw, 62px);
+            font-size: clamp(28px, 4vw, 58px);
             font-weight: 300;
-            line-height: 1.25;
+            line-height: 1.28;
             color: var(--ink);
-            max-width: 900px;
-            margin: 0 auto 60px;
+            max-width: 860px;
+            margin: 0 auto 64px;
         }
 
-        .stmt-text em {
+        .stmt-q em {
             font-style: normal;
             color: var(--grey);
         }
 
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            border-top: 1px solid var(--smoke);
-            border-bottom: 1px solid var(--smoke);
-            margin-top: 60px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid var(--smoke);
         }
 
-        .stat-col {
-            flex: 1;
-            max-width: 200px;
-            padding: 36px 24px;
+        .sc {
+            padding: 36px 20px;
             border-right: 1px solid var(--smoke);
+            text-align: center;
         }
 
-        .stat-col:last-child {
+        .sc:last-child {
             border-right: none;
         }
 
-        .stat-num {
+        .sn {
             font-family: var(--serif);
-            font-size: clamp(36px, 4vw, 54px);
+            font-size: clamp(36px, 4vw, 52px);
             font-weight: 300;
             color: var(--ink);
             line-height: 1;
         }
 
-        .stat-label {
+        .sl {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 400;
@@ -553,204 +680,203 @@
             margin-top: 8px;
         }
 
-        /* PANELS */
-        .panels-section {
+        /* ─── PANELS ──────────────────────────────────── */
+        .panels {
             background: var(--smoke);
         }
 
         .panel {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            min-height: 80vh;
-            overflow: hidden;
+            min-height: 78vh;
         }
 
-        .panel:nth-child(even) {
+        .panel.rev {
             direction: rtl;
         }
 
-        .panel:nth-child(even)>* {
+        .panel.rev>* {
             direction: ltr;
         }
 
-        .panel-img {
-            position: relative;
+        .p-img {
             overflow: hidden;
+            position: relative;
         }
 
-        .panel-img img {
-            width: 100%;
+        .p-img img {
             height: 100%;
+            min-height: 500px;
             object-fit: cover;
-            transform: scale(1.06);
-            transition: transform 8s ease;
-            filter: grayscale(15%);
+            filter: grayscale(18%);
+            transform: scale(1.05);
+            transition: transform 7s ease, filter .6s;
         }
 
-        .panel:hover .panel-img img {
+        .panel:hover .p-img img {
             transform: scale(1);
+            filter: grayscale(0%);
         }
 
-        .panel-body {
-            background: var(--warm-white);
+        .p-body {
+            background: var(--warm);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 80px 72px;
+            padding: 72px 64px;
         }
 
-        .panel-num {
+        .p-num {
             font-family: var(--serif);
-            font-size: 120px;
+            font-size: 100px;
             font-weight: 300;
             color: var(--smoke);
             line-height: 1;
-            margin-bottom: -20px;
-            display: block;
+            margin-bottom: -10px;
         }
 
-        .panel-kicker {
+        .p-tag {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
-            letter-spacing: .4em;
+            letter-spacing: .38em;
             text-transform: uppercase;
             color: var(--grey);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .panel-kicker::before {
+        .p-tag::before {
             content: '';
             display: block;
-            width: 20px;
+            width: 16px;
             height: 1px;
-            background: var(--grey);
+            background: var(--silver);
         }
 
-        .panel-h2 {
+        .p-h2 {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(36px, 3.5vw, 52px);
+            font-size: clamp(32px, 3.2vw, 50px);
             font-weight: 300;
             color: var(--ink);
             line-height: 1.15;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
-        .panel-desc {
+        .p-desc {
             font-family: var(--sans);
             font-size: 13px;
             font-weight: 300;
             color: var(--grey);
-            line-height: 1.85;
-            max-width: 360px;
-            margin-bottom: 40px;
+            line-height: 1.88;
+            max-width: 340px;
+            margin-bottom: 36px;
         }
 
-        .link-arrow {
+        .arr {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
-            letter-spacing: .25em;
+            letter-spacing: .2em;
             text-transform: uppercase;
             color: var(--ink);
             display: inline-flex;
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid var(--ink);
-            padding-bottom: 3px;
-            transition: gap .3s, opacity .2s;
+            padding-bottom: 2px;
+            transition: gap .35s, opacity .2s;
         }
 
-        .link-arrow:hover {
-            gap: 18px;
-            opacity: .6;
+        .arr:hover {
+            gap: 20px;
+            opacity: .55;
         }
 
-        /* STORE SWIPER */
-        .stores-section {
+        /* ─── STORE SWIPER ────────────────────────────── */
+        .sl-sec {
             background: var(--ink);
-            padding: 100px 0;
+            padding: 96px 0;
         }
 
-        .stores-head {
-            padding: 0 52px;
-            margin-bottom: 56px;
+        .sl-head {
+            padding: 0 48px;
+            margin-bottom: 52px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
 
-        .stores-h2 {
+        .sl-h2 {
             font-family: var(--serif);
-            font-style: italic;
-            font-size: clamp(40px, 5vw, 72px);
+            font-size: clamp(36px, 5vw, 68px);
             font-weight: 300;
-            color: var(--warm-white);
+            color: var(--warm);
             line-height: 1;
         }
 
-        .stores-link {
+        .sl-h2 em {
+            font-style: italic;
+        }
+
+        .sl-link {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 400;
-            letter-spacing: .25em;
+            letter-spacing: .2em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .4);
-            border-bottom: 1px solid rgba(255, 255, 255, .2);
+            color: rgba(245, 243, 239, .35);
+            border-bottom: 1px solid rgba(245, 243, 239, .18);
             padding-bottom: 2px;
             transition: color .2s, border-color .2s;
         }
 
-        .stores-link:hover {
-            color: var(--warm-white);
-            border-color: var(--warm-white);
+        .sl-link:hover {
+            color: var(--warm);
+            border-color: var(--warm);
         }
 
-        .swiper-stores {
-            padding: 0 52px 56px !important;
+        .swiper-sl {
+            padding: 0 48px 48px !important;
         }
 
-        .store-slide {
+        .ss {
             position: relative;
             overflow: hidden;
-            cursor: none;
             background: var(--mid);
         }
 
-        .store-slide img {
-            width: 100%;
-            aspect-ratio: 2/3;
+        .ss img {
+            aspect-ratio: 9/13;
             object-fit: cover;
-            display: block;
-            filter: grayscale(30%);
+            filter: grayscale(25%);
             transition: filter .6s, transform .7s;
         }
 
-        .store-slide:hover img {
+        .ss:hover img {
             filter: grayscale(0%);
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
-        .store-slide-overlay {
+        .ss-ov {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(10, 9, 9, .8) 0%, transparent 55%);
+            background: linear-gradient(to top, rgba(8, 7, 6, .82) 0%, transparent 52%);
             pointer-events: none;
         }
 
-        .store-slide-info {
+        .ss-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 24px 22px;
+            padding: 20px 18px;
         }
 
-        .slide-cat {
+        .ss-cat {
             font-family: var(--sans);
             font-size: 8px;
             font-weight: 500;
@@ -758,33 +884,33 @@
             text-transform: uppercase;
             color: var(--silver);
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
-        .slide-name {
+        .ss-name {
             font-family: var(--serif);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 300;
-            color: var(--warm-white);
+            color: var(--warm);
         }
 
-        .swiper-pagination-stores .swiper-pagination-bullet {
-            background: rgba(255, 255, 255, .25);
+        .swiper-pagination-sl .swiper-pagination-bullet {
+            background: rgba(245, 243, 239, .2);
             width: 5px;
             height: 5px;
-            transition: width .3s;
+            transition: width .3s, background .3s;
         }
 
-        .swiper-pagination-stores .swiper-pagination-bullet-active {
-            background: var(--warm-white);
-            width: 20px;
+        .swiper-pagination-sl .swiper-pagination-bullet-active {
+            background: var(--warm);
+            width: 18px;
             border-radius: 3px;
         }
 
-        /* ROOF CTA */
-        .roof-section {
+        /* ─── ROOF CTA ────────────────────────────────── */
+        .roof {
             position: relative;
-            min-height: 75vh;
+            min-height: 72vh;
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -795,171 +921,188 @@
             inset: 0;
             background: url('images/home/eventos-bg.jpg') center/cover no-repeat;
             transform: scale(1.04);
-            transition: transform 8s;
+            will-change: transform;
         }
 
-        .roof-section:hover .roof-bg {
-            transform: scale(1);
-        }
-
-        .roof-overlay {
+        .roof-ov {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to right, rgba(10, 9, 9, .78) 0%, rgba(10, 9, 9, .4) 60%, transparent 100%);
+            background: linear-gradient(to right, rgba(8, 7, 6, .82) 0%, rgba(8, 7, 6, .45) 55%, transparent 100%);
         }
 
-        .roof-content {
+        .roof-c {
             position: relative;
             z-index: 2;
-            padding: 0 52px;
-            max-width: 640px;
+            padding: 0 48px;
+            max-width: 620px;
         }
 
-        .roof-kicker {
+        .roof-tag {
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
             letter-spacing: .4em;
             text-transform: uppercase;
-            color: rgba(194, 187, 178, .7);
+            color: rgba(192, 185, 176, .65);
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 24px;
         }
 
-        .roof-kicker::before {
+        .roof-tag::before {
             content: '';
             display: block;
-            width: 20px;
+            width: 16px;
             height: 1px;
-            background: rgba(194, 187, 178, .5);
+            background: rgba(192, 185, 176, .4);
         }
 
         .roof-h2 {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(40px, 6vw, 84px);
+            font-size: clamp(38px, 6vw, 82px);
             font-weight: 300;
-            color: var(--warm-white);
+            color: var(--warm);
             line-height: .95;
-            margin-bottom: 28px;
+            margin-bottom: 26px;
         }
 
         .roof-desc {
             font-family: var(--sans);
             font-size: 13px;
             font-weight: 300;
-            color: rgba(246, 244, 240, .65);
+            color: rgba(245, 243, 239, .6);
             line-height: 1.85;
-            margin-bottom: 40px;
+            margin-bottom: 38px;
         }
 
-        /* NOVEDADES */
-        .novedades-section {
-            padding: 120px 52px;
-            background: var(--warm-white);
+        /* ─── NOVEDADES ───────────────────────────────── */
+        .nov {
+            padding: 112px 48px;
+            background: var(--warm);
         }
 
-        .novedades-head {
+        .nov-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 64px;
+            margin-bottom: 56px;
         }
 
         .nov-h2 {
             font-family: var(--serif);
-            font-style: italic;
-            font-size: clamp(40px, 5vw, 64px);
+            font-size: clamp(36px, 5vw, 62px);
             font-weight: 300;
             color: var(--ink);
             line-height: 1;
         }
 
+        .nov-h2 em {
+            font-style: italic;
+        }
+
         .nov-grid {
             display: grid;
-            grid-template-columns: 1.2fr .8fr .8fr;
+            grid-template-columns: 1.3fr 1fr 1fr;
             gap: 3px;
         }
 
-        .nov-card {
+        .nc {
             position: relative;
             overflow: hidden;
-            cursor: none;
             display: block;
+            background: var(--silver);
         }
 
-        .nov-card:first-child {
+        .nc:first-child {
             grid-row: span 2;
         }
 
-        .nov-card img {
+        .nc img {
             width: 100%;
             height: 100%;
-            min-height: 280px;
+            min-height: 260px;
             object-fit: cover;
-            filter: grayscale(25%);
-            transition: transform .7s ease, filter .5s;
+            filter: grayscale(20%);
+            transition: transform .7s, filter .5s;
         }
 
-        .nov-card:hover img {
+        .nc:first-child img {
+            min-height: 520px;
+        }
+
+        .nc:hover img {
             transform: scale(1.06);
             filter: grayscale(0%);
         }
 
-        .nov-card-overlay {
+        .nc-ov {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(10, 9, 9, .72) 0%, transparent 55%);
+            background: linear-gradient(to top, rgba(8, 7, 6, .75) 0%, transparent 55%);
             pointer-events: none;
         }
 
-        .nov-card-info {
+        .nc-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 24px 22px;
+            padding: 22px 20px;
         }
 
-        .nov-tag {
+        .nc-tag {
             font-family: var(--sans);
             font-size: 8px;
             font-weight: 500;
-            letter-spacing: .3em;
+            letter-spacing: .32em;
             text-transform: uppercase;
             color: var(--silver);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
 
-        .nov-title {
+        .nc-title {
             font-family: var(--serif);
             font-weight: 300;
-            font-size: 18px;
-            color: var(--warm-white);
-            line-height: 1.3;
+            color: var(--warm);
+            line-height: 1.25;
         }
 
-        .nov-card:first-child .nov-title {
-            font-size: clamp(20px, 2.5vw, 28px);
+        .nc:first-child .nc-title {
+            font-size: clamp(18px, 2.2vw, 28px);
         }
 
-        /* NEWSLETTER */
-        .nl-section {
+        .nc:not(:first-child) .nc-title {
+            font-size: 17px;
+        }
+
+        /* ─── NEWSLETTER ──────────────────────────────── */
+        .nl {
             background: var(--smoke);
-            padding: 100px 52px;
+            padding: 96px 48px;
             text-align: center;
+        }
+
+        .nl-tag {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 18px;
         }
 
         .nl-h2 {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(32px, 4vw, 52px);
+            font-size: clamp(30px, 4vw, 50px);
             font-weight: 300;
             color: var(--ink);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .nl-sub {
@@ -967,12 +1110,12 @@
             font-size: 13px;
             font-weight: 300;
             color: var(--grey);
-            margin-bottom: 44px;
+            margin-bottom: 40px;
         }
 
         .nl-form {
             display: flex;
-            max-width: 480px;
+            max-width: 460px;
             margin: 0 auto;
             border-bottom: 1px solid var(--mid);
         }
@@ -996,14 +1139,14 @@
         .nl-form button {
             background: none;
             border: none;
-            cursor: none;
+            cursor: pointer;
             font-family: var(--sans);
             font-size: 9px;
             font-weight: 500;
-            letter-spacing: .2em;
+            letter-spacing: .18em;
             text-transform: uppercase;
             color: var(--ink);
-            padding: 12px 0 12px 20px;
+            padding: 12px 0 12px 18px;
             transition: color .2s;
         }
 
@@ -1011,170 +1154,200 @@
             color: var(--grey);
         }
 
-        /* FOOTER */
+        /* ─── FOOTER ──────────────────────────────────── */
         footer {
             background: var(--ink);
-            padding: 80px 52px 36px;
+            padding: 76px 48px 32px;
             position: relative;
             overflow: hidden;
         }
 
-        .footer-bg-text {
+        .f-bg {
             position: absolute;
-            bottom: -40px;
-            left: -10px;
+            bottom: -60px;
+            left: -20px;
             font-family: var(--serif);
-            font-size: clamp(120px, 20vw, 240px);
+            font-size: clamp(100px, 18vw, 220px);
             font-weight: 300;
-            color: rgba(255, 255, 255, .03);
+            color: rgba(255, 255, 255, .025);
             line-height: 1;
             pointer-events: none;
             white-space: nowrap;
             user-select: none;
         }
 
-        .footer-top {
+        .f-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 48px;
-            padding-bottom: 48px;
+            gap: 44px;
+            padding-bottom: 44px;
             border-bottom: 1px solid rgba(255, 255, 255, .06);
             position: relative;
             z-index: 1;
         }
 
-        .footer-brand-name {
+        .f-logo {
             font-family: var(--serif);
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 300;
-            color: var(--warm-white);
-            margin-bottom: 16px;
+            color: var(--warm);
+            margin-bottom: 14px;
         }
 
-        .footer-brand-name span {
+        .f-logo em {
             font-style: italic;
         }
 
-        .footer-brand-desc {
+        .f-desc {
             font-family: var(--sans);
             font-size: 12px;
             font-weight: 300;
             color: var(--grey);
             line-height: 1.9;
-            max-width: 260px;
+            max-width: 250px;
         }
 
-        .footer-col h4 {
+        .f-col h4 {
             font-family: var(--sans);
             font-size: 8px;
             font-weight: 500;
-            letter-spacing: .35em;
+            letter-spacing: .32em;
             text-transform: uppercase;
             color: var(--grey);
-            margin-bottom: 24px;
-            opacity: .7;
+            opacity: .65;
+            margin-bottom: 22px;
         }
 
-        .footer-col ul {
+        .f-col ul {
             list-style: none;
         }
 
-        .footer-col ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-col ul li a {
+        .f-col ul li a,
+        .f-col address {
             font-family: var(--sans);
             font-size: 12px;
             font-weight: 300;
-            color: rgba(255, 255, 255, .35);
+            color: rgba(255, 255, 255, .3);
             transition: color .2s;
+            font-style: normal;
+            line-height: 2.2;
+            display: block;
         }
 
-        .footer-col ul li a:hover {
+        .f-col ul li a:hover {
             color: rgba(255, 255, 255, .8);
         }
 
-        .footer-col address {
-            font-style: normal;
-            font-family: var(--sans);
-            font-size: 12px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, .35);
-            line-height: 2.2;
-        }
-
-        .footer-bottom {
+        .f-bot {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 28px;
+            padding-top: 26px;
             position: relative;
             z-index: 1;
         }
 
-        .footer-copy {
+        .f-copy {
             font-family: var(--sans);
             font-size: 10px;
             font-weight: 300;
-            color: rgba(255, 255, 255, .2);
+            color: rgba(255, 255, 255, .18);
             letter-spacing: .06em;
         }
 
-        .footer-socials {
+        .f-soc {
             display: flex;
-            gap: 18px;
+            gap: 14px;
         }
 
-        .footer-socials a {
+        .f-soc a {
             width: 30px;
             height: 30px;
-            border: 1px solid rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .1);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255, 255, 255, .3);
-            font-size: 11px;
+            color: rgba(255, 255, 255, .28);
             transition: border-color .2s, color .2s;
         }
 
-        .footer-socials a:hover {
-            border-color: rgba(255, 255, 255, .5);
+        .f-soc a:hover {
+            border-color: rgba(255, 255, 255, .45);
             color: rgba(255, 255, 255, .8);
         }
 
-        /* HIDDEN BACKEND MODAL */
-        .modal-fade {
-            display: none;
+        /* ─── SCROLL REVEAL ───────────────────────────── */
+        .rv {
+            opacity: 0;
+            transform: translateY(44px);
+            transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
         }
 
-        /* RESPONSIVE */
-        @media(max-width:1024px) {
+        .rv.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .rv-d1 {
+            transition-delay: .1s;
+        }
+
+        .rv-d2 {
+            transition-delay: .2s;
+        }
+
+        .rv-d3 {
+            transition-delay: .3s;
+        }
+
+        /* ─── RESPONSIVE ──────────────────────────────── */
+        @media(max-width:1100px) {
             .panel {
                 grid-template-columns: 1fr;
-                min-height: auto;
             }
 
-            .panel:nth-child(even) {
+            .panel.rev {
                 direction: ltr;
             }
 
-            .panel-img {
-                min-height: 50vw;
+            .p-img img {
+                min-height: 55vw;
             }
 
-            .panel-body {
-                padding: 56px 40px;
+            .p-body {
+                padding: 56px 36px;
             }
 
-            .footer-top {
+            .f-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .sc:nth-child(2) {
+                border-right: none;
+            }
+
+            .sc:nth-child(3) {
+                border-top: 1px solid var(--smoke);
+            }
+
+            .sc:nth-child(4) {
+                border-top: 1px solid var(--smoke);
+                border-right: none;
             }
         }
 
         @media(max-width:768px) {
-            nav#nav {
+            #nav {
                 padding: 0 20px;
+                height: 60px;
+            }
+
+            #nav.s {
+                height: 54px;
             }
 
             .nav-links {
@@ -1185,75 +1358,96 @@
                 display: flex;
             }
 
-            #cursor,
-            #cursor-dot {
+            .h-content {
+                padding: 0 20px 80px;
+            }
+
+            .h-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .h-strip-item:nth-child(2) {
+                border-right: none;
+            }
+
+            .h-strip-item:nth-child(3) {
+                border-top: 1px solid rgba(255, 255, 255, .07);
+            }
+
+            .h-strip-item:nth-child(4) {
+                border-top: 1px solid rgba(255, 255, 255, .07);
+                border-right: none;
+            }
+
+            .h-scroll {
                 display: none;
             }
 
-            body {
-                cursor: auto;
+            .stmt,
+            .nov,
+            .nl {
+                padding: 80px 20px;
             }
 
-            a,
-            button {
-                cursor: pointer;
+            .stmt-q {
+                font-size: clamp(24px, 6vw, 36px);
             }
 
-            .hero-content,
-            .statement-section,
-            .novedades-section,
-            .nl-section {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .sl-head,
+            .swiper-sl {
                 padding-left: 20px;
                 padding-right: 20px;
             }
 
-            .hero-content {
-                padding-bottom: 60px;
+            .sl-sec {
+                padding: 80px 0;
             }
 
-            .stores-head,
-            .swiper-stores {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            .roof-content {
+            .roof-c {
                 padding: 0 20px;
             }
 
-            .footer-top {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            footer {
-                padding: 60px 20px 28px;
+            .nov-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
             }
 
             .nov-grid {
                 grid-template-columns: 1fr;
             }
 
-            .nov-card:first-child {
+            .nc:first-child {
                 grid-row: auto;
             }
 
-            .novedades-head {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
+            .nc img,
+            .nc:first-child img {
+                min-height: 260px;
             }
 
-            .panel-body {
-                padding: 48px 20px;
+            footer {
+                padding: 60px 20px 28px;
             }
 
-            .stats-row {
-                flex-wrap: wrap;
+            .f-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
             }
 
-            .stat-col {
-                flex: 1 1 45%;
+            .f-bg {
+                display: none;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
             }
         }
     </style>
@@ -1261,248 +1455,276 @@
 
 <body>
 
+    <!-- LOADER -->
+    <div id="loader" aria-hidden="true">
+        <div class="loader-word" id="lw">PLAZA CARSO</div>
+        <div class="loader-bar" id="lb"></div>
+    </div>
+
     <!-- CURSOR -->
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
+    <div id="cur" aria-hidden="true"></div>
 
     <!-- NAV -->
     <nav id="nav">
-        <a href="index.html" class="nav-logo"><span>Plaza</span> Carso</a>
+        <a href="index.html" class="nav-logo"><em>Plaza</em> Carso</a>
         <div class="nav-links">
-            <a href="index.html" class="active">Inicio</a>
+            <a href="index.html" class="act">Inicio</a>
             <a href="directorio.html">Directorio</a>
             <a href="mapa.html">Mapa</a>
             <a href="eventosypromociones.html">Novedades</a>
-            <a href="contacto.html" class="nav-cta-link">Contacto</a>
+            <a href="contacto.html" class="nav-cta">Contacto</a>
         </div>
-        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú">
+        <button class="nav-ham" id="hamBtn" onclick="toggleMob()" aria-label="Menú" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
     </nav>
-
-    <!-- MOBILE MENU -->
-    <div id="mob-menu">
-        <button class="mob-close" onclick="toggleMob()">✕</button>
-        <a href="index.html" onclick="toggleMob()">Inicio</a>
-        <a href="directorio.html" onclick="toggleMob()">Directorio</a>
-        <a href="mapa.html" onclick="toggleMob()">Mapa</a>
-        <a href="eventosypromociones.html" onclick="toggleMob()">Novedades</a>
-        <a href="contacto.html" onclick="toggleMob()">Contacto</a>
+    <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="directorio.html">Directorio</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="eventosypromociones.html">Novedades</a>
+        <a href="contacto.html">Contacto</a>
     </div>
 
     <!-- HERO -->
-    <section id="hero">
-        <div class="hero-img" id="heroImg"></div>
-        <div class="hero-gradient"></div>
-        <div class="hero-content">
-            <p class="hero-kicker" id="hKicker">Polanco · Ciudad de México</p>
-            <h1 class="hero-h1" id="hTitle">Donde<br>el estilo<br><strong>define todo.</strong></h1>
-            <p class="hero-sub" id="hSub">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de la CDMX,
-                frente al Museo Soumaya.</p>
-            <div class="hero-btns" id="hBtns">
-                <a href="directorio.html" class="btn-primary">Explorar Directorio</a>
-                <a href="mapa.html" class="btn-ghost">Ver Mapa</a>
+    <section id="hero" aria-labelledby="h-main-title">
+        <div class="h-img" id="hImg"></div>
+        <div class="h-ov"></div>
+        <div class="h-grain" aria-hidden="true"></div>
+
+        <div class="h-content">
+            <div class="h-kicker">
+                <span class="h-kicker-bar" id="hBar"></span>
+                <span class="h-kicker-text" id="hKick">Polanco · Ciudad de México</span>
+            </div>
+
+            <div class="h-headline" id="h-main-title">
+                <span class="h-line"><span class="h-line-inner" id="hl1">El destino</span></span>
+                <span class="h-line"><span class="h-line-inner" id="hl2">más sofisticado</span></span>
+                <span class="h-line"><span class="h-line-inner strong" id="hl3">de Polanco.</span></span>
+            </div>
+
+            <div class="h-divider" id="hDiv"></div>
+
+            <p class="h-sub" id="hSub">Boutiques exclusivas, alta cocina y el Roof Garden frente al Museo Soumaya. Una
+                experiencia que redefine la ciudad.</p>
+
+            <div class="h-btns" id="hBtns">
+                <a href="directorio.html" class="btn-p">Explorar Directorio</a>
+                <a href="mapa.html" class="btn-g">Ver Mapa</a>
             </div>
         </div>
-        <div class="hero-scroll-ind" id="hScroll">
+
+        <!-- Info Strip -->
+        <div class="h-strip" id="hStrip">
+            <div class="h-strip-item">
+                <span class="h-strip-label">Ubicación</span>
+                <span class="h-strip-val">Lago Zúrich 219, Granada</span>
+            </div>
+            <div class="h-strip-item">
+                <span class="h-strip-label">Horario</span>
+                <span class="h-strip-val">11:00 – 21:00</span>
+            </div>
+            <div class="h-strip-item">
+                <span class="h-strip-label">Tiendas</span>
+                <span class="h-strip-val">+120 boutiques</span>
+            </div>
+            <div class="h-strip-item">
+                <span class="h-strip-label">Estacionamiento</span>
+                <span class="h-strip-val">3 hrs gratis</span>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="h-scroll" id="hScroll" aria-hidden="true">
             <span>Scroll</span>
-            <div class="scroll-line"></div>
+            <div class="h-scroll-line"></div>
         </div>
     </section>
 
     <!-- MARQUEE -->
-    <div class="marquee-band">
-        <div class="marquee-track" aria-hidden="true">
-            <span class="marquee-item">Moda</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Gastronomía</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Roof Garden</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Joyería</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Entretenimiento</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Polanco</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Museo Soumaya</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Alta Cocina</span><span class="marquee-dot marquee-item">·</span>
-            <!-- Duplicate for seamless loop -->
-            <span class="marquee-item">Moda</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Gastronomía</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Roof Garden</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Joyería</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Entretenimiento</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Polanco</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Museo Soumaya</span><span class="marquee-dot marquee-item">·</span>
-            <span class="marquee-item">Alta Cocina</span><span class="marquee-dot marquee-item">·</span>
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span class="mi">Moda</span><span class="md mi">·</span>
+            <span class="mi">Gastronomía</span><span class="md mi">·</span>
+            <span class="mi">Roof Garden</span><span class="md mi">·</span>
+            <span class="mi">Joyería</span><span class="md mi">·</span>
+            <span class="mi">Entretenimiento</span><span class="md mi">·</span>
+            <span class="mi">Polanco CDMX</span><span class="md mi">·</span>
+            <span class="mi">Museo Soumaya</span><span class="md mi">·</span>
+            <span class="mi">Alta Cocina</span><span class="md mi">·</span>
+            <span class="mi">Moda</span><span class="md mi">·</span>
+            <span class="mi">Gastronomía</span><span class="md mi">·</span>
+            <span class="mi">Roof Garden</span><span class="md mi">·</span>
+            <span class="mi">Joyería</span><span class="md mi">·</span>
+            <span class="mi">Entretenimiento</span><span class="md mi">·</span>
+            <span class="mi">Polanco CDMX</span><span class="md mi">·</span>
+            <span class="mi">Museo Soumaya</span><span class="md mi">·</span>
+            <span class="mi">Alta Cocina</span><span class="md mi">·</span>
         </div>
     </div>
 
     <!-- STATEMENT -->
-    <section class="statement-section">
-        <p class="stmt-label reveal-up">Nuestra Esencia</p>
-        <p class="stmt-text reveal-up" style="transition-delay:.1s">"Un espacio donde la arquitectura, la moda y la
-            gastronomía <em>se convierten en experiencia.</em>"</p>
-        <div class="stats-row reveal-up" style="transition-delay:.2s">
-            <div class="stat-col">
-                <div class="stat-num">+120</div>
-                <div class="stat-label">Tiendas</div>
+    <section class="stmt">
+        <span class="stmt-tag rv">Nuestra Esencia</span>
+        <p class="stmt-q rv rv-d1">"Un espacio donde la arquitectura, la moda y la gastronomía <em>se convierten en
+                experiencia.</em>"</p>
+        <div class="stats rv rv-d2">
+            <div class="sc">
+                <div class="sn" data-count="120">0</div>
+                <div class="sl">Tiendas</div>
             </div>
-            <div class="stat-col">
-                <div class="stat-num">2</div>
-                <div class="stat-label">Niveles</div>
+            <div class="sc">
+                <div class="sn">2</div>
+                <div class="sl">Niveles</div>
             </div>
-            <div class="stat-col">
-                <div class="stat-num">Roof</div>
-                <div class="stat-label">Garden exclusivo</div>
+            <div class="sc">
+                <div class="sn">Roof</div>
+                <div class="sl">Garden exclusivo</div>
             </div>
-            <div class="stat-col">
-                <div class="stat-num">∞</div>
-                <div class="stat-label">Sofisticación</div>
+            <div class="sc">
+                <div class="sn">∞</div>
+                <div class="sl">Sofisticación</div>
             </div>
         </div>
     </section>
 
     <!-- PANELS -->
-    <section class="panels-section">
-        <div class="panel reveal-panel">
-            <div class="panel-img"><img src="images/home/directorio-bg.jpg" alt="Boutiques Plaza Carso" loading="lazy">
+    <section class="panels">
+        <div class="panel rv">
+            <div class="p-img"><img src="images/home/directorio-bg.jpg" alt="Boutiques Plaza Carso" loading="lazy">
             </div>
-            <div class="panel-body">
-                <span class="panel-num">01</span>
-                <span class="panel-kicker">Moda & Boutiques</span>
-                <h2 class="panel-h2">Las marcas más deseadas del mundo, aquí.</h2>
-                <p class="panel-desc">Desde las grandes casas internacionales hasta las firmas de nueva generación,
-                    Plaza Carso reúne lo más selecto del universo de la moda.</p>
-                <a href="directorio.html" class="link-arrow">Explorar Directorio <span>→</span></a>
+            <div class="p-body">
+                <span class="p-num">01</span>
+                <span class="p-tag">Moda & Boutiques</span>
+                <h2 class="p-h2">Las marcas más deseadas del mundo, aquí.</h2>
+                <p class="p-desc">Desde las grandes casas internacionales hasta las firmas de nueva generación. Plaza
+                    Carso reúne lo más selecto de la moda en Polanco.</p>
+                <a href="directorio.html" class="arr">Explorar Directorio <span>→</span></a>
             </div>
         </div>
-        <div class="panel reveal-panel">
-            <div class="panel-img"><img src="images/home/eventos-bg.jpg" alt="Roof Garden Soumaya" loading="lazy"></div>
-            <div class="panel-body">
-                <span class="panel-num">02</span>
-                <span class="panel-kicker">Roof Garden · Soumaya</span>
-                <h2 class="panel-h2">La vista más icónica de Polanco.</h2>
-                <p class="panel-desc">Un escenario único sobre los tejados de Granada, con la silueta del Museo Soumaya
-                    como telón de fondo. El espacio perfecto para vivir momentos extraordinarios.</p>
-                <a href="eventosypromociones.html" class="link-arrow">Ver Novedades <span>→</span></a>
+        <div class="panel rev rv">
+            <div class="p-img"><img src="images/home/eventos-bg.jpg" alt="Roof Garden Soumaya" loading="lazy"></div>
+            <div class="p-body">
+                <span class="p-num">02</span>
+                <span class="p-tag">Roof Garden · Soumaya</span>
+                <h2 class="p-h2">La vista más icónica de Polanco.</h2>
+                <p class="p-desc">Un escenario único sobre los tejados de Granada. La silueta del Museo Soumaya como
+                    telón de fondo. El espacio para momentos extraordinarios.</p>
+                <a href="eventosypromociones.html" class="arr">Ver Novedades <span>→</span></a>
             </div>
         </div>
     </section>
 
     <!-- STORES SWIPER -->
-    <section class="stores-section">
-        <div class="stores-head reveal-up-dark">
-            <h2 class="stores-h2">Tiendas<br><em style="font-style:italic;font-family:var(--serif)">Destacadas.</em>
-            </h2>
-            <a href="directorio.html" class="stores-link">Ver directorio completo →</a>
+    <section class="sl-sec">
+        <div class="sl-head rv">
+            <h2 class="sl-h2">Tiendas<br><em>Destacadas.</em></h2>
+            <a href="directorio.html" class="sl-link">Ver directorio completo →</a>
         </div>
-        <div class="swiper swiper-stores">
+        <div class="swiper swiper-sl">
             <div class="swiper-wrapper">
-                <div class="swiper-slide store-slide">
-                    <img src="images/home/directorio-bg.jpg" alt="Boutique" loading="lazy">
-                    <div class="store-slide-overlay"></div>
-                    <div class="store-slide-info"><span class="slide-cat">Moda Internacional</span>
-                        <div class="slide-name">Boutiques Premium</div>
+                <div class="swiper-slide ss"><img src="images/home/directorio-bg.jpg" alt="Boutique" loading="lazy">
+                    <div class="ss-ov"></div>
+                    <div class="ss-info"><span class="ss-cat">Moda Internacional</span>
+                        <div class="ss-name">Boutiques Premium</div>
                     </div>
                 </div>
-                <div class="swiper-slide store-slide">
-                    <img src="images/home/hero.jpg" alt="Plaza Interior" loading="lazy">
-                    <div class="store-slide-overlay"></div>
-                    <div class="store-slide-info"><span class="slide-cat">Alta Moda</span>
-                        <div class="slide-name">Diseñadores Selectos</div>
+                <div class="swiper-slide ss"><img src="images/home/hero.jpg" alt="Interior" loading="lazy">
+                    <div class="ss-ov"></div>
+                    <div class="ss-info"><span class="ss-cat">Alta Moda</span>
+                        <div class="ss-name">Diseñadores Selectos</div>
                     </div>
                 </div>
-                <div class="swiper-slide store-slide">
-                    <img src="images/home/eventos-bg.jpg" alt="Gastronomía" loading="lazy">
-                    <div class="store-slide-overlay"></div>
-                    <div class="store-slide-info"><span class="slide-cat">Gastronomía</span>
-                        <div class="slide-name">Alta Cocina</div>
+                <div class="swiper-slide ss"><img src="images/home/eventos-bg.jpg" alt="Gastronomía" loading="lazy">
+                    <div class="ss-ov"></div>
+                    <div class="ss-info"><span class="ss-cat">Gastronomía</span>
+                        <div class="ss-name">Alta Cocina</div>
                     </div>
                 </div>
-                <div class="swiper-slide store-slide">
-                    <img src="images/home/directorio-bg.jpg" alt="Joyería" loading="lazy">
-                    <div class="store-slide-overlay"></div>
-                    <div class="store-slide-info"><span class="slide-cat">Joyería & Accesorios</span>
-                        <div class="slide-name">Lujo sin límites</div>
+                <div class="swiper-slide ss"><img src="images/home/directorio-bg.jpg" alt="Joyería" loading="lazy">
+                    <div class="ss-ov"></div>
+                    <div class="ss-info"><span class="ss-cat">Joyería & Accesorios</span>
+                        <div class="ss-name">Lujo sin límites</div>
                     </div>
                 </div>
-                <div class="swiper-slide store-slide">
-                    <img src="images/home/hero.jpg" alt="Tecnología" loading="lazy">
-                    <div class="store-slide-overlay"></div>
-                    <div class="store-slide-info"><span class="slide-cat">Tecnología</span>
-                        <div class="slide-name">Innovación & Conectividad</div>
+                <div class="swiper-slide ss"><img src="images/home/hero.jpg" alt="Tecnología" loading="lazy">
+                    <div class="ss-ov"></div>
+                    <div class="ss-info"><span class="ss-cat">Tecnología</span>
+                        <div class="ss-name">Innovación</div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination swiper-pagination-stores"></div>
+            <div class="swiper-pagination swiper-pagination-sl"></div>
         </div>
     </section>
 
     <!-- ROOF CTA -->
-    <section class="roof-section">
+    <section class="roof">
         <div class="roof-bg" id="roofBg"></div>
-        <div class="roof-overlay"></div>
-        <div class="roof-content">
-            <p class="roof-kicker">Vista Exclusiva</p>
+        <div class="roof-ov"></div>
+        <div class="roof-c rv">
+            <div class="roof-tag">Vista exclusiva</div>
             <h2 class="roof-h2">El Roof<br>Garden de<br>Polanco.</h2>
-            <p class="roof-desc">Un destino en sí mismo, con la silueta plateada del Museo Soumaya como horizonte.
-                Gastronomía, cultura y el cielo de la CDMX, todo en uno.</p>
-            <a href="eventosypromociones.html" class="btn-ghost"
-                style="border-color:rgba(246,244,240,.4);color:var(--warm-white);">Ver Novedades</a>
+            <p class="roof-desc">Gastronomía, cultura y el cielo de la CDMX con la silueta plateada del Museo Soumaya.
+                Un evento en sí mismo.</p>
+            <a href="eventosypromociones.html" class="btn-g"
+                style="border-color:rgba(245,243,239,.35);color:var(--warm);">Ver Novedades</a>
         </div>
     </section>
 
     <!-- NOVEDADES -->
-    <section class="novedades-section">
-        <div class="novedades-head reveal-up">
+    <section class="nov">
+        <div class="nov-top rv">
             <h2 class="nov-h2">Novedades<br><em>& Eventos.</em></h2>
-            <a href="eventosypromociones.html" class="link-arrow">Ver todo →</a>
+            <a href="eventosypromociones.html" class="arr rv-d1">Ver todo →</a>
         </div>
-        <div class="nov-grid reveal-up" style="transition-delay:.15s">
-            <a class="nov-card" href="eventosypromociones.html">
-                <img src="images/home/eventos-bg.jpg" alt="Roof Garden Primavera" loading="lazy">
-                <div class="nov-card-overlay"></div>
-                <div class="nov-card-info">
-                    <span class="nov-tag">Evento Especial</span>
-                    <div class="nov-title">Roof Garden · Temporada Primavera 2026</div>
+        <div class="nov-grid rv rv-d2">
+            <a class="nc" href="eventosypromociones.html"><img src="images/home/eventos-bg.jpg"
+                    alt="Roof Garden Primavera" loading="lazy">
+                <div class="nc-ov"></div>
+                <div class="nc-info"><span class="nc-tag">Evento Especial</span>
+                    <div class="nc-title">Roof Garden · Temporada Primavera 2026</div>
                 </div>
             </a>
-            <a class="nov-card" href="eventosypromociones.html">
-                <img src="images/home/directorio-bg.jpg" alt="Nuevas aperturas" loading="lazy">
-                <div class="nov-card-overlay"></div>
-                <div class="nov-card-info">
-                    <span class="nov-tag">Nuevas Aperturas</span>
-                    <div class="nov-title">Las últimas llegadas al directorio</div>
+            <a class="nc" href="eventosypromociones.html"><img src="images/home/directorio-bg.jpg"
+                    alt="Nuevas aperturas" loading="lazy">
+                <div class="nc-ov"></div>
+                <div class="nc-info"><span class="nc-tag">Nuevas Aperturas</span>
+                    <div class="nc-title">Las últimas llegadas al directorio</div>
                 </div>
             </a>
-            <a class="nov-card" href="eventosypromociones.html">
-                <img src="images/home/hero.jpg" alt="Promociones" loading="lazy">
-                <div class="nov-card-overlay"></div>
-                <div class="nov-card-info">
-                    <span class="nov-tag">Promociones</span>
-                    <div class="nov-title">Ofertas exclusivas de temporada</div>
+            <a class="nc" href="eventosypromociones.html"><img src="images/home/hero.jpg" alt="Promociones"
+                    loading="lazy">
+                <div class="nc-ov"></div>
+                <div class="nc-info"><span class="nc-tag">Promoción</span>
+                    <div class="nc-title">Ofertas exclusivas de temporada</div>
                 </div>
             </a>
         </div>
     </section>
 
     <!-- NEWSLETTER -->
-    <section class="nl-section">
-        <p class="stmt-label reveal-up" style="margin-bottom:16px;">Newsletter</p>
-        <h2 class="nl-h2 reveal-up">Carso <em>Insider.</em></h2>
-        <p class="nl-sub reveal-up">Recibe primero las novedades, eventos y aperturas de temporada.</p>
-        <form class="nl-form reveal-up" onsubmit="return false;">
-            <input type="email" placeholder="Tu correo electrónico">
+    <section class="nl">
+        <span class="nl-tag rv">Carso Insider</span>
+        <h2 class="nl-h2 rv rv-d1">Mantente al día.</h2>
+        <p class="nl-sub rv rv-d2">Novedades, eventos y aperturas, siempre primero.</p>
+        <form class="nl-form rv rv-d3" onsubmit="return false;">
+            <input type="email" placeholder="Tu correo electrónico" aria-label="Correo electrónico">
             <button type="submit">Suscribirse</button>
         </form>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <div class="footer-bg-text" aria-hidden="true">CARSO</div>
-        <div class="footer-top">
+        <div class="f-bg" aria-hidden="true">CARSO</div>
+        <div class="f-grid">
             <div>
-                <div class="footer-brand-name"><span>Plaza</span> Carso</div>
-                <p class="footer-brand-desc">Boutiques exclusivas, alta cocina, entretenimiento y el Roof Garden más
-                    icónico de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
+                <div class="f-logo"><em>Plaza</em> Carso</div>
+                <p class="f-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco. Lago Zúrich
+                    219-245, Granada, CDMX.</p>
             </div>
-            <div class="footer-col">
+            <div class="f-col">
                 <h4>Navegación</h4>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
@@ -1511,34 +1733,33 @@
                     <li><a href="eventosypromociones.html">Novedades</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="f-col">
                 <h4>Visítanos</h4>
-                <address>Lago Zúrich 219-245<br>Granada, 11529<br>Ciudad de México<br><br><a href="tel:4976 0346">4976
+                <address>Lago Zúrich 219-245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:49760346">4976
                         0346</a></address>
             </div>
-            <div class="footer-col">
+            <div class="f-col">
                 <h4>Horario</h4>
                 <ul>
-                    <li><a href="#">Lun–Vie: 11:00–21:00</a></li>
-                    <li><a href="#">Sáb–Dom: 11:00–21:00</a></li>
-                    <li><a href="contacto.html" style="margin-top:16px;display:block;">Contáctanos</a></li>
+                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
+                    <li><a href="contacto.html">Contáctanos</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
-            <div class="footer-socials">
+        <div class="f-bot">
+            <p class="f-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <div class="f-soc">
                 <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener"
-                    aria-label="Facebook"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    aria-label="Facebook"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                     </svg></a>
-                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter/X"><svg
-                        width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter"><svg
+                        width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                     </svg></a>
-                <a href="#" aria-label="Instagram"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
+                <a href="#" aria-label="Instagram"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8">
                         <rect x="2" y="2" width="20" height="20" rx="5" />
                         <circle cx="12" cy="12" r="4" />
                         <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -1547,9 +1768,9 @@
         </div>
     </footer>
 
-    <!-- Backend Bootstrap Modal Integration Point -->
+    <!-- Backend modal integration -->
     <div class="modal fade" id="miModalLocatario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
-        <div class="modal-dialog" role="document" style="width:90%;max-width:960px;margin:2% auto;">
+        <div class="modal-dialog" style="width:90%;max-width:960px;margin:2% auto;">
             <div class="modal-content" id="miModalContenidoLocatario"
                 style="min-height:400px;border-radius:0;border:none;"></div>
         </div>
@@ -1559,81 +1780,119 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="Scripts/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script>
         gsap.registerPlugin(ScrollTrigger);
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // ── Custom Cursor ──
-        const cur = document.getElementById('cursor');
-        const dot = document.getElementById('cursor-dot');
+        /* ── LOADER ── */
+        (function () {
+            const lw = document.getElementById('lw');
+            const lb = document.getElementById('lb');
+            const loader = document.getElementById('loader');
+            gsap.to(lw, { opacity: 1, y: 0, duration: .6, ease: 'power3.out', delay: .1 });
+            gsap.to(lb, { width: '100%', duration: .9, ease: 'power2.inOut', delay: .3, onComplete: startHero });
+            function startHero() {
+                gsap.to(loader, { opacity: 0, duration: .5, delay: .1, ease: 'power2.in', onComplete: () => { loader.classList.add('gone'); } });
+                runHeroAnim();
+            }
+        })();
+
+        /* ── HERO ANIMATIONS ── */
+        function runHeroAnim() {
+            if (prefersReduced) { document.querySelectorAll('.h-line-inner,.h-sub,.h-btns,.h-scroll,.nav-logo,.nav-links').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; }); return; }
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+            tl.to('.nav-logo,.nav-links', { opacity: 1, y: 0, duration: .6, stagger: .1 }, .1)
+                .to('#hBar', { width: '32px', duration: .7 }, .3)
+                .to('#hKick', { x: 0, opacity: 1, duration: .7 }, .45)
+                .to(['#hl1', '#hl2', '#hl3'], { y: '0%', opacity: 1, duration: 1.1, stagger: .14 }, .55)
+                .to('#hDiv', { width: '100%', duration: 1, ease: 'power2.inOut' }, .8)
+                .to('#hSub', { y: 0, opacity: 1, duration: .8 }, 1.1)
+                .to('#hBtns', { y: 0, opacity: 1, duration: .7 }, 1.3)
+                .to('#hStrip', { y: 0, opacity: 1, duration: .8, ease: 'power3.out' }, 1.4)
+                .to('#hScroll', { opacity: 1, duration: .6 }, 1.6);
+
+            /* Hero image Ken Burns */
+            if (!prefersReduced) gsap.to('#hImg', { scale: 1, duration: 9, ease: 'power1.out', delay: .2 });
+        }
+
+        /* ── CURSOR ── */
+        const cur = document.getElementById('cur');
         if (cur && window.matchMedia('(pointer:fine)').matches) {
-            document.addEventListener('mousemove', e => {
-                gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' });
-                gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 });
+            let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            (function loop() {
+                gsap.set(cur, { x: mx, y: my });
+                requestAnimationFrame(loop);
+            })();
+            document.querySelectorAll('a,button,.nc,.ss,.panel').forEach(el => {
+                el.addEventListener('mouseenter', () => cur.classList.add('h'));
+                el.addEventListener('mouseleave', () => cur.classList.remove('h'));
             });
-            document.querySelectorAll('a,button,.nov-card,.store-slide,.panel-img').forEach(el => {
-                el.addEventListener('mouseenter', () => cur.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
-            });
-            document.addEventListener('mousedown', () => cur.classList.add('click'));
-            document.addEventListener('mouseup', () => cur.classList.remove('click'));
+            document.addEventListener('mousedown', () => cur.classList.add('c'));
+            document.addEventListener('mouseup', () => cur.classList.remove('c'));
         }
 
-        // ── Nav scroll ──
-        window.addEventListener('scroll', () => {
-            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-        });
+        /* ── NAV SCROLL ── */
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('s', window.scrollY > 50), { passive: true });
 
-        // ── Mobile menu ──
+        /* ── MOBILE MENU ── */
         function toggleMob() {
-            document.getElementById('mob-menu').classList.toggle('open');
-            document.body.style.overflow = document.getElementById('mob-menu').classList.contains('open') ? 'hidden' : '';
+            const mob = document.getElementById('mob-nav');
+            const btn = document.getElementById('hamBtn');
+            const open = mob.classList.toggle('open');
+            btn.classList.toggle('open', open);
+            btn.setAttribute('aria-expanded', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+        document.getElementById('mob-nav').querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            document.getElementById('mob-nav').classList.remove('open');
+            document.getElementById('hamBtn').classList.remove('open');
+            document.body.style.overflow = '';
+        }));
+
+        /* ── SCROLL REVEALS ── */
+        const rvEls = document.querySelectorAll('.rv');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+        }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+        rvEls.forEach(el => observer.observe(el));
+
+        /* ── PARALLAX ── */
+        if (!prefersReduced) {
+            gsap.to('#hImg', {
+                yPercent: 20, ease: 'none',
+                scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
+            });
+            gsap.to('#roofBg', {
+                yPercent: 16, ease: 'none',
+                scrollTrigger: { trigger: '.roof', start: 'top bottom', end: 'bottom top', scrub: 1 }
+            });
         }
 
-        // ── Hero entrance ──
-        const heroTl = gsap.timeline({ delay: .2 });
-        heroTl
-            .fromTo('#hKicker', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out' })
-            .fromTo('#hTitle', { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'power3.out' }, '-=.5')
-            .fromTo('#hSub', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out' }, '-=.6')
-            .fromTo('#hBtns', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .7, ease: 'power3.out' }, '-=.5')
-            .fromTo('#hScroll', { opacity: 0 }, { opacity: 1, duration: .6 }, '-=.3');
-
-        // ── Hero parallax ──
-        gsap.to('#heroImg', {
-            yPercent: 22, ease: 'none',
-            scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
-        });
-
-        // ── Roof parallax ──
-        gsap.to('#roofBg', {
-            yPercent: 18, ease: 'none',
-            scrollTrigger: { trigger: '.roof-section', start: 'top bottom', end: 'bottom top', scrub: true }
-        });
-
-        // ── Scroll reveals ──
-        gsap.utils.toArray('.reveal-up').forEach(el => {
-            gsap.fromTo(el, { y: 50, opacity: 0 }, {
-                y: 0, opacity: 1, duration: .9, ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 85%' }
-            });
-        });
-        gsap.utils.toArray('.reveal-panel').forEach((el, i) => {
-            gsap.fromTo(el, { opacity: 0, y: 40 }, {
-                opacity: 1, y: 0, duration: .9, ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 80%' }
+        /* ── COUNTER ANIMATION ── */
+        document.querySelectorAll('[data-count]').forEach(el => {
+            const target = +el.dataset.count;
+            ScrollTrigger.create({
+                trigger: el, start: 'top 85%', once: true, onEnter: () => {
+                    gsap.fromTo({ v: 0 }, {
+                        v: target, duration: 1.6, ease: 'power2.out',
+                        onUpdate: function () { el.textContent = '+' + Math.round(this.targets()[0].v); }
+                    });
+                }
             });
         });
 
-        // ── Swiper stores ──
-        new Swiper('.swiper-stores', {
-            slidesPerView: 1.25, spaceBetween: 16,
-            centeredSlides: false, loop: false,
-            pagination: { el: '.swiper-pagination-stores', clickable: true },
+        /* ── SWIPER ── */
+        new Swiper('.swiper-sl', {
+            slidesPerView: 1.2, spaceBetween: 12, loop: false,
+            pagination: { el: '.swiper-pagination-sl', clickable: true },
             breakpoints: {
-                640: { slidesPerView: 2.2, spaceBetween: 20 },
-                1024: { slidesPerView: 3.2, spaceBetween: 24 },
-                1400: { slidesPerView: 4, spaceBetween: 24 }
+                540: { slidesPerView: 1.8, spaceBetween: 16 },
+                768: { slidesPerView: 2.4, spaceBetween: 18 },
+                1024: { slidesPerView: 3.2, spaceBetween: 20 },
+                1400: { slidesPerView: 4, spaceBetween: 22 }
             }
         });
     </script>

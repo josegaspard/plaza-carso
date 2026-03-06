@@ -2,44 +2,30 @@
 <html lang="es">
 
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plaza Carso | Inicio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Plaza Carso | Polanco · Ciudad de México</title>
     <meta name="description"
-        content="Plaza Carso – El destino de moda, gastronomía y entretenimiento de Polanco. Con vista al Museo Soumaya y el Roof Garden más exclusivo de la CDMX." />
-    <link rel="shortcut icon" type="image/x-icon" href="logos/icono.ico" />
-    <link href="logos/icono.ico" rel="shortcut icon" type="image/x-icon" />
-
-    <!-- Google Fonts -->
+        content="Plaza Carso – El destino de moda, gastronomía y cultura de Polanco. Boutiques exclusivas, alta cocina y el Roof Garden con vista al Museo Soumaya." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
-
-    <!-- Libs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-
     <style>
         :root {
-            --white: #FFFFFF;
-            --off-white: #F8F8F8;
-            --silver-light: #EBEBEB;
-            --silver: #C8C8C8;
-            --grey: #8A8A8A;
-            --charcoal: #2C2C2C;
-            --black: #111111;
-            --accent: #B0B0B0;
-            --font-display: 'Bebas Neue', sans-serif;
-            --font-head: 'Space Grotesk', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
+            --ink: #0A0909;
+            --warm-white: #F6F4F0;
+            --smoke: #EEEBE5;
+            --silver: #C2BBB2;
+            --grey: #857F78;
+            --mid: #3A3632;
+            --serif: 'Cormorant Garamond', serif;
+            --sans: 'Outfit', sans-serif;
         }
 
         *,
@@ -51,346 +37,384 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            font-family: var(--font-body);
-            background: var(--white);
-            color: var(--charcoal);
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--sans);
+            background: var(--warm-white);
+            color: var(--ink);
             overflow-x: hidden;
+            cursor: none;
         }
 
-        /* ─── HEADER ─────────────────────────────── */
-        #main-header {
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* CURSOR */
+        #cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform .15s ease, width .25s ease, height .25s ease, border-color .25s ease, background .25s ease;
+            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+        }
+
+        #cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: rgba(10, 9, 9, .08);
+            border-color: var(--mid);
+        }
+
+        #cursor.click {
+            width: 24px;
+            height: 24px;
+        }
+
+        #cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--ink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            transition: opacity .2s;
+        }
+
+        /* NAV */
+        nav#nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 500;
+            padding: 0 52px;
             height: 72px;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--silver-light);
-            transition: all .4s ease;
-        }
-
-        #main-header.scrolled {
-            height: 60px;
-            box-shadow: 0 2px 24px rgba(0, 0, 0, .06);
-        }
-
-        .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 100%;
-            padding: 0 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: background .4s, box-shadow .4s, height .35s;
         }
 
-        .logo-wrap {
-            display: flex;
-            align-items: center;
+        nav#nav.scrolled {
+            background: rgba(246, 244, 240, .95);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 var(--smoke);
+            height: 60px;
         }
 
-        .logo-wrap img {
-            height: 38px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-family: var(--font-display);
+        .nav-logo {
+            font-family: var(--serif);
             font-size: 22px;
-            letter-spacing: .12em;
-            color: var(--black);
+            font-weight: 300;
+            letter-spacing: .08em;
+            color: var(--ink);
+            line-height: 1;
         }
 
-        nav.main-nav {
+        .nav-logo span {
+            font-style: italic;
+        }
+
+        .nav-links {
             display: flex;
             align-items: center;
-            gap: 36px;
+            gap: 40px;
         }
 
-        nav.main-nav a {
-            font-family: var(--font-head);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: .18em;
+        .nav-links a {
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: .22em;
             text-transform: uppercase;
-            color: var(--charcoal);
-            text-decoration: none;
+            color: var(--mid);
+            padding: 4px 0;
             position: relative;
-            padding-bottom: 3px;
             transition: color .25s;
         }
 
-        nav.main-nav a::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0;
             height: 1px;
-            background: var(--black);
+            width: 0;
+            background: var(--ink);
             transition: width .3s ease;
         }
 
-        nav.main-nav a:hover {
-            color: var(--black);
+        .nav-links a:hover {
+            color: var(--ink);
         }
 
-        nav.main-nav a:hover::after {
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        .nav-cta {
-            font-family: var(--font-head);
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta-link {
+            font-family: var(--sans);
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: .2em;
             text-transform: uppercase;
-            color: var(--white) !important;
-            background: var(--black);
-            padding: 9px 20px;
-            text-decoration: none;
-            transition: background .25s !important;
+            border: 1px solid var(--ink);
+            padding: 10px 22px;
+            color: var(--ink) !important;
+            transition: background .25s, color .25s !important;
         }
 
-        .nav-cta:hover {
-            background: var(--charcoal) !important;
+        .nav-cta-link:hover {
+            background: var(--ink);
+            color: var(--warm-white) !important;
         }
 
-        .nav-cta::after {
+        .nav-cta-link::after {
             display: none !important;
         }
 
-        /* Hamburger */
-        .hamburger {
+        .nav-ham {
             display: none;
             flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
+            gap: 6px;
+            cursor: none;
+            background: none;
+            border: none;
             padding: 4px;
         }
 
-        .hamburger span {
+        .nav-ham span {
             display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--black);
+            width: 24px;
+            height: 1px;
+            background: var(--ink);
             transition: all .3s;
         }
 
-        /* Mobile Menu */
-        #mobile-menu {
+        #mob-menu {
             position: fixed;
             inset: 0;
-            background: var(--white);
-            z-index: 200;
+            background: var(--ink);
+            z-index: 800;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity .4s ease;
+            transition: opacity .4s;
         }
 
-        #mobile-menu.open {
+        #mob-menu.open {
             opacity: 1;
             pointer-events: all;
         }
 
-        #mobile-menu nav {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            text-align: center;
+        #mob-menu a {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 7vw, 72px);
+            color: var(--warm-white);
+            display: block;
+            margin-bottom: 20px;
+            opacity: .8;
+            transition: opacity .2s;
         }
 
-        #mobile-menu nav a {
-            font-family: var(--font-display);
-            font-size: 36px;
-            letter-spacing: .08em;
-            color: var(--black);
-            text-decoration: none;
-            transition: color .2s;
+        #mob-menu a:hover {
+            opacity: 1;
         }
 
-        #mobile-menu nav a:hover {
-            color: var(--grey);
-        }
-
-        .menu-close {
+        .mob-close {
             position: absolute;
             top: 24px;
             right: 32px;
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--black);
             background: none;
             border: none;
-            line-height: 1;
+            font-size: 28px;
+            color: var(--warm-white);
+            cursor: none;
         }
 
-        /* ─── HERO ───────────────────────────────── */
-        .hero {
+        /* HERO */
+        #hero {
             position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            height: 100vh;
+            min-height: 600px;
             overflow: hidden;
+            display: flex;
+            align-items: flex-end;
         }
 
-        .hero-bg {
+        .hero-img {
             position: absolute;
             inset: 0;
             background: url('images/home/hero.jpg') center/cover no-repeat;
-            transform: scale(1.04);
-            transition: transform 8s ease;
+            transform-origin: center;
+            will-change: transform;
         }
 
-        .hero-bg.loaded {
-            transform: scale(1);
-        }
-
-        .hero-overlay {
+        .hero-gradient {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top,
-                    rgba(17, 17, 17, .72) 0%,
-                    rgba(17, 17, 17, .2) 50%,
-                    rgba(17, 17, 17, .05) 100%);
+            background: linear-gradient(105deg, rgba(246, 244, 240, 1) 0%, rgba(246, 244, 240, .85) 32%, rgba(246, 244, 240, .3) 58%, transparent 80%), linear-gradient(to top, rgba(10, 9, 9, .5) 0%, transparent 40%);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 0 60px 80px;
-            max-width: 900px;
+            padding: 0 52px 72px;
+            max-width: 680px;
         }
 
-        .hero-label {
-            font-family: var(--font-head);
-            font-size: 10px;
+        .hero-kicker {
+            font-family: var(--sans);
+            font-size: 9px;
             font-weight: 500;
-            letter-spacing: .4em;
+            letter-spacing: .45em;
             text-transform: uppercase;
-            color: var(--silver);
-            margin-bottom: 20px;
+            color: var(--grey);
             display: flex;
             align-items: center;
             gap: 14px;
-        }
-
-        .hero-label::before {
-            content: '';
-            display: block;
-            width: 32px;
-            height: 1px;
-            background: var(--silver);
-        }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(64px, 9vw, 128px);
-            line-height: .92;
-            letter-spacing: .02em;
-            color: var(--white);
             margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .hero-title em {
-            color: var(--silver);
+        .hero-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--grey);
+        }
+
+        .hero-h1 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(68px, 9.5vw, 148px);
+            font-weight: 300;
+            line-height: .9;
+            color: var(--ink);
+            margin-bottom: 36px;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .hero-h1 strong {
             font-style: normal;
+            font-weight: 400;
         }
 
         .hero-sub {
-            font-family: var(--font-body);
-            font-size: 15px;
+            font-family: var(--sans);
+            font-size: 13px;
             font-weight: 300;
-            color: rgba(255, 255, 255, .7);
-            line-height: 1.7;
-            max-width: 480px;
-            margin-bottom: 40px;
+            color: var(--grey);
+            line-height: 1.8;
+            max-width: 400px;
+            margin-bottom: 44px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .hero-actions {
+        .hero-btns {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .btn-hero-primary {
-            font-family: var(--font-head);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: .25em;
-            text-transform: uppercase;
-            color: var(--black);
-            background: var(--white);
-            padding: 14px 32px;
-            text-decoration: none;
-            transition: background .25s, color .25s;
-        }
-
-        .btn-hero-primary:hover {
-            background: var(--silver);
-        }
-
-        .btn-hero-outline {
-            font-family: var(--font-head);
-            font-size: 10px;
+        .btn-primary {
+            font-family: var(--sans);
+            font-size: 9px;
             font-weight: 500;
             letter-spacing: .25em;
             text-transform: uppercase;
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, .4);
-            padding: 14px 32px;
-            text-decoration: none;
-            backdrop-filter: blur(4px);
+            background: var(--ink);
+            color: var(--warm-white);
+            padding: 15px 34px;
+            border: none;
+            cursor: none;
+            transition: background .25s;
+        }
+
+        .btn-primary:hover {
+            background: var(--mid);
+        }
+
+        .btn-ghost {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            border: 1px solid rgba(10, 9, 9, .35);
+            color: var(--ink);
+            padding: 15px 34px;
+            cursor: none;
             transition: border-color .25s, background .25s;
         }
 
-        .btn-hero-outline:hover {
-            border-color: var(--white);
-            background: rgba(255, 255, 255, .1);
+        .btn-ghost:hover {
+            border-color: var(--ink);
+            background: rgba(10, 9, 9, .05);
         }
 
-        /* Hero scroll indicator */
-        .hero-scroll {
+        .hero-scroll-ind {
             position: absolute;
-            bottom: 30px;
-            right: 60px;
-            z-index: 2;
+            right: 52px;
+            bottom: 48px;
+            z-index: 3;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            opacity: 0;
         }
 
-        .hero-scroll span {
-            font-family: var(--font-head);
+        .hero-scroll-ind span {
+            font-family: var(--sans);
             font-size: 8px;
             letter-spacing: .35em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .5);
+            color: #fff;
             writing-mode: vertical-rl;
         }
 
-        .hero-scroll-line {
+        .scroll-line {
             width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, .5), transparent);
-            animation: scrollPulse 2s ease infinite;
+            height: 56px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, .6), transparent);
+            animation: scrollAnim 2.2s ease infinite;
         }
 
-        @keyframes scrollPulse {
+        @keyframes scrollAnim {
             0% {
                 transform: scaleY(0);
                 transform-origin: top;
@@ -412,377 +436,497 @@
             }
         }
 
-        /* ─── QUICK LINKS ─────────────────────────── */
-        .quick-links {
-            background: var(--black);
-            padding: 0;
+        /* MARQUEE */
+        .marquee-band {
+            background: var(--ink);
+            overflow: hidden;
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, .06);
         }
 
-        .quick-links-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            max-width: 100%;
-        }
-
-        .quick-link-item {
-            padding: 28px 32px;
-            border-right: 1px solid rgba(255, 255, 255, .08);
+        .marquee-track {
             display: flex;
-            align-items: center;
-            gap: 16px;
-            text-decoration: none;
-            transition: background .25s;
-            cursor: pointer;
+            gap: 0;
+            white-space: nowrap;
+            animation: marqueeScroll 28s linear infinite;
         }
 
-        .quick-link-item:last-child {
-            border-right: none;
+        .marquee-track:hover {
+            animation-play-state: paused;
         }
 
-        .quick-link-item:hover {
-            background: rgba(255, 255, 255, .04);
-        }
-
-        .quick-link-icon {
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255, 255, 255, .15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .marquee-item {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: .5em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .45);
+            padding: 0 36px;
             flex-shrink: 0;
         }
 
-        .quick-link-icon i {
-            font-size: 13px;
+        .marquee-dot {
             color: var(--silver);
+            opacity: .3;
         }
 
-        .quick-link-text {}
+        @keyframes marqueeScroll {
+            0% {
+                transform: translateX(0);
+            }
 
-        .quick-link-label {
-            font-family: var(--font-head);
-            font-size: 8px;
-            font-weight: 500;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--grey);
-            display: block;
-            margin-bottom: 4px;
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
-        .quick-link-title {
-            font-family: var(--font-head);
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--white);
+        /* STATEMENT */
+        .statement-section {
+            padding: 140px 52px;
+            background: var(--warm-white);
+            text-align: center;
+            overflow: hidden;
         }
 
-        /* ─── SECTION SHARED ──────────────────────── */
-        .section-label {
-            font-family: var(--font-head);
+        .stmt-label {
+            font-family: var(--sans);
             font-size: 9px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: .4em;
             text-transform: uppercase;
             color: var(--grey);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 40px;
         }
 
-        .section-label::before {
-            content: '';
-            display: block;
-            width: 24px;
-            height: 1px;
-            background: var(--grey);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(36px, 5vw, 64px);
-            letter-spacing: .03em;
-            color: var(--black);
-            line-height: 1;
-            margin-bottom: 20px;
-        }
-
-        .section-desc {
-            font-family: var(--font-body);
-            font-size: 15px;
+        .stmt-text {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(32px, 4.5vw, 62px);
             font-weight: 300;
+            line-height: 1.25;
+            color: var(--ink);
+            max-width: 900px;
+            margin: 0 auto 60px;
+        }
+
+        .stmt-text em {
+            font-style: normal;
             color: var(--grey);
-            line-height: 1.8;
-            max-width: 520px;
         }
 
-        /* ─── INTRO SPLIT ─────────────────────────── */
-        .intro-section {
-            padding: 120px 0;
-            background: var(--white);
-        }
-
-        .intro-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .intro-img-wrap {
-            position: relative;
-        }
-
-        .intro-img-main {
-            width: 100%;
-            aspect-ratio: 4/5;
-            object-fit: cover;
-            filter: grayscale(15%);
-            transition: filter .6s;
-        }
-
-        .intro-img-main:hover {
-            filter: grayscale(0%);
-        }
-
-        .intro-img-badge {
-            position: absolute;
-            bottom: -24px;
-            right: -24px;
-            width: 140px;
-            height: 140px;
-            background: var(--black);
+        .stats-row {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            gap: 0;
+            border-top: 1px solid var(--smoke);
+            border-bottom: 1px solid var(--smoke);
+            margin-top: 60px;
         }
 
-        .intro-img-badge .badge-num {
-            font-family: var(--font-display);
-            font-size: 40px;
-            color: var(--white);
-            line-height: 1;
+        .stat-col {
+            flex: 1;
+            max-width: 200px;
+            padding: 36px 24px;
+            border-right: 1px solid var(--smoke);
         }
 
-        .intro-img-badge .badge-text {
-            font-family: var(--font-head);
-            font-size: 8px;
-            font-weight: 500;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            color: var(--silver);
-            text-align: center;
-            margin-top: 6px;
-        }
-
-        .intro-text {
-            padding-left: 20px;
-        }
-
-        .intro-text .section-title {
-            font-size: clamp(40px, 4vw, 56px);
-        }
-
-        .intro-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .stat-item {
-            border-left: 2px solid var(--silver-light);
-            padding-left: 20px;
+        .stat-col:last-child {
+            border-right: none;
         }
 
         .stat-num {
-            font-family: var(--font-display);
-            font-size: 36px;
-            color: var(--black);
+            font-family: var(--serif);
+            font-size: clamp(36px, 4vw, 54px);
+            font-weight: 300;
+            color: var(--ink);
             line-height: 1;
         }
 
         .stat-label {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 300;
-            letter-spacing: .1em;
-            color: var(--grey);
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: .2em;
             text-transform: uppercase;
-            margin-top: 4px;
+            color: var(--grey);
+            margin-top: 8px;
         }
 
-        /* ─── FEATURED (Swiper) ───────────────────── */
-        .featured-section {
-            padding: 120px 0;
-            background: var(--off-white);
+        /* PANELS */
+        .panels-section {
+            background: var(--smoke);
         }
 
-        .featured-header {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
+        .panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+            overflow: hidden;
+        }
+
+        .panel:nth-child(even) {
+            direction: rtl;
+        }
+
+        .panel:nth-child(even)>* {
+            direction: ltr;
+        }
+
+        .panel-img {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.06);
+            transition: transform 8s ease;
+            filter: grayscale(15%);
+        }
+
+        .panel:hover .panel-img img {
+            transform: scale(1);
+        }
+
+        .panel-body {
+            background: var(--warm-white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 72px;
+        }
+
+        .panel-num {
+            font-family: var(--serif);
+            font-size: 120px;
+            font-weight: 300;
+            color: var(--smoke);
+            line-height: 1;
+            margin-bottom: -20px;
+            display: block;
+        }
+
+        .panel-kicker {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-kicker::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--grey);
+        }
+
+        .panel-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(36px, 3.5vw, 52px);
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .panel-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.85;
+            max-width: 360px;
+            margin-bottom: 40px;
+        }
+
+        .link-arrow {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--ink);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 3px;
+            transition: gap .3s, opacity .2s;
+        }
+
+        .link-arrow:hover {
+            gap: 18px;
+            opacity: .6;
+        }
+
+        /* STORE SWIPER */
+        .stores-section {
+            background: var(--ink);
+            padding: 100px 0;
+        }
+
+        .stores-head {
+            padding: 0 52px;
+            margin-bottom: 56px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 48px;
         }
 
-        .featured-link {
-            font-family: var(--font-head);
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: .2em;
+        .stores-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 300;
+            color: var(--warm-white);
+            line-height: 1;
+        }
+
+        .stores-link {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: .25em;
             text-transform: uppercase;
-            color: var(--charcoal);
-            text-decoration: none;
-            border-bottom: 1px solid var(--charcoal);
+            color: rgba(255, 255, 255, .4);
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
             padding-bottom: 2px;
             transition: color .2s, border-color .2s;
         }
 
-        .featured-link:hover {
-            color: var(--grey);
-            border-color: var(--grey);
+        .stores-link:hover {
+            color: var(--warm-white);
+            border-color: var(--warm-white);
         }
 
-        .swiper-featured {
-            padding: 0 60px 48px !important;
+        .swiper-stores {
+            padding: 0 52px 56px !important;
         }
 
-        .swiper-slide-featured {
+        .store-slide {
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            background: var(--silver-light);
+            cursor: none;
+            background: var(--mid);
         }
 
-        .swiper-slide-featured img {
+        .store-slide img {
             width: 100%;
-            aspect-ratio: 3/4;
+            aspect-ratio: 2/3;
             object-fit: cover;
             display: block;
-            filter: grayscale(20%);
-            transition: filter .5s, transform .6s;
+            filter: grayscale(30%);
+            transition: filter .6s, transform .7s;
         }
 
-        .swiper-slide-featured:hover img {
+        .store-slide:hover img {
             filter: grayscale(0%);
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
-        .slide-info {
+        .store-slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 9, 9, .8) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .store-slide-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 24px 20px;
-            background: linear-gradient(to top, rgba(17, 17, 17, .7) 0%, transparent 100%);
+            padding: 24px 22px;
         }
 
         .slide-cat {
-            font-family: var(--font-head);
+            font-family: var(--sans);
             font-size: 8px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: .3em;
             text-transform: uppercase;
             color: var(--silver);
-            margin-bottom: 6px;
             display: block;
+            margin-bottom: 6px;
         }
 
         .slide-name {
-            font-family: var(--font-head);
-            font-size: 17px;
-            font-weight: 500;
-            color: var(--white);
+            font-family: var(--serif);
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--warm-white);
         }
 
-        .swiper-pagination-featured .swiper-pagination-bullet {
-            background: var(--grey);
-            opacity: .4;
-            width: 6px;
-            height: 6px;
+        .swiper-pagination-stores .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, .25);
+            width: 5px;
+            height: 5px;
+            transition: width .3s;
         }
 
-        .swiper-pagination-featured .swiper-pagination-bullet-active {
-            background: var(--black);
-            opacity: 1;
+        .swiper-pagination-stores .swiper-pagination-bullet-active {
+            background: var(--warm-white);
             width: 20px;
             border-radius: 3px;
         }
 
-        /* ─── NOVEDADES PREVIEW ───────────────────── */
+        /* ROOF CTA */
+        .roof-section {
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .roof-bg {
+            position: absolute;
+            inset: 0;
+            background: url('images/home/eventos-bg.jpg') center/cover no-repeat;
+            transform: scale(1.04);
+            transition: transform 8s;
+        }
+
+        .roof-section:hover .roof-bg {
+            transform: scale(1);
+        }
+
+        .roof-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(10, 9, 9, .78) 0%, rgba(10, 9, 9, .4) 60%, transparent 100%);
+        }
+
+        .roof-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 52px;
+            max-width: 640px;
+        }
+
+        .roof-kicker {
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: rgba(194, 187, 178, .7);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .roof-kicker::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: rgba(194, 187, 178, .5);
+        }
+
+        .roof-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 6vw, 84px);
+            font-weight: 300;
+            color: var(--warm-white);
+            line-height: .95;
+            margin-bottom: 28px;
+        }
+
+        .roof-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(246, 244, 240, .65);
+            line-height: 1.85;
+            margin-bottom: 40px;
+        }
+
+        /* NOVEDADES */
         .novedades-section {
-            padding: 120px 0;
-            background: var(--white);
+            padding: 120px 52px;
+            background: var(--warm-white);
         }
 
-        .novedades-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
+        .novedades-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
         }
 
-        .novedades-grid {
+        .nov-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .nov-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr;
-            gap: 2px;
-            margin-top: 60px;
+            grid-template-columns: 1.2fr .8fr .8fr;
+            gap: 3px;
         }
 
-        .novedad-card {
+        .nov-card {
             position: relative;
             overflow: hidden;
-            background: var(--silver-light);
-            cursor: pointer;
-            text-decoration: none;
+            cursor: none;
             display: block;
         }
 
-        .novedad-card:first-child {
+        .nov-card:first-child {
             grid-row: span 2;
         }
 
-        .novedad-card img {
+        .nov-card img {
             width: 100%;
             height: 100%;
-            min-height: 300px;
+            min-height: 280px;
             object-fit: cover;
-            filter: grayscale(30%);
-            transition: transform .6s ease, filter .4s;
-            display: block;
+            filter: grayscale(25%);
+            transition: transform .7s ease, filter .5s;
         }
 
-        .novedad-card:hover img {
-            transform: scale(1.05);
+        .nov-card:hover img {
+            transform: scale(1.06);
             filter: grayscale(0%);
         }
 
-        .novedad-overlay {
+        .nov-card-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, .65) 0%, transparent 55%);
+            background: linear-gradient(to top, rgba(10, 9, 9, .72) 0%, transparent 55%);
             pointer-events: none;
         }
 
-        .novedad-info {
+        .nov-card-info {
             position: absolute;
-            bottom: 24px;
-            left: 24px;
-            right: 24px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 22px;
         }
 
-        .novedad-tag {
-            font-family: var(--font-head);
+        .nov-tag {
+            font-family: var(--sans);
             font-size: 8px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: .3em;
             text-transform: uppercase;
             color: var(--silver);
@@ -790,157 +934,103 @@
             margin-bottom: 8px;
         }
 
-        .novedad-title {
-            font-family: var(--font-head);
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--white);
+        .nov-title {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: 18px;
+            color: var(--warm-white);
             line-height: 1.3;
         }
 
-        /* ─── ROOF GARDEN CTA ─────────────────────── */
-        .roofgarden-section {
-            position: relative;
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
+        .nov-card:first-child .nov-title {
+            font-size: clamp(20px, 2.5vw, 28px);
         }
 
-        .roofgarden-bg {
-            position: absolute;
-            inset: 0;
-            background: url('images/home/eventos-bg.jpg') center/cover no-repeat;
-        }
-
-        .roofgarden-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(17, 17, 17, .55);
-        }
-
-        .roofgarden-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
-            max-width: 700px;
-            padding-left: 60px;
-        }
-
-        .roofgarden-content .section-label {
-            color: var(--silver);
-        }
-
-        .roofgarden-content .section-label::before {
-            background: var(--silver);
-        }
-
-        .roofgarden-content .section-title {
-            color: var(--white);
-        }
-
-        .roofgarden-content .section-desc {
-            color: rgba(255, 255, 255, .65);
-        }
-
-        .btn-rg {
-            display: inline-block;
-            margin-top: 36px;
-            font-family: var(--font-head);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: .25em;
-            text-transform: uppercase;
-            color: var(--black);
-            background: var(--white);
-            padding: 14px 36px;
-            text-decoration: none;
-            transition: background .25s;
-        }
-
-        .btn-rg:hover {
-            background: var(--silver);
-        }
-
-        /* ─── NEWSLETTER ─────────────────────────── */
-        .newsletter-section {
-            background: var(--off-white);
-            border-top: 1px solid var(--silver-light);
-            padding: 80px 0;
-        }
-
-        .newsletter-inner {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 0 40px;
+        /* NEWSLETTER */
+        .nl-section {
+            background: var(--smoke);
+            padding: 100px 52px;
             text-align: center;
         }
 
-        .newsletter-inner .section-title {
-            font-size: 36px;
-            margin-bottom: 12px;
+        .nl-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 300;
+            color: var(--ink);
+            margin-bottom: 14px;
         }
 
-        .newsletter-inner p {
-            font-family: var(--font-body);
-            font-size: 14px;
+        .nl-sub {
+            font-family: var(--sans);
+            font-size: 13px;
             font-weight: 300;
             color: var(--grey);
-            margin-bottom: 32px;
+            margin-bottom: 44px;
         }
 
-        .newsletter-form {
+        .nl-form {
             display: flex;
-            border-bottom: 1px solid var(--charcoal);
+            max-width: 480px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--mid);
         }
 
-        .newsletter-form input {
+        .nl-form input {
             flex: 1;
-            background: transparent;
+            background: none;
             border: none;
             outline: none;
-            font-family: var(--font-body);
+            font-family: var(--sans);
             font-size: 14px;
             font-weight: 300;
-            color: var(--charcoal);
+            color: var(--ink);
             padding: 12px 0;
         }
 
-        .newsletter-form input::placeholder {
+        .nl-form input::placeholder {
             color: var(--silver);
         }
 
-        .newsletter-form button {
+        .nl-form button {
             background: none;
             border: none;
-            cursor: pointer;
-            font-family: var(--font-head);
+            cursor: none;
+            font-family: var(--sans);
             font-size: 9px;
-            font-weight: 600;
-            letter-spacing: .25em;
+            font-weight: 500;
+            letter-spacing: .2em;
             text-transform: uppercase;
-            color: var(--charcoal);
+            color: var(--ink);
             padding: 12px 0 12px 20px;
             transition: color .2s;
         }
 
-        .newsletter-form button:hover {
+        .nl-form button:hover {
             color: var(--grey);
         }
 
-        /* ─── FOOTER ─────────────────────────────── */
-        footer.site-footer {
-            background: var(--black);
-            color: var(--white);
-            padding: 72px 0 32px;
+        /* FOOTER */
+        footer {
+            background: var(--ink);
+            padding: 80px 52px 36px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
+        .footer-bg-text {
+            position: absolute;
+            bottom: -40px;
+            left: -10px;
+            font-family: var(--serif);
+            font-size: clamp(120px, 20vw, 240px);
+            font-weight: 300;
+            color: rgba(255, 255, 255, .03);
+            line-height: 1;
+            pointer-events: none;
+            white-space: nowrap;
+            user-select: none;
         }
 
         .footer-top {
@@ -948,32 +1038,41 @@
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 48px;
             padding-bottom: 48px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            position: relative;
+            z-index: 1;
         }
 
-        .footer-brand .logo-text {
+        .footer-brand-name {
+            font-family: var(--serif);
             font-size: 20px;
-            color: var(--white);
+            font-weight: 300;
+            color: var(--warm-white);
+            margin-bottom: 16px;
         }
 
-        .footer-brand p {
-            font-family: var(--font-body);
-            font-size: 13px;
+        .footer-brand-name span {
+            font-style: italic;
+        }
+
+        .footer-brand-desc {
+            font-family: var(--sans);
+            font-size: 12px;
             font-weight: 300;
             color: var(--grey);
-            line-height: 1.8;
-            margin-top: 16px;
-            max-width: 280px;
+            line-height: 1.9;
+            max-width: 260px;
         }
 
         .footer-col h4 {
-            font-family: var(--font-head);
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: .3em;
+            font-family: var(--sans);
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: .35em;
             text-transform: uppercase;
-            color: var(--silver);
+            color: var(--grey);
             margin-bottom: 24px;
+            opacity: .7;
         }
 
         .footer-col ul {
@@ -985,88 +1084,87 @@
         }
 
         .footer-col ul li a {
-            font-family: var(--font-body);
-            font-size: 13px;
+            font-family: var(--sans);
+            font-size: 12px;
             font-weight: 300;
-            color: var(--grey);
-            text-decoration: none;
+            color: rgba(255, 255, 255, .35);
             transition: color .2s;
         }
 
         .footer-col ul li a:hover {
-            color: var(--white);
+            color: rgba(255, 255, 255, .8);
         }
 
         .footer-col address {
             font-style: normal;
-            font-family: var(--font-body);
-            font-size: 13px;
+            font-family: var(--sans);
+            font-size: 12px;
             font-weight: 300;
-            color: var(--grey);
-            line-height: 2;
+            color: rgba(255, 255, 255, .35);
+            line-height: 2.2;
         }
 
         .footer-bottom {
-            padding-top: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 28px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-copy {
-            font-family: var(--font-body);
-            font-size: 11px;
+            font-family: var(--sans);
+            font-size: 10px;
             font-weight: 300;
-            color: rgba(255, 255, 255, .25);
-            letter-spacing: .08em;
+            color: rgba(255, 255, 255, .2);
+            letter-spacing: .06em;
         }
 
         .footer-socials {
             display: flex;
-            gap: 20px;
+            gap: 18px;
         }
 
         .footer-socials a {
-            width: 32px;
-            height: 32px;
-            border: 1px solid rgba(255, 255, 255, .15);
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, .12);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--grey);
-            text-decoration: none;
+            color: rgba(255, 255, 255, .3);
+            font-size: 11px;
             transition: border-color .2s, color .2s;
         }
 
         .footer-socials a:hover {
-            border-color: var(--white);
-            color: var(--white);
+            border-color: rgba(255, 255, 255, .5);
+            color: rgba(255, 255, 255, .8);
         }
 
-        .footer-socials a i {
-            font-size: 12px;
-        }
-
-        /* ─── BOOTSTRAP MODAL (backend integration) ─── */
+        /* HIDDEN BACKEND MODAL */
         .modal-fade {
             display: none;
         }
 
-        #miModalLocatario .modal-content {
-            border-radius: 0;
-            border: none;
-            min-height: 400px;
-        }
-
-        /* ─── RESPONSIVE ──────────────────────────── */
-        @media (max-width: 1024px) {
-            .intro-inner {
+        /* RESPONSIVE */
+        @media(max-width:1024px) {
+            .panel {
                 grid-template-columns: 1fr;
-                gap: 48px;
+                min-height: auto;
             }
 
-            .intro-text {
-                padding-left: 0;
+            .panel:nth-child(even) {
+                direction: ltr;
+            }
+
+            .panel-img {
+                min-height: 50vw;
+            }
+
+            .panel-body {
+                padding: 56px 40px;
             }
 
             .footer-top {
@@ -1074,73 +1172,88 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .header-inner {
+        @media(max-width:768px) {
+            nav#nav {
                 padding: 0 20px;
             }
 
-            nav.main-nav {
+            .nav-links {
                 display: none;
             }
 
-            .hamburger {
+            .nav-ham {
                 display: flex;
             }
 
-            .hero-content {
-                padding: 0 20px 60px;
-            }
-
-            .hero-scroll {
+            #cursor,
+            #cursor-dot {
                 display: none;
             }
 
-            .quick-links-grid {
-                grid-template-columns: 1fr 1fr;
+            body {
+                cursor: auto;
             }
 
-            .quick-link-item {
-                border-bottom: 1px solid rgba(255, 255, 255, .08);
+            a,
+            button {
+                cursor: pointer;
             }
 
-            .intro-inner,
-            .novedades-inner,
-            .featured-header,
-            .roofgarden-content,
-            .footer-inner,
-            .newsletter-inner {
+            .hero-content,
+            .statement-section,
+            .novedades-section,
+            .nl-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero-content {
+                padding-bottom: 60px;
+            }
+
+            .stores-head,
+            .swiper-stores {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .roof-content {
                 padding: 0 20px;
-            }
-
-            .intro-inner {
-                padding: 0 20px;
-            }
-
-            .novedades-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .novedad-card:first-child {
-                grid-row: auto;
-            }
-
-            .intro-section,
-            .featured-section,
-            .novedades-section {
-                padding: 72px 0;
-            }
-
-            .swiper-featured {
-                padding: 0 20px 40px !important;
             }
 
             .footer-top {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
                 gap: 32px;
             }
 
-            .footer-inner {
-                padding: 0 20px;
+            footer {
+                padding: 60px 20px 28px;
+            }
+
+            .nov-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nov-card:first-child {
+                grid-row: auto;
+            }
+
+            .novedades-head {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .panel-body {
+                padding: 48px 20px;
+            }
+
+            .stats-row {
+                flex-wrap: wrap;
+            }
+
+            .stat-col {
+                flex: 1 1 45%;
             }
         }
     </style>
@@ -1148,339 +1261,379 @@
 
 <body>
 
-    <!-- ─── HEADER ─────────────────────────────── -->
-    <header id="main-header">
-        <div class="header-inner">
-            <div class="logo-wrap">
-                <span class="logo-text">PLAZA<span
-                        style="color:var(--grey);margin-left:8px;font-size:18px;">CARSO</span></span>
-            </div>
-            <nav class="main-nav" id="desktop-nav">
-                <a href="index.html">Inicio</a>
-                <a href="directorio.html">Directorio</a>
-                <a href="mapa.html">Mapa</a>
-                <a href="eventosypromociones.html">Novedades</a>
-                <a href="contacto.html" class="nav-cta">Contacto</a>
-            </nav>
-            <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
+    <!-- CURSOR -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu">
-        <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <nav>
-            <a href="index.html" onclick="toggleMenu()">Inicio</a>
-            <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
-            <a href="mapa.html" onclick="toggleMenu()">Mapa</a>
-            <a href="eventosypromociones.html" onclick="toggleMenu()">Novedades</a>
-            <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
-        </nav>
-        <p
-            style="position:absolute;bottom:32px;font-family:var(--font-head);font-size:8px;letter-spacing:.3em;color:var(--grey);text-transform:uppercase;">
-            Polanco · Ciudad de México</p>
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo"><span>Plaza</span> Carso</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Inicio</a>
+            <a href="directorio.html">Directorio</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="eventosypromociones.html">Novedades</a>
+            <a href="contacto.html" class="nav-cta-link">Contacto</a>
+        </div>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mob-menu">
+        <button class="mob-close" onclick="toggleMob()">✕</button>
+        <a href="index.html" onclick="toggleMob()">Inicio</a>
+        <a href="directorio.html" onclick="toggleMob()">Directorio</a>
+        <a href="mapa.html" onclick="toggleMob()">Mapa</a>
+        <a href="eventosypromociones.html" onclick="toggleMob()">Novedades</a>
+        <a href="contacto.html" onclick="toggleMob()">Contacto</a>
     </div>
 
-    <!-- ─── HERO ───────────────────────────────── -->
-    <section class="hero" id="hero">
-        <div class="hero-bg" id="hero-bg"></div>
-        <div class="hero-overlay"></div>
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-img" id="heroImg"></div>
+        <div class="hero-gradient"></div>
         <div class="hero-content">
-            <p class="hero-label" data-aos="fade-up" data-aos-delay="100">Polanco · Ciudad de México</p>
-            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
-                Donde el<br>
-                estilo<br>
-                <em>define todo.</em>
-            </h1>
-            <p class="hero-sub" data-aos="fade-up" data-aos-delay="350">
-                Boutiques de talla internacional, alta cocina, cultura y el Roof Garden más exclusivo de la CDMX frente
-                al Museo Soumaya.
-            </p>
-            <div class="hero-actions" data-aos="fade-up" data-aos-delay="450">
-                <a href="directorio.html" class="btn-hero-primary">Explorar Directorio</a>
-                <a href="mapa.html" class="btn-hero-outline">Ver Mapa Interactivo</a>
+            <p class="hero-kicker" id="hKicker">Polanco · Ciudad de México</p>
+            <h1 class="hero-h1" id="hTitle">Donde<br>el estilo<br><strong>define todo.</strong></h1>
+            <p class="hero-sub" id="hSub">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de la CDMX,
+                frente al Museo Soumaya.</p>
+            <div class="hero-btns" id="hBtns">
+                <a href="directorio.html" class="btn-primary">Explorar Directorio</a>
+                <a href="mapa.html" class="btn-ghost">Ver Mapa</a>
             </div>
         </div>
-        <div class="hero-scroll">
+        <div class="hero-scroll-ind" id="hScroll">
             <span>Scroll</span>
-            <div class="hero-scroll-line"></div>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- ─── QUICK ACCESS ──────────────────────── -->
-    <div class="quick-links">
-        <div class="quick-links-grid">
-            <a href="directorio.html" class="quick-link-item">
-                <div class="quick-link-icon"><i class="fas fa-store"></i></div>
-                <div class="quick-link-text">
-                    <span class="quick-link-label">Explorar</span>
-                    <span class="quick-link-title">Directorio</span>
-                </div>
-            </a>
-            <a href="mapa.html" class="quick-link-item">
-                <div class="quick-link-icon"><i class="fas fa-map-marked-alt"></i></div>
-                <div class="quick-link-text">
-                    <span class="quick-link-label">Navegar</span>
-                    <span class="quick-link-title">Mapa Interactivo</span>
-                </div>
-            </a>
-            <a href="eventosypromociones.html" class="quick-link-item">
-                <div class="quick-link-icon"><i class="fas fa-calendar-star"></i></div>
-                <div class="quick-link-text">
-                    <span class="quick-link-label">Agenda</span>
-                    <span class="quick-link-title">Novedades</span>
-                </div>
-            </a>
-            <a href="contacto.html" class="quick-link-item">
-                <div class="quick-link-icon"><i class="fas fa-paper-plane"></i></div>
-                <div class="quick-link-text">
-                    <span class="quick-link-label">Conectar</span>
-                    <span class="quick-link-title">Contacto</span>
-                </div>
-            </a>
+    <!-- MARQUEE -->
+    <div class="marquee-band">
+        <div class="marquee-track" aria-hidden="true">
+            <span class="marquee-item">Moda</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Gastronomía</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Roof Garden</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Joyería</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Entretenimiento</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Polanco</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Museo Soumaya</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Alta Cocina</span><span class="marquee-dot marquee-item">·</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-item">Moda</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Gastronomía</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Roof Garden</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Joyería</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Entretenimiento</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Polanco</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Museo Soumaya</span><span class="marquee-dot marquee-item">·</span>
+            <span class="marquee-item">Alta Cocina</span><span class="marquee-dot marquee-item">·</span>
         </div>
     </div>
 
-    <!-- ─── INTRO ─────────────────────────────── -->
-    <section class="intro-section">
-        <div class="intro-inner">
-            <div class="intro-img-wrap" data-aos="fade-right">
-                <img src="images/home/directorio-bg.jpg" alt="Interior Plaza Carso" class="intro-img-main">
-                <div class="intro-img-badge">
-                    <span class="badge-num">2</span>
-                    <span class="badge-text">Niveles de moda</span>
-                </div>
+    <!-- STATEMENT -->
+    <section class="statement-section">
+        <p class="stmt-label reveal-up">Nuestra Esencia</p>
+        <p class="stmt-text reveal-up" style="transition-delay:.1s">"Un espacio donde la arquitectura, la moda y la
+            gastronomía <em>se convierten en experiencia.</em>"</p>
+        <div class="stats-row reveal-up" style="transition-delay:.2s">
+            <div class="stat-col">
+                <div class="stat-num">+120</div>
+                <div class="stat-label">Tiendas</div>
             </div>
-            <div class="intro-text" data-aos="fade-left" data-aos-delay="150">
-                <p class="section-label">Nuestra Esencia</p>
-                <h2 class="section-title">Una experiencia sin igual en Polanco.</h2>
-                <p class="section-desc">Plaza Carso reúne las boutiques más prestigiosas, restaurantes de alta cocina y
-                    espacios culturales únicos. Un destino diseñado para quienes aprecian lo extraordinario.</p>
-                <div class="intro-stats">
-                    <div class="stat-item">
-                        <div class="stat-num">+120</div>
-                        <div class="stat-label">Tiendas</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num">2</div>
-                        <div class="stat-label">Niveles</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num">Roof</div>
-                        <div class="stat-label">Garden exclusivo</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num">Soumaya</div>
-                        <div class="stat-label">A pasos del museo</div>
-                    </div>
-                </div>
+            <div class="stat-col">
+                <div class="stat-num">2</div>
+                <div class="stat-label">Niveles</div>
+            </div>
+            <div class="stat-col">
+                <div class="stat-num">Roof</div>
+                <div class="stat-label">Garden exclusivo</div>
+            </div>
+            <div class="stat-col">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Sofisticación</div>
             </div>
         </div>
     </section>
 
-    <!-- ─── FEATURED STORES (Swiper) ─────────────── -->
-    <section class="featured-section">
-        <div class="featured-header" data-aos="fade-up">
-            <div>
-                <p class="section-label">Curated Selection</p>
-                <h2 class="section-title">Tiendas destacadas.</h2>
+    <!-- PANELS -->
+    <section class="panels-section">
+        <div class="panel reveal-panel">
+            <div class="panel-img"><img src="images/home/directorio-bg.jpg" alt="Boutiques Plaza Carso" loading="lazy">
             </div>
-            <a href="directorio.html" class="featured-link">Ver directorio completo</a>
+            <div class="panel-body">
+                <span class="panel-num">01</span>
+                <span class="panel-kicker">Moda & Boutiques</span>
+                <h2 class="panel-h2">Las marcas más deseadas del mundo, aquí.</h2>
+                <p class="panel-desc">Desde las grandes casas internacionales hasta las firmas de nueva generación,
+                    Plaza Carso reúne lo más selecto del universo de la moda.</p>
+                <a href="directorio.html" class="link-arrow">Explorar Directorio <span>→</span></a>
+            </div>
         </div>
+        <div class="panel reveal-panel">
+            <div class="panel-img"><img src="images/home/eventos-bg.jpg" alt="Roof Garden Soumaya" loading="lazy"></div>
+            <div class="panel-body">
+                <span class="panel-num">02</span>
+                <span class="panel-kicker">Roof Garden · Soumaya</span>
+                <h2 class="panel-h2">La vista más icónica de Polanco.</h2>
+                <p class="panel-desc">Un escenario único sobre los tejados de Granada, con la silueta del Museo Soumaya
+                    como telón de fondo. El espacio perfecto para vivir momentos extraordinarios.</p>
+                <a href="eventosypromociones.html" class="link-arrow">Ver Novedades <span>→</span></a>
+            </div>
+        </div>
+    </section>
 
-        <div class="swiper swiper-featured">
+    <!-- STORES SWIPER -->
+    <section class="stores-section">
+        <div class="stores-head reveal-up-dark">
+            <h2 class="stores-h2">Tiendas<br><em style="font-style:italic;font-family:var(--serif)">Destacadas.</em>
+            </h2>
+            <a href="directorio.html" class="stores-link">Ver directorio completo →</a>
+        </div>
+        <div class="swiper swiper-stores">
             <div class="swiper-wrapper">
-                <div class="swiper-slide swiper-slide-featured">
-                    <img src="images/home/hero.jpg" alt="Boutiques Plaza Carso" loading="lazy">
-                    <div class="slide-info">
-                        <span class="slide-cat">Moda</span>
+                <div class="swiper-slide store-slide">
+                    <img src="images/home/directorio-bg.jpg" alt="Boutique" loading="lazy">
+                    <div class="store-slide-overlay"></div>
+                    <div class="store-slide-info"><span class="slide-cat">Moda Internacional</span>
                         <div class="slide-name">Boutiques Premium</div>
                     </div>
                 </div>
-                <div class="swiper-slide swiper-slide-featured">
-                    <img src="images/home/directorio-bg.jpg" alt="Estilo Internacional" loading="lazy">
-                    <div class="slide-info">
-                        <span class="slide-cat">Estilo Internacional</span>
-                        <div class="slide-name">Alta Moda</div>
+                <div class="swiper-slide store-slide">
+                    <img src="images/home/hero.jpg" alt="Plaza Interior" loading="lazy">
+                    <div class="store-slide-overlay"></div>
+                    <div class="store-slide-info"><span class="slide-cat">Alta Moda</span>
+                        <div class="slide-name">Diseñadores Selectos</div>
                     </div>
                 </div>
-                <div class="swiper-slide swiper-slide-featured">
-                    <img src="images/home/eventos-bg.jpg" alt="Roof Garden" loading="lazy">
-                    <div class="slide-info">
-                        <span class="slide-cat">Roof Garden</span>
-                        <div class="slide-name">Vista al Soumaya</div>
+                <div class="swiper-slide store-slide">
+                    <img src="images/home/eventos-bg.jpg" alt="Gastronomía" loading="lazy">
+                    <div class="store-slide-overlay"></div>
+                    <div class="store-slide-info"><span class="slide-cat">Gastronomía</span>
+                        <div class="slide-name">Alta Cocina</div>
                     </div>
                 </div>
-                <div class="swiper-slide swiper-slide-featured">
-                    <img src="images/home/hero.jpg" alt="Gastronomía" loading="lazy">
-                    <div class="slide-info">
-                        <span class="slide-cat">Alta Cocina</span>
-                        <div class="slide-name">Restaurantes Gourmet</div>
+                <div class="swiper-slide store-slide">
+                    <img src="images/home/directorio-bg.jpg" alt="Joyería" loading="lazy">
+                    <div class="store-slide-overlay"></div>
+                    <div class="store-slide-info"><span class="slide-cat">Joyería & Accesorios</span>
+                        <div class="slide-name">Lujo sin límites</div>
+                    </div>
+                </div>
+                <div class="swiper-slide store-slide">
+                    <img src="images/home/hero.jpg" alt="Tecnología" loading="lazy">
+                    <div class="store-slide-overlay"></div>
+                    <div class="store-slide-info"><span class="slide-cat">Tecnología</span>
+                        <div class="slide-name">Innovación & Conectividad</div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination swiper-pagination-featured"></div>
+            <div class="swiper-pagination swiper-pagination-stores"></div>
         </div>
     </section>
 
-    <!-- ─── NOVEDADES GRID ─────────────────────── -->
+    <!-- ROOF CTA -->
+    <section class="roof-section">
+        <div class="roof-bg" id="roofBg"></div>
+        <div class="roof-overlay"></div>
+        <div class="roof-content">
+            <p class="roof-kicker">Vista Exclusiva</p>
+            <h2 class="roof-h2">El Roof<br>Garden de<br>Polanco.</h2>
+            <p class="roof-desc">Un destino en sí mismo, con la silueta plateada del Museo Soumaya como horizonte.
+                Gastronomía, cultura y el cielo de la CDMX, todo en uno.</p>
+            <a href="eventosypromociones.html" class="btn-ghost"
+                style="border-color:rgba(246,244,240,.4);color:var(--warm-white);">Ver Novedades</a>
+        </div>
+    </section>
+
+    <!-- NOVEDADES -->
     <section class="novedades-section">
-        <div class="novedades-inner">
-            <div data-aos="fade-up">
-                <p class="section-label">Lo más reciente</p>
-                <h2 class="section-title">Novedades & Eventos.</h2>
-            </div>
-            <div class="novedades-grid" data-aos="fade-up" data-aos-delay="150">
-                <a class="novedad-card" href="eventosypromociones.html">
-                    <img src="images/home/eventos-bg.jpg" alt="Eventos especiales Plaza Carso" loading="lazy">
-                    <div class="novedad-overlay"></div>
-                    <div class="novedad-info">
-                        <span class="novedad-tag">Eventos especiales</span>
-                        <div class="novedad-title">Roof Garden · Temporada de primavera 2026</div>
-                    </div>
-                </a>
-                <a class="novedad-card" href="eventosypromociones.html">
-                    <img src="images/home/directorio-bg.jpg" alt="Nueva boutique" loading="lazy">
-                    <div class="novedad-overlay"></div>
-                    <div class="novedad-info">
-                        <span class="novedad-tag">Nuevas aperturas</span>
-                        <div class="novedad-title">Descubre las últimas llegadas al directorio</div>
-                    </div>
-                </a>
-                <a class="novedad-card" href="eventosypromociones.html">
-                    <img src="images/home/hero.jpg" alt="Promociones" loading="lazy">
-                    <div class="novedad-overlay"></div>
-                    <div class="novedad-info">
-                        <span class="novedad-tag">Promociones</span>
-                        <div class="novedad-title">Ofertas exclusivas de temporada</div>
-                    </div>
-                </a>
-            </div>
+        <div class="novedades-head reveal-up">
+            <h2 class="nov-h2">Novedades<br><em>& Eventos.</em></h2>
+            <a href="eventosypromociones.html" class="link-arrow">Ver todo →</a>
+        </div>
+        <div class="nov-grid reveal-up" style="transition-delay:.15s">
+            <a class="nov-card" href="eventosypromociones.html">
+                <img src="images/home/eventos-bg.jpg" alt="Roof Garden Primavera" loading="lazy">
+                <div class="nov-card-overlay"></div>
+                <div class="nov-card-info">
+                    <span class="nov-tag">Evento Especial</span>
+                    <div class="nov-title">Roof Garden · Temporada Primavera 2026</div>
+                </div>
+            </a>
+            <a class="nov-card" href="eventosypromociones.html">
+                <img src="images/home/directorio-bg.jpg" alt="Nuevas aperturas" loading="lazy">
+                <div class="nov-card-overlay"></div>
+                <div class="nov-card-info">
+                    <span class="nov-tag">Nuevas Aperturas</span>
+                    <div class="nov-title">Las últimas llegadas al directorio</div>
+                </div>
+            </a>
+            <a class="nov-card" href="eventosypromociones.html">
+                <img src="images/home/hero.jpg" alt="Promociones" loading="lazy">
+                <div class="nov-card-overlay"></div>
+                <div class="nov-card-info">
+                    <span class="nov-tag">Promociones</span>
+                    <div class="nov-title">Ofertas exclusivas de temporada</div>
+                </div>
+            </a>
         </div>
     </section>
 
-    <!-- ─── ROOF GARDEN CTA ─────────────────────── -->
-    <section class="roofgarden-section">
-        <div class="roofgarden-bg"></div>
-        <div class="roofgarden-overlay"></div>
-        <div class="roofgarden-content" data-aos="fade-up">
-            <p class="section-label">Vista exclusiva</p>
-            <h2 class="section-title">El Roof Garden<br>de Polanco.</h2>
-            <p class="section-desc">Un escenario único donde la majestuosa silueta del Museo Soumaya se funde con la
-                vida cosmopolita. El lugar perfecto para eventos sociales, culturales y gastronómicos.</p>
-            <a href="eventosypromociones.html" class="btn-rg">Ver Novedades</a>
-        </div>
+    <!-- NEWSLETTER -->
+    <section class="nl-section">
+        <p class="stmt-label reveal-up" style="margin-bottom:16px;">Newsletter</p>
+        <h2 class="nl-h2 reveal-up">Carso <em>Insider.</em></h2>
+        <p class="nl-sub reveal-up">Recibe primero las novedades, eventos y aperturas de temporada.</p>
+        <form class="nl-form reveal-up" onsubmit="return false;">
+            <input type="email" placeholder="Tu correo electrónico">
+            <button type="submit">Suscribirse</button>
+        </form>
     </section>
 
-    <!-- ─── NEWSLETTER ─────────────────────────── -->
-    <section class="newsletter-section">
-        <div class="newsletter-inner" data-aos="fade-up">
-            <p class="section-label" style="justify-content:center;">Mantente al día</p>
-            <h2 class="section-title">Carso Insider.</h2>
-            <p>Recibe primero las novedades, eventos exclusivos y aperturas de temporada.</p>
-            <form class="newsletter-form" onsubmit="return false;">
-                <input type="email" placeholder="Tu correo electrónico">
-                <button type="submit">Suscribirse</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- ─── FOOTER ─────────────────────────────── -->
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <span class="logo-text">PLAZA<span
-                            style="color:var(--grey);margin-left:8px;font-size:16px;">CARSO</span></span>
-                    <p>Boutiques exclusivas, alta cocina, entretenimiento y el Roof Garden más icónico de Polanco.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="directorio.html">Directorio</a></li>
-                        <li><a href="mapa.html">Mapa</a></li>
-                        <li><a href="eventosypromociones.html">Novedades</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Visítanos</h4>
-                    <address>
-                        Calle Lago Zúrich<br>219-245, Granada<br>11529 Ciudad de México<br><br>
-                        <a href="tel:4976 0346" style="color:var(--grey);text-decoration:none;">Tel. 4976 0346</a>
-                    </address>
-                </div>
-                <div class="footer-col">
-                    <h4>Horarios</h4>
-                    <ul>
-                        <li><a href="#">Lun – Vie: 11:00 – 21:00</a></li>
-                        <li><a href="#">Sáb: 11:00 – 21:00</a></li>
-                        <li><a href="#">Dom: 11:00 – 21:00</a></li>
-                        <li style="margin-top:16px;"><a href="contacto.html">Escríbenos</a></li>
-                    </ul>
-                </div>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-bg-text" aria-hidden="true">CARSO</div>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand-name"><span>Plaza</span> Carso</div>
+                <p class="footer-brand-desc">Boutiques exclusivas, alta cocina, entretenimiento y el Roof Garden más
+                    icónico de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
             </div>
-            <div class="footer-bottom">
-                <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
-                <div class="footer-socials">
-                    <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener"
-                        aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter"><i
-                            class="fab fa-x-twitter"></i></a>
-                    <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><i
-                            class="fab fa-instagram"></i></a>
-                </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="directorio.html">Directorio</a></li>
+                    <li><a href="mapa.html">Mapa</a></li>
+                    <li><a href="eventosypromociones.html">Novedades</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Visítanos</h4>
+                <address>Lago Zúrich 219-245<br>Granada, 11529<br>Ciudad de México<br><br><a href="tel:4976 0346">4976
+                        0346</a></address>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul>
+                    <li><a href="#">Lun–Vie: 11:00–21:00</a></li>
+                    <li><a href="#">Sáb–Dom: 11:00–21:00</a></li>
+                    <li><a href="contacto.html" style="margin-top:16px;display:block;">Contáctanos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener"
+                    aria-label="Facebook"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                    </svg></a>
+                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter/X"><svg
+                        width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg></a>
+                <a href="#" aria-label="Instagram"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                    </svg></a>
             </div>
         </div>
     </footer>
 
-    <!-- ─── INTEGRATION POINT: Bootstrap Modal para AJAX de Sistemas ─── -->
+    <!-- Backend Bootstrap Modal Integration Point -->
     <div class="modal fade" id="miModalLocatario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
         <div class="modal-dialog" role="document" style="width:90%;max-width:960px;margin:2% auto;">
             <div class="modal-content" id="miModalContenidoLocatario"
-                style="min-height:400px;border-radius:0;border:none;">
-                <!-- locatarioModal.php se carga aquí vía jQuery AJAX -->
-            </div>
+                style="min-height:400px;border-radius:0;border:none;"></div>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
-        // AOS init
-        AOS.init({ duration: 800, easing: 'ease-out-quad', once: true, offset: 60 });
+        gsap.registerPlugin(ScrollTrigger);
 
-        // Header scroll
-        const hdr = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            hdr.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // Hero parallax
-        const heroBg = document.getElementById('hero-bg');
-        window.addEventListener('scroll', () => {
-            if (heroBg) heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.3}px)`;
-        });
-        setTimeout(() => { if (heroBg) heroBg.classList.add('loaded'); }, 100);
-
-        // Mobile menu
-        function toggleMenu() {
-            document.getElementById('mobile-menu').classList.toggle('open');
-            document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+        // ── Custom Cursor ──
+        const cur = document.getElementById('cursor');
+        const dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => {
+                gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' });
+                gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 });
+            });
+            document.querySelectorAll('a,button,.nov-card,.store-slide,.panel-img').forEach(el => {
+                el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+            });
+            document.addEventListener('mousedown', () => cur.classList.add('click'));
+            document.addEventListener('mouseup', () => cur.classList.remove('click'));
         }
 
-        // Swiper
-        new Swiper('.swiper-featured', {
-            slidesPerView: 1.2, spaceBetween: 16, loop: false,
-            pagination: { el: '.swiper-pagination-featured', clickable: true },
+        // ── Nav scroll ──
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Mobile menu ──
+        function toggleMob() {
+            document.getElementById('mob-menu').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('mob-menu').classList.contains('open') ? 'hidden' : '';
+        }
+
+        // ── Hero entrance ──
+        const heroTl = gsap.timeline({ delay: .2 });
+        heroTl
+            .fromTo('#hKicker', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out' })
+            .fromTo('#hTitle', { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'power3.out' }, '-=.5')
+            .fromTo('#hSub', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out' }, '-=.6')
+            .fromTo('#hBtns', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .7, ease: 'power3.out' }, '-=.5')
+            .fromTo('#hScroll', { opacity: 0 }, { opacity: 1, duration: .6 }, '-=.3');
+
+        // ── Hero parallax ──
+        gsap.to('#heroImg', {
+            yPercent: 22, ease: 'none',
+            scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+        });
+
+        // ── Roof parallax ──
+        gsap.to('#roofBg', {
+            yPercent: 18, ease: 'none',
+            scrollTrigger: { trigger: '.roof-section', start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+
+        // ── Scroll reveals ──
+        gsap.utils.toArray('.reveal-up').forEach(el => {
+            gsap.fromTo(el, { y: 50, opacity: 0 }, {
+                y: 0, opacity: 1, duration: .9, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+        gsap.utils.toArray('.reveal-panel').forEach((el, i) => {
+            gsap.fromTo(el, { opacity: 0, y: 40 }, {
+                opacity: 1, y: 0, duration: .9, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 80%' }
+            });
+        });
+
+        // ── Swiper stores ──
+        new Swiper('.swiper-stores', {
+            slidesPerView: 1.25, spaceBetween: 16,
+            centeredSlides: false, loop: false,
+            pagination: { el: '.swiper-pagination-stores', clickable: true },
             breakpoints: {
                 640: { slidesPerView: 2.2, spaceBetween: 20 },
                 1024: { slidesPerView: 3.2, spaceBetween: 24 },
-                1280: { slidesPerView: 4, spaceBetween: 24 }
+                1400: { slidesPerView: 4, spaceBetween: 24 }
             }
         });
     </script>

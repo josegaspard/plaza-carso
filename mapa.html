@@ -46,7 +46,7 @@
         }
 
         body {
-            font-family: var(--font-body);
+            font-family: var(--sans);
             background: var(--white);
             color: var(--charcoal);
             -webkit-font-smoothing: antialiased;
@@ -178,42 +178,62 @@
         .store-list-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
+            gap: 16px;
+            padding: 16px 24px;
             cursor: pointer;
-            border-bottom: 1px solid var(--silver-light);
-            transition: background .15s;
+            border-bottom: 1px solid var(--smoke);
+            background: var(--warm-white);
+            transition: background .25s, padding-left .25s;
             text-decoration: none;
+            position: relative;
+        }
+
+        .store-list-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--ink);
+            transition: width .25s;
         }
 
         .store-list-item:hover,
         .store-list-item.highlighted {
-            background: var(--off-white);
+            background: rgba(8, 7, 6, 0.03);
+            padding-left: 30px;
+        }
+
+        .store-list-item:hover::before,
+        .store-list-item.highlighted::before {
+            width: 4px;
         }
 
         .store-list-num {
             font-family: var(--serif);
-            font-size: 18px;
+            font-size: 16px;
             font-style: italic;
             color: var(--grey);
-            width: 28px;
+            width: 32px;
             flex-shrink: 0;
-            text-align: center;
         }
 
         .store-list-name {
-            font-family: var(--font-head);
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--black);
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--ink);
         }
 
         .store-list-cat {
-            font-family: var(--font-body);
-            font-size: 10px;
-            font-weight: 300;
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: .15em;
+            text-transform: uppercase;
             color: var(--grey);
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         /* Map canvas area */
@@ -253,14 +273,16 @@
         }
 
         .map-placeholder h3 {
-            font-family: var(--font-display);
-            font-size: 32px;
-            color: var(--charcoal);
-            margin-bottom: 10px;
+            font-family: var(--serif);
+            font-size: 38px;
+            font-style: italic;
+            color: var(--ink);
+            margin-bottom: 12px;
+            line-height: 1;
         }
 
         .map-placeholder p {
-            font-family: var(--font-body);
+            font-family: var(--sans);
             font-size: 13px;
             font-weight: 300;
             color: var(--grey);
@@ -269,15 +291,15 @@
 
         .map-placeholder .integration-pill {
             display: inline-block;
-            margin-top: 20px;
-            background: var(--black);
-            color: var(--white);
-            font-family: var(--font-head);
+            margin-top: 24px;
+            background: var(--ink);
+            color: var(--warm-white);
+            font-family: var(--sans);
             font-size: 9px;
-            font-weight: 600;
-            letter-spacing: .2em;
+            font-weight: 500;
+            letter-spacing: .22em;
             text-transform: uppercase;
-            padding: 8px 18px;
+            padding: 12px 24px;
         }
 
         /* Locatario info panel (when store is selected) */
@@ -305,36 +327,40 @@
 
         .panel-close {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 16px;
+            right: 16px;
             background: none;
             border: none;
-            cursor: pointer;
             color: var(--grey);
-            font-size: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color .2s;
+        }
+
+        .panel-close:hover {
+            color: var(--ink);
         }
 
         .panel-cat {
-            font-family: var(--font-head);
+            font-family: var(--sans);
             font-size: 8px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: .25em;
             text-transform: uppercase;
             color: var(--grey);
-            margin-bottom: 6px;
-            display: block;
         }
 
         .panel-name {
-            font-family: var(--font-head);
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 6px;
+            font-family: var(--serif);
+            font-size: 24px;
+            font-style: italic;
+            color: var(--ink);
+            line-height: 1.1;
+            margin: 6px 0 12px 0;
         }
 
         .panel-floor {
-            font-family: var(--font-body);
+            font-family: var(--sans);
             font-size: 11px;
             font-weight: 300;
             color: var(--grey);
@@ -367,20 +393,24 @@
         /* Legend */
         .map-legend {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: var(--white);
-            border: 1px solid var(--silver-light);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            bottom: 30px;
+            right: 30px;
+            left: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, .06);
+            border: 1px solid var(--smoke);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            border-radius: 2px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .legend-dot {
@@ -390,11 +420,10 @@
         }
 
         .legend-label {
-            font-family: var(--font-head);
-            font-size: 9px;
-            font-weight: 500;
-            letter-spacing: .1em;
-            color: var(--charcoal);
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 300;
+            color: var(--ink);
         }
 
         /* Bootstrap modal for Sistemas AJAX */
@@ -417,9 +446,9 @@
 
             .map-sidebar {
                 width: 100%;
-                max-height: 200px;
+                max-height: 250px;
                 border-right: none;
-                border-bottom: 1px solid var(--silver-light);
+                border-bottom: 1px solid var(--smoke);
             }
 
             .map-wrapper {

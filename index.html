@@ -79,14 +79,19 @@
             display: none;
         }
 
-        .loader-word {
-            font-family: var(--serif);
-            font-size: clamp(28px, 5vw, 52px);
-            font-weight: 300;
-            letter-spacing: .12em;
-            color: var(--ink);
+        .loader-logo-wrap {
+            width: clamp(140px, 35vw, 240px);
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(30px) scale(0.95);
+            display: flex;
+            justify-content: center;
+        }
+
+        .loader-img {
+            width: 100%;
+            height: auto;
+            filter: brightness(0);
+            display: block;
         }
 
         .loader-bar {
@@ -1504,7 +1509,9 @@
 
     <!-- LOADER -->
     <div id="loader" aria-hidden="true">
-        <div class="loader-word" id="lw">PLAZA CARSO</div>
+        <div class="loader-logo-wrap" id="lw">
+            <img src="images/logos/logo-carso-big.png" alt="Plaza Carso" class="loader-img">
+        </div>
         <div class="loader-bar" id="lb"></div>
     </div>
 
@@ -1836,11 +1843,22 @@
             const lw = document.getElementById('lw');
             const lb = document.getElementById('lb');
             const loader = document.getElementById('loader');
-            gsap.to(lw, { opacity: 1, y: 0, duration: .6, ease: 'power3.out', delay: .1 });
-            gsap.to(lb, { width: '100%', duration: .9, ease: 'power2.inOut', delay: .3, onComplete: startHero });
+
+            // Refined logo entrance
+            gsap.to(lw, { opacity: 1, y: 0, scale: 1, duration: 1.4, ease: 'power4.out', delay: .2 });
+
+            // Bar progression
+            gsap.to(lb, { width: '100%', duration: 1.6, ease: 'power2.inOut', delay: .5, onComplete: startHero });
+
             function startHero() {
-                gsap.to(loader, { opacity: 0, duration: .5, delay: .1, ease: 'power2.in', onComplete: () => { loader.classList.add('gone'); } });
-                runHeroAnim();
+                // Fade out logo cleanly upwards
+                gsap.to(lw, { opacity: 0, y: -20, duration: 0.8, ease: 'power3.in' });
+
+                // Fade out full loader bg shortly after
+                gsap.to(loader, { opacity: 0, duration: 0.8, delay: 0.4, ease: 'power2.inOut', onComplete: () => { loader.classList.add('gone'); } });
+
+                // Initialize main page entry safely synced
+                setTimeout(runHeroAnim, 600);
             }
         })();
 

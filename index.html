@@ -1856,18 +1856,18 @@
                 if (isDesktop && !prefersReduced) {
                     const lwImg = document.querySelector('.loader-img');
                     const navImg = document.querySelector('.nav-logo img');
-                    
+
                     if (lwImg && navImg) {
                         const startRect = lwImg.getBoundingClientRect();
                         const finalRect = navImg.getBoundingClientRect();
-                        
+
                         const scale = finalRect.width / startRect.width;
                         const moveX = finalRect.left - startRect.left;
                         const moveY = finalRect.top - startRect.top;
 
                         // Fade out loader bar
                         gsap.to(lb, { opacity: 0, duration: 0.4 });
-                        
+
                         // Fade out the solid background safely revealing the hero behind it
                         gsap.to(loader, { backgroundColor: 'rgba(245, 243, 239, 0)', duration: 1.2, ease: 'power2.inOut' });
 
@@ -1880,16 +1880,17 @@
                             duration: 1.2,
                             ease: 'power3.inOut',
                             onComplete: () => {
+                                document.querySelector('.nav-logo').style.opacity = '1';
                                 loader.classList.add('gone');
                             }
                         });
 
-                        // Sync the hero elements entry smoothly
-                        setTimeout(runHeroAnim, 200);
+                        // Sync the hero elements entry smoothly, skip duplicate nav logo fade
+                        setTimeout(() => runHeroAnim(true), 200);
                         return;
                     }
                 }
-                
+
                 // Fade out logo cleanly upwards
                 gsap.to(lw, { opacity: 0, y: -20, duration: 0.8, ease: 'power3.in' });
 
@@ -1902,15 +1903,22 @@
         })();
 
         /* ── HERO ANIMATIONS ── */
-        function runHeroAnim() {
+        function runHeroAnim(skipLogoFade = false) {
             if (prefersReduced) {
                 document.querySelectorAll('.h-line-inner,.h-sub,.h-btns,.h-scroll,.nav-logo,.nav-links').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
                 document.querySelectorAll('#hDiv').forEach(el => el.style.width = '100%');
                 return;
             }
             const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-            tl.to('.nav-logo,.nav-links', { opacity: 1, duration: 1, stagger: .1 }, .1)
-                .to(['#hl1', '#hl2', '#hl3'], { y: '0%', opacity: 1, duration: 1.6, stagger: .2 }, .3)
+
+            if (skipLogoFade) {
+                // If desktop flight happened, just animate links
+                tl.to('.nav-links', { opacity: 1, duration: 1, stagger: .1 }, .1);
+            } else {
+                tl.to('.nav-logo,.nav-links', { opacity: 1, duration: 1, stagger: .1 }, .1);
+            }
+
+            tl.to(['#hl1', '#hl2', '#hl3'], { y: '0%', opacity: 1, duration: 1.6, stagger: .2 }, .3)
                 .set('.h-line', { overflow: 'visible' }, '>')
                 .to('#hDiv', { width: '100%', maxWidth: '240px', duration: 1.2, ease: 'power2.inOut' }, .8)
                 .to('#hSub', { y: 0, opacity: 1, duration: 1 }, 1)

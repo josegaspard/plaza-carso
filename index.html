@@ -1851,6 +1851,45 @@
             gsap.to(lb, { width: '100%', duration: 1.6, ease: 'power2.inOut', delay: .5, onComplete: startHero });
 
             function startHero() {
+                const isDesktop = window.innerWidth > 768;
+
+                if (isDesktop && !prefersReduced) {
+                    const lwImg = document.querySelector('.loader-img');
+                    const navImg = document.querySelector('.nav-logo img');
+                    
+                    if (lwImg && navImg) {
+                        const startRect = lwImg.getBoundingClientRect();
+                        const finalRect = navImg.getBoundingClientRect();
+                        
+                        const scale = finalRect.width / startRect.width;
+                        const moveX = finalRect.left - startRect.left;
+                        const moveY = finalRect.top - startRect.top;
+
+                        // Fade out loader bar
+                        gsap.to(lb, { opacity: 0, duration: 0.4 });
+                        
+                        // Fade out the solid background safely revealing the hero behind it
+                        gsap.to(loader, { backgroundColor: 'rgba(245, 243, 239, 0)', duration: 1.2, ease: 'power2.inOut' });
+
+                        // Fly the logo to the header position
+                        gsap.to(lwImg, {
+                            x: moveX,
+                            y: moveY,
+                            scale: scale,
+                            transformOrigin: 'top left',
+                            duration: 1.2,
+                            ease: 'power3.inOut',
+                            onComplete: () => {
+                                loader.classList.add('gone');
+                            }
+                        });
+
+                        // Sync the hero elements entry smoothly
+                        setTimeout(runHeroAnim, 200);
+                        return;
+                    }
+                }
+                
                 // Fade out logo cleanly upwards
                 gsap.to(lw, { opacity: 0, y: -20, duration: 0.8, ease: 'power3.in' });
 

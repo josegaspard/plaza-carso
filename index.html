@@ -41,9 +41,15 @@
 
         body {
             font-family: var(--sans);
-            background: var(--warm);
+            background: url('images/home/back-directorio.jpg') center/cover fixed, var(--warm);
             color: var(--ink);
             overflow-x: hidden;
+        }
+
+        @media(max-width: 768px) {
+            body {
+                background: var(--warm);
+            }
         }
 
         a {
@@ -596,7 +602,7 @@
         .h-img {
             position: absolute;
             inset: 0;
-            background: url('images/home/hero-ext.jpg') center/cover no-repeat;
+            background: url('images/home/back-slide-home.jpg') center/cover no-repeat;
             transform: scale(1.08);
             will-change: transform;
         }
@@ -659,7 +665,9 @@
             font-weight: 500;
             letter-spacing: .35em;
             text-transform: uppercase;
-            color: var(--grey);
+            color: rgba(255, 255, 255, 0.9);
+            /* Improved visibility over background */
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             transform: translateY(10px);
             opacity: 0;
             transition: transform .7s var(--ease-out), opacity .7s;
@@ -1604,6 +1612,12 @@
         }
 
         /* ─── RESPONSIVE ──────────────────────────────── */
+        @media(min-width:1101px) {
+            body {
+                background: url('images/home/back-directorio.jpg') center/cover no-repeat fixed;
+            }
+        }
+
         @media(max-width:1100px) {
             .panel {
                 grid-template-columns: 1fr;
@@ -1787,8 +1801,8 @@
 
     <!-- NAV -->
     <nav id="nav">
-        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso"
-                style="height:28px; width:auto; filter:brightness(0);"></a>
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:32px; width:auto; filter:brightness(0);"></a>
         <div class="nav-links">
             <a href="index.html" class="act">Inicio</a>
             <a href="directorio.html">Directorio</a>
@@ -2042,8 +2056,8 @@
         <div class="f-bg" aria-hidden="true">CARSO</div>
         <div class="f-grid">
             <div>
-                <div class="f-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso"
-                        style="height:36px; width:auto; filter:brightness(0) invert(1);"></div>
+                <div class="f-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                        style="height:44px; width:auto;"></div>
                 <p class="f-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco. Lago Zúrich
                     219-245, Granada, CDMX.</p>
             </div>

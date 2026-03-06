@@ -577,8 +577,9 @@
 <body>
     <header id="main-header">
         <div class="header-inner">
-            <span class="logo-text">PLAZA<span
-                    style="color:var(--grey);margin-left:8px;font-size:18px;">CARSO</span></span>
+            <a href="index.html" class="nav-logo" style="text-decoration:none;"><img
+                    src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                    style="height:32px; width:auto; filter:brightness(0);"></a>
             <nav class="main-nav">
                 <a href="index.html">Inicio</a>
                 <a href="directorio.html">Directorio</a>
@@ -591,7 +592,7 @@
     </header>
     <div id="mobile-menu">
         <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <nav>
+        <nav id="nav">
             <a href="index.html" onclick="toggleMenu()">Inicio</a>
             <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
             <a href="mapa.html" onclick="toggleMenu()">Mapa</a>

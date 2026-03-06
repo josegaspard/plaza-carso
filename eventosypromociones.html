@@ -375,7 +375,8 @@
     <div id="cursor"></div>
     <div id="cursor-dot"></div>
     <nav id="nav">
-        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso" style="height:28px; width:auto; filter:brightness(0);"></a>
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:32px; width:auto; filter:brightness(0);"></a>
         <div class="nav-links">
             <a href="index.html">Inicio</a><a href="directorio.html">Directorio</a>
             <a href="mapa.html">Mapa</a><a href="eventosypromociones.html" class="active">Novedades</a>
@@ -509,7 +510,8 @@
         <div class="footer-bg-text" aria-hidden="true">CARSO</div>
         <div class="footer-top">
             <div>
-                <div class="footer-brand-name"><img src="images/logos/logo-carso.webp" alt="Plaza Carso" style="height:36px; width:auto; filter:brightness(0) invert(1);"></div>
+                <div class="footer-brand-name"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                        style="height:44px; width:auto;"></div>
                 <p class="footer-brand-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco.
                 </p>
             </div>
@@ -560,21 +562,21 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
-const cur=document.getElementById('cursor'),dot=document.getElementById('cursor-dot');
-if(cur&&window.matchMedia('(pointer:fine)').matches){
-  document.addEventListener('mousemove',e=>{gsap.to(cur,{x:e.clientX,y:e.clientY,duration:.25,ease:'power2.out'});gsap.to(dot,{x:e.clientX,y:e.clientY,duration:.08});});
-  document.querySelectorAll('a,button,.e-card').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hover'));el.addEventListener('mouseleave',()=>cur.classList.remove('hover'));});
-}
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
-function toggleMob(){document.getElementById('mob-menu').classList.toggle('open');document.body.style.overflow=document.getElementById('mob-menu').classList.contains('open')?'hidden':'';}
-function switchTab(tab,btn){
-  document.querySelectorAll('.t-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  document.querySelectorAll('.e-card').forEach(c=>{c.style.display=(tab==='todos'||c.dataset.tab===tab)?'':'none';});
-}
-function openPub(title,tag,desc,img,e){if(e)e.preventDefault();document.getElementById('pub-title').textContent=title;document.getElementById('pub-tag').textContent=tag;document.getElementById('pub-desc').textContent=desc;document.getElementById('pub-modal-img').src=img;document.getElementById('pub-modal').classList.add('open');document.body.style.overflow='hidden';}
-function closePub(){document.getElementById('pub-modal').classList.remove('open');document.body.style.overflow='';}
-function closePubOuter(e){if(e.target===document.getElementById('pub-modal'))closePub();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closePub();});
+        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
+            document.querySelectorAll('a,button,.e-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
+        }
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
+        function toggleMob() { document.getElementById('mob-menu').classList.toggle('open'); document.body.style.overflow = document.getElementById('mob-menu').classList.contains('open') ? 'hidden' : ''; }
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            document.querySelectorAll('.e-card').forEach(c => { c.style.display = (tab === 'todos' || c.dataset.tab === tab) ? '' : 'none'; });
+        }
+        function openPub(title, tag, desc, img, e) { if (e) e.preventDefault(); document.getElementById('pub-title').textContent = title; document.getElementById('pub-tag').textContent = tag; document.getElementById('pub-desc').textContent = desc; document.getElementById('pub-modal-img').src = img; document.getElementById('pub-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closePub() { document.getElementById('pub-modal').classList.remove('open'); document.body.style.overflow = ''; }
+        function closePubOuter(e) { if (e.target === document.getElementById('pub-modal')) closePub(); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
     </script>
 </body>
 

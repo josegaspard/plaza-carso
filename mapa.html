@@ -655,8 +655,28 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
+        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
+            document.querySelectorAll('a, button, .store-list-item, .panel-btn, .floor-tab, .map-placeholder').forEach(el => {
+                el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+            });
+        }
+
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
+
+        // Initial Entry Animations
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.from('.sidebar-head h2, .sidebar-head p', { y: 20, opacity: 0, duration: 0.8, stagger: 0.1 }, 0.2)
+            .from('.floor-tab', { y: 15, opacity: 0, duration: 0.6, stagger: 0.05 }, 0.4)
+            .from('.store-list-item', { x: -20, opacity: 0, duration: 0.5, stagger: 0.04 }, 0.6)
+            .from('.map-placeholder', { scale: 0.95, opacity: 0, duration: 1 }, 0.6)
+            .from('.map-legend', { y: 20, opacity: 0, duration: 0.8 }, 0.8);
+
         function toggleMenu() {
             document.getElementById('mobile-menu').classList.toggle('open');
         }

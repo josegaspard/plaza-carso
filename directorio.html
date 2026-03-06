@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directorio | Plaza Carso</title>
+    <meta name="description"
+        content="Directorio completo de tiendas en Plaza Carso, Polanco. Filtra por categoría y encuentra tu tienda favorita." />
+    <link rel="shortcut icon" type="image/x-icon" href="logos/icono.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --off-white: #F8F8F8;
+            --silver-light: #EBEBEB;
+            --silver: #C8C8C8;
+            --grey: #8A8A8A;
+            --charcoal: #2C2C2C;
+            --black: #111111;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            height: 72px;
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--silver-light);
+            transition: all .4s;
+        }
+
+        #main-header.scrolled {
+            height: 60px;
+            box-shadow: 0 2px 24px rgba(0, 0, 0, .06);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 22px;
+            letter-spacing: .12em;
+            color: var(--black);
+        }
+
+        nav.main-nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        nav.main-nav a {
+            font-family: var(--font-head);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 3px;
+            transition: color .25s;
+        }
+
+        nav.main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--black);
+            transition: width .3s;
+        }
+
+        nav.main-nav a:hover {
+            color: var(--black);
+        }
+
+        nav.main-nav a:hover::after {
+            width: 100%;
+        }
+
+        nav.main-nav a.active {
+            color: var(--black);
+        }
+
+        nav.main-nav a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--white) !important;
+            background: var(--black);
+            padding: 9px 20px;
+            text-decoration: none;
+            transition: background .25s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--charcoal) !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--black);
+            transition: all .3s;
+        }
+
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s;
+        }
+
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            text-align: center;
+        }
+
+        #mobile-menu nav a {
+            font-family: var(--font-display);
+            font-size: 36px;
+            letter-spacing: .08em;
+            color: var(--black);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        #mobile-menu nav a:hover {
+            color: var(--grey);
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--black);
+            background: none;
+            border: none;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            margin-top: 72px;
+            background: url('images/home/directorio-bg.jpg') center/cover no-repeat;
+            min-height: 320px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(17, 17, 17, .65) 0%, rgba(17, 17, 17, .1) 100%);
+        }
+
+        .page-hero-inner {
+            position: relative;
+            z-index: 2;
+            padding: 40px 60px;
+            width: 100%;
+        }
+
+        .page-hero-label {
+            font-family: var(--font-head);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .page-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 6vw, 80px);
+            color: var(--white);
+            line-height: 1;
+        }
+
+        /* Filters bar */
+        .filters-bar {
+            position: sticky;
+            top: 72px;
+            z-index: 50;
+            background: var(--white);
+            border-bottom: 1px solid var(--silver-light);
+            padding: 0 60px;
+        }
+
+        .filters-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filters-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            flex-shrink: 0;
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--grey);
+            background: none;
+            border: none;
+            padding: 18px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            color: var(--charcoal);
+        }
+
+        .filter-btn.active {
+            color: var(--black);
+            border-bottom-color: var(--black);
+        }
+
+        .filter-search {
+            margin-left: auto;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 1px solid var(--silver-light);
+            padding-left: 20px;
+        }
+
+        .filter-search input {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 300;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--charcoal);
+            width: 180px;
+            padding: 8px 0;
+        }
+
+        .filter-search input::placeholder {
+            color: var(--silver);
+        }
+
+        .filter-search i {
+            color: var(--grey);
+            font-size: 13px;
+        }
+
+        /* Directory grid */
+        .directory-section {
+            padding: 60px 0 100px;
+            background: var(--off-white);
+        }
+
+        .directory-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .dir-results-count {
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 32px;
+        }
+
+        #stores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2px;
+        }
+
+        .store-card {
+            background: var(--silver-light);
+            cursor: pointer;
+            overflow: hidden;
+            transition: none;
+            position: relative;
+        }
+
+        .store-card-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(40%);
+            transition: filter .5s, transform .5s;
+        }
+
+        .store-card:hover .store-card-img {
+            filter: grayscale(0%);
+            transform: scale(1.04);
+        }
+
+        .store-card-body {
+            padding: 16px 20px;
+            background: var(--white);
+            border-top: 1px solid var(--silver-light);
+        }
+
+        .store-card-cat {
+            font-family: var(--font-head);
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .store-card-name {
+            font-family: var(--font-head);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .store-card-floor {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 4px;
+        }
+
+        .no-results {
+            grid-column: 1/-1;
+            padding: 60px;
+            text-align: center;
+            font-family: var(--font-head);
+            font-size: 13px;
+            color: var(--grey);
+        }
+
+        /* Modal dir */
+        #dir-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(17, 17, 17, .85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #dir-modal.open {
+            display: flex;
+        }
+
+        #dir-modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 840px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform .4s ease, opacity .4s ease;
+        }
+
+        #dir-modal.open #dir-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-img-panel {
+            overflow: hidden;
+        }
+
+        .modal-img-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-info-panel {
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        #modal-cat {
+            font-family: var(--font-head);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        #modal-name {
+            font-family: var(--font-display);
+            font-size: 48px;
+            color: var(--black);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        #modal-desc {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .modal-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--silver-light);
+            padding-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .modal-meta-item span:first-child {
+            font-family: var(--font-head);
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .modal-meta-item span:last-child {
+            font-family: var(--font-head);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .modal-socials {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .modal-social-link {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--silver-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--grey);
+            text-decoration: none;
+            transition: border-color .2s, color .2s;
+            font-size: 12px;
+        }
+
+        .modal-social-link:hover {
+            border-color: var(--black);
+            color: var(--black);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            background: var(--silver-light);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--charcoal);
+            transition: background .2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Espacios disponibles */
+        .dir-cta {
+            background: var(--black);
+            padding: 60px;
+            margin: 0 60px;
+            margin-bottom: 60px;
+        }
+
+        .dir-cta-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .dir-cta h3 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            color: var(--white);
+        }
+
+        .dir-cta p {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 8px;
+            max-width: 400px;
+        }
+
+        .btn-cta-white {
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--black);
+            background: var(--white);
+            padding: 14px 32px;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: background .2s;
+        }
+
+        .btn-cta-white:hover {
+            background: var(--silver);
+        }
+
+        /* Footer compact */
+        footer.site-footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 48px 0 24px;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .25);
+            letter-spacing: .08em;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--grey);
+            text-decoration: none;
+            transition: border-color .2s, color .2s;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .footer-socials a i {
+            font-size: 11px;
+        }
+
+        @media(max-width:768px) {
+            .header-inner {
+                padding: 0 20px;
+            }
+
+            nav.main-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .page-hero-inner,
+            .filters-bar {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .filters-bar {
+                padding: 0 0 0 12px;
+            }
+
+            .directory-inner {
+                padding: 0 12px;
+            }
+
+            #stores-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #dir-modal-content {
+                grid-template-columns: 1fr;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .modal-img-panel {
+                max-height: 260px;
+            }
+
+            .modal-info-panel {
+                padding: 28px 20px;
+            }
+
+            #modal-name {
+                font-size: 32px;
+            }
+
+            .dir-cta {
+                margin: 0;
+                padding: 40px 20px;
+            }
+
+            .footer-inner {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header id="main-header">
+        <div class="header-inner">
+            <div class="logo-wrap">
+                <span class="logo-text">PLAZA<span
+                        style="color:var(--grey);margin-left:8px;font-size:18px;">CARSO</span></span>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">Inicio</a>
+                <a href="directorio.html" class="active">Directorio</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="eventosypromociones.html">Novedades</a>
+                <a href="contacto.html" class="nav-cta">Contacto</a>
+            </nav>
+            <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <div id="mobile-menu">
+        <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <nav>
+            <a href="index.html" onclick="toggleMenu()">Inicio</a>
+            <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
+            <a href="mapa.html" onclick="toggleMenu()">Mapa</a>
+            <a href="eventosypromociones.html" onclick="toggleMenu()">Novedades</a>
+            <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <span class="page-hero-label">Plaza Carso · Polanco</span>
+            <h1 class="page-hero-title">Directorio</h1>
+        </div>
+    </section>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <div class="filters-inner" id="filters-inner">
+            <button class="filter-btn active" data-cat="Todos" onclick="filterStores('Todos', this)">Todos</button>
+            <button class="filter-btn" data-cat="Moda" onclick="filterStores('Moda', this)">Moda</button>
+            <button class="filter-btn" data-cat="Gastronomía"
+                onclick="filterStores('Gastronomía', this)">Gastronomía</button>
+            <button class="filter-btn" data-cat="Tecnología"
+                onclick="filterStores('Tecnología', this)">Tecnología</button>
+            <button class="filter-btn" data-cat="Joyería" onclick="filterStores('Joyería', this)">Joyería</button>
+            <button class="filter-btn" data-cat="Entretenimiento"
+                onclick="filterStores('Entretenimiento', this)">Entretenimiento</button>
+            <button class="filter-btn" data-cat="Salud & Bienestar"
+                onclick="filterStores('Salud & Bienestar', this)">Salud & Bienestar</button>
+            <button class="filter-btn" data-cat="Departamental"
+                onclick="filterStores('Departamental', this)">Departamental</button>
+            <div class="filter-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Buscar tienda..." oninput="searchStores(this.value)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Directory Grid -->
+    <section class="directory-section">
+        <div class="directory-inner">
+            <p class="dir-results-count" id="results-count">Mostrando todas las tiendas</p>
+            <div id="stores-grid">
+
+                <!-- INTEGRATION: cuando el backend esté conectado, estas tarjetas se generan via PHP:
+             <?php echo directorioCC($CentroComercial, $giroComercial); ?>
+             Por ahora se muestran datos de ejemplo para el preview visual. -->
+
+                <div class="store-card" data-category="Moda"
+                    onclick="openDirModal('Armani Exchange','Moda','images/home/directorio-bg.jpg','Colecciones contemporáneas de la icónica casa italiana.','PB','11:00 – 21:00')">
+                    <img src="images/home/directorio-bg.jpg" alt="Armani Exchange" class="store-card-img"
+                        loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Moda</span>
+                        <div class="store-card-name">Armani Exchange</div>
+                        <div class="store-card-floor">Planta Baja</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Moda"
+                    onclick="openDirModal('Tommy Hilfiger','Moda','images/home/hero.jpg','El clásico americano con un toque global.','PA','11:00 – 21:00')">
+                    <img src="images/home/hero.jpg" alt="Tommy Hilfiger" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Moda</span>
+                        <div class="store-card-name">Tommy Hilfiger</div>
+                        <div class="store-card-floor">Planta Alta</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Joyería"
+                    onclick="openDirModal('Swarovski','Joyería','images/home/directorio-bg.jpg','Cristales y joyas de precisión austríaca.','PB','11:00 – 21:00')">
+                    <img src="images/home/directorio-bg.jpg" alt="Swarovski" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Joyería</span>
+                        <div class="store-card-name">Swarovski</div>
+                        <div class="store-card-floor">Planta Baja</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Tecnología"
+                    onclick="openDirModal('Telcel','Tecnología','images/home/hero.jpg','Conectividad y tecnología de vanguardia.','PA','11:00 – 21:00')">
+                    <img src="images/home/hero.jpg" alt="Telcel" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Tecnología</span>
+                        <div class="store-card-name">Telcel</div>
+                        <div class="store-card-floor">Planta Alta</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Gastronomía"
+                    onclick="openDirModal('Restaurantes Gourmet','Gastronomía','images/home/eventos-bg.jpg','Alta cocina y experiencias gastronómicas únicas.','Roof Garden','11:00 – 23:00')">
+                    <img src="images/home/eventos-bg.jpg" alt="Gastronomía" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Gastronomía</span>
+                        <div class="store-card-name">Restaurantes Gourmet</div>
+                        <div class="store-card-floor">Roof Garden</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Entretenimiento"
+                    onclick="openDirModal('Cinépolis','Entretenimiento','images/home/hero.jpg','Experiencia cinematográfica de primer nivel.','PA','11:00 – 23:00')">
+                    <img src="images/home/hero.jpg" alt="Cinépolis" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Entretenimiento</span>
+                        <div class="store-card-name">Cinépolis</div>
+                        <div class="store-card-floor">Planta Alta</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Moda"
+                    onclick="openDirModal('Calvin Klein','Moda','images/home/directorio-bg.jpg','Diseño minimalista y sofisticado.','PB','11:00 – 21:00')">
+                    <img src="images/home/directorio-bg.jpg" alt="Calvin Klein" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Moda</span>
+                        <div class="store-card-name">Calvin Klein</div>
+                        <div class="store-card-floor">Planta Baja</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Gastronomía"
+                    onclick="openDirModal('Sanborns','Gastronomía','images/home/hero.jpg','Café, restaurante y librería icónica de México.','PB','8:00 – 22:00')">
+                    <img src="images/home/hero.jpg" alt="Sanborns" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Gastronomía</span>
+                        <div class="store-card-name">Sanborns</div>
+                        <div class="store-card-floor">Planta Baja</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Salud & Bienestar"
+                    onclick="openDirModal('GNC','Salud & Bienestar','images/home/directorio-bg.jpg','Suplementos y nutrición para tu bienestar.','PA','11:00 – 21:00')">
+                    <img src="images/home/directorio-bg.jpg" alt="GNC" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Salud & Bienestar</span>
+                        <div class="store-card-name">GNC</div>
+                        <div class="store-card-floor">Planta Alta</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Departamental"
+                    onclick="openDirModal('Liverpool','Departamental','images/home/hero.jpg','El favorito de México en moda y hogar.','PB - PA','11:00 – 21:00')">
+                    <img src="images/home/hero.jpg" alt="Liverpool" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Departamental</span>
+                        <div class="store-card-name">Liverpool</div>
+                        <div class="store-card-floor">PB – PA</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Moda"
+                    onclick="openDirModal('ZARA','Moda','images/home/directorio-bg.jpg','Las últimas tendencias internacionales.','PA','11:00 – 21:00')">
+                    <img src="images/home/directorio-bg.jpg" alt="ZARA" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Moda</span>
+                        <div class="store-card-name">ZARA</div>
+                        <div class="store-card-floor">Planta Alta</div>
+                    </div>
+                </div>
+                <div class="store-card" data-category="Gastronomía"
+                    onclick="openDirModal('Food Court','Gastronomía','images/home/eventos-bg.jpg','Amplia selección de opciones gastronómicas.','Nivel 2','11:00 – 21:00')">
+                    <img src="images/home/eventos-bg.jpg" alt="Food Court" class="store-card-img" loading="lazy">
+                    <div class="store-card-body"><span class="store-card-cat">Gastronomía</span>
+                        <div class="store-card-name">Food Court</div>
+                        <div class="store-card-floor">Nivel 2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Espacios Disponibles -->
+    <div class="dir-cta" data-aos="fade-up">
+        <div class="dir-cta-inner">
+            <div>
+                <h3>¿Tu marca en Plaza Carso?</h3>
+                <p>Contamos con espacios disponibles en distintos niveles. Contáctanos para información de renta.</p>
+            </div>
+            <a href="contacto.html" class="btn-cta-white">Solicitar Información</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="dir-modal" onclick="closeDirModal(event)">
+        <div id="dir-modal-content">
+            <button class="modal-close" onclick="closeDirModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-img-panel"><img id="modal-img" src="" alt=""></div>
+            <div class="modal-info-panel">
+                <span id="modal-cat"></span>
+                <h2 id="modal-name"></h2>
+                <p id="modal-desc"></p>
+                <div class="modal-meta">
+                    <div class="modal-meta-item"><span>Ubicación</span><span id="modal-loc"></span></div>
+                    <div class="modal-meta-item"><span>Horario</span><span id="modal-time"></span></div>
+                </div>
+                <div class="modal-socials" id="modal-socials">
+                    <a href="#" id="modal-ig" class="modal-social-link" target="_blank" rel="noopener"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" id="modal-fb" class="modal-social-link" target="_blank" rel="noopener"><i
+                            class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTEGRATION POINT: Bootstrap modal para AJAX de Sistemas -->
+    <div class="modal fade" id="miModalLocatario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+        <div class="modal-dialog" role="document" style="width:90%;max-width:960px;margin:2% auto;">
+            <div class="modal-content" id="miModalContenidoLocatario"
+                style="min-height:400px;border-radius:0;border:none;"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/plazacarsomx" target="_blank"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/carsoplaza" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 40);
+        });
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+        }
+
+        // Filter stores
+        function filterStores(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cards = document.querySelectorAll('.store-card');
+            let visible = 0;
+            cards.forEach(c => {
+                const show = cat === 'Todos' || c.dataset.category === cat;
+                c.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            document.getElementById('results-count').textContent = cat === 'Todos'
+                ? 'Mostrando todas las tiendas'
+                : `${visible} tienda${visible !== 1 ? 's' : ''} en ${cat}`;
+        }
+
+        function searchStores(q) {
+            const lower = q.toLowerCase().trim();
+            const cards = document.querySelectorAll('.store-card');
+            let visible = 0;
+            cards.forEach(c => {
+                const name = (c.querySelector('.store-card-name') || {}).innerText || '';
+                const show = name.toLowerCase().includes(lower);
+                c.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            document.getElementById('results-count').textContent = q
+                ? `${visible} resultado${visible !== 1 ? 's' : ''} para "${q}"`
+                : 'Mostrando todas las tiendas';
+        }
+
+        // Directory modal
+        function openDirModal(name, cat, img, desc, loc, time) {
+            const modal = document.getElementById('dir-modal');
+            document.getElementById('modal-name').textContent = name;
+            document.getElementById('modal-cat').textContent = cat;
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-img').alt = name;
+            document.getElementById('modal-desc').textContent = desc;
+            document.getElementById('modal-loc').textContent = loc;
+            document.getElementById('modal-time').textContent = time;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.getElementById('dir-modal-content').style.transform = 'translateY(0)';
+                document.getElementById('dir-modal-content').style.opacity = '1';
+            }, 10);
+        }
+        function closeDirModal(e) {
+            if (e && e.target !== document.getElementById('dir-modal')) return;
+            const modal = document.getElementById('dir-modal');
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('dir-modal').classList.remove('open'); document.body.style.overflow = ''; } });
+    </script>
+</body>
+
+</html>

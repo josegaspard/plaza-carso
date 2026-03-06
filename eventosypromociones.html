@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novedades | Plaza Carso</title>
+    <meta name="description"
+        content="Eventos, promociones y novedades de Plaza Carso, Polanco. Descubre lo que está pasando en la plaza." />
+    <link rel="shortcut icon" type="image/x-icon" href="logos/icono.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --off-white: #F8F8F8;
+            --silver-light: #EBEBEB;
+            --silver: #C8C8C8;
+            --grey: #8A8A8A;
+            --charcoal: #2C2C2C;
+            --black: #111111;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            height: 72px;
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--silver-light);
+            transition: all .4s;
+        }
+
+        #main-header.scrolled {
+            height: 60px;
+            box-shadow: 0 2px 24px rgba(0, 0, 0, .06);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 22px;
+            letter-spacing: .12em;
+            color: var(--black);
+        }
+
+        nav.main-nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        nav.main-nav a {
+            font-family: var(--font-head);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 3px;
+            transition: color .25s;
+        }
+
+        nav.main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--black);
+            transition: width .3s;
+        }
+
+        nav.main-nav a:hover {
+            color: var(--black);
+        }
+
+        nav.main-nav a:hover::after {
+            width: 100%;
+        }
+
+        nav.main-nav a.active {
+            color: var(--black);
+        }
+
+        nav.main-nav a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--white) !important;
+            background: var(--black);
+            padding: 9px 20px;
+            text-decoration: none;
+            transition: background .25s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--charcoal) !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--black);
+        }
+
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s;
+        }
+
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            text-align: center;
+        }
+
+        #mobile-menu nav a {
+            font-family: var(--font-display);
+            font-size: 36px;
+            letter-spacing: .08em;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--black);
+            background: none;
+            border: none;
+        }
+
+        /* Page hero */
+        .page-hero {
+            margin-top: 72px;
+            background: url('images/home/eventos-bg.jpg') center/cover no-repeat;
+            min-height: 420px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(17, 17, 17, .7) 0%, rgba(17, 17, 17, .15) 100%);
+        }
+
+        .page-hero-inner {
+            position: relative;
+            z-index: 2;
+            padding: 48px 60px;
+            width: 100%;
+        }
+
+        .page-hero-label {
+            font-family: var(--font-head);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .page-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(52px, 7vw, 88px);
+            color: var(--white);
+            line-height: .96;
+        }
+
+        .page-hero-sub {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .65);
+            margin-top: 14px;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        /* Tabs */
+        .novedades-tabs {
+            border-bottom: 1px solid var(--silver-light);
+            background: var(--white);
+            position: sticky;
+            top: 72px;
+            z-index: 50;
+        }
+
+        .tabs-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            gap: 0;
+        }
+
+        .tab-btn {
+            font-family: var(--font-head);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--grey);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 18px 24px;
+            border-bottom: 2px solid transparent;
+            transition: color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--charcoal);
+        }
+
+        .tab-btn.active {
+            color: var(--black);
+            border-bottom-color: var(--black);
+        }
+
+        /* Grid */
+        .novedades-section {
+            padding: 72px 0 100px;
+            background: var(--off-white);
+        }
+
+        .novedades-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        /* Promo Modal (publicidadModal) */
+        .pub-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .pub-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--silver-light);
+            display: block;
+            text-decoration: none;
+        }
+
+        .pub-card:nth-child(1) {
+            grid-column: 1/3;
+        }
+
+        /* feature card */
+        .pub-card img {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: filter .5s, transform .6s;
+            aspect-ratio: 16/9;
+        }
+
+        .pub-card:nth-child(1) img {
+            aspect-ratio: 16/8;
+        }
+
+        .pub-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.04);
+        }
+
+        .pub-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .pub-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px;
+        }
+
+        .pub-tag {
+            font-family: var(--font-head);
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--silver);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pub-tag::before {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--silver);
+            display: block;
+        }
+
+        .pub-title {
+            font-family: var(--font-head);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        .pub-card:nth-child(1) .pub-title {
+            font-size: 26px;
+        }
+
+        /* Integration note */
+        .integration-note {
+            background: var(--silver-light);
+            border-left: 3px solid var(--grey);
+            padding: 16px 20px;
+            margin-bottom: 40px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            color: var(--grey);
+            display: none;
+            /* Ocultar en producción - esto es solo para dev */
+        }
+
+        /* Social Strip */
+        .social-strip {
+            background: var(--black);
+            padding: 60px;
+        }
+
+        .social-strip-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .social-strip h3 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            color: var(--white);
+        }
+
+        .social-strip p {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 6px;
+        }
+
+        .social-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-head);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: all .2s;
+        }
+
+        .btn-fb {
+            background: #1877F2;
+            color: var(--white);
+        }
+
+        .btn-fb:hover {
+            background: #1460c8;
+        }
+
+        .btn-tw {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-tw:hover {
+            background: var(--silver);
+        }
+
+        footer.site-footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 48px 0 24px;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .25);
+            letter-spacing: .08em;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--grey);
+            text-decoration: none;
+            transition: border-color .2s, color .2s;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .footer-socials a i {
+            font-size: 11px;
+        }
+
+        /* Pub modal */
+        #pub-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(17, 17, 17, .9);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #pub-modal.open {
+            display: flex;
+        }
+
+        #pub-modal-content {
+            background: var(--white);
+            max-width: 840px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            transform: scale(.96);
+            opacity: 0;
+            transition: transform .4s, opacity .4s;
+        }
+
+        #pub-modal.open #pub-modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        #pub-modal img {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: cover;
+            display: block;
+        }
+
+        #pub-modal-info {
+            padding: 32px 40px;
+        }
+
+        #pub-modal-info h3 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+
+        #pub-modal-info p {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.7;
+        }
+
+        .pub-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 0, 0, .5);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        @media(max-width:768px) {
+            .header-inner {
+                padding: 0 20px;
+            }
+
+            nav.main-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .page-hero-inner,
+            .novedades-inner,
+            .social-strip {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .tabs-inner {
+                padding: 0 12px;
+            }
+
+            .pub-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pub-card:nth-child(1) {
+                grid-column: auto;
+            }
+
+            .footer-inner {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="main-header">
+        <div class="header-inner">
+            <span class="logo-text">PLAZA<span
+                    style="color:var(--grey);margin-left:8px;font-size:18px;">CARSO</span></span>
+            <nav class="main-nav">
+                <a href="index.html">Inicio</a>
+                <a href="directorio.html">Directorio</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="eventosypromociones.html" class="active">Novedades</a>
+                <a href="contacto.html" class="nav-cta">Contacto</a>
+            </nav>
+            <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <div id="mobile-menu">
+        <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <nav>
+            <a href="index.html" onclick="toggleMenu()">Inicio</a>
+            <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
+            <a href="mapa.html" onclick="toggleMenu()">Mapa</a>
+            <a href="eventosypromociones.html" onclick="toggleMenu()">Novedades</a>
+            <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
+        </nav>
+    </div>
+
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <span class="page-hero-label">Agenda & Actividades</span>
+            <h1 class="page-hero-title">Novedades<br>& Eventos.</h1>
+            <p class="page-hero-sub">Conferencias, exposiciones, activaciones de marca y las mejores promociones
+                seleccionadas para ti.</p>
+        </div>
+    </section>
+
+    <!-- Tab filter -->
+    <div class="novedades-tabs">
+        <div class="tabs-inner">
+            <button class="tab-btn active" onclick="switchTab('todos', this)">Todos</button>
+            <button class="tab-btn" onclick="switchTab('eventos', this)">Eventos</button>
+            <button class="tab-btn" onclick="switchTab('promociones', this)">Promociones</button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <section class="novedades-section">
+        <div class="novedades-inner">
+            <!--
+        INTEGRATION POINT: Las publicaciones son generadas por PHP via:
+          <?php echo publicaciones($CentroComercial); ?>
+        Cada tarjeta es un <a href="publicidadModal.php?CentroComercial=XX&idPublicacion=YY" class="publicidad">
+        El modal de publicidad se carga en #miModalPublicidad via AJAX.
+        El grid de abajo es el placeholder visual estático.
+      -->
+            <div class="pub-grid" id="pub-grid">
+                <a class="pub-card" data-tab="eventos"
+                    onclick="openPubModal('Roof Garden · Primavera 2026','Eventos & Activaciones','Disfruta del Roof Garden con vista al Museo Soumaya. Música en vivo, gastronomía y la mejor vista de Polanco.','images/home/eventos-bg.jpg',event)">
+                    <img src="images/home/eventos-bg.jpg" alt="Roof Garden Evento" loading="lazy">
+                    <div class="pub-overlay"></div>
+                    <div class="pub-info">
+                        <span class="pub-tag">Evento especial</span>
+                        <div class="pub-title">Roof Garden · Temporada de Primavera 2026</div>
+                    </div>
+                </a>
+                <a class="pub-card" data-tab="eventos"
+                    onclick="openPubModal('Arte & Cultura','Exposición Temporal','Exploración de arte contemporáneo en los espacios de Plaza Carso. Una experiencia única que mezcla cultura y moda.','images/home/hero.jpg',event)">
+                    <img src="images/home/hero.jpg" alt="Arte y Cultura" loading="lazy">
+                    <div class="pub-overlay"></div>
+                    <div class="pub-info">
+                        <span class="pub-tag">Cultural</span>
+                        <div class="pub-title">Arte & Cultura en Plaza Carso</div>
+                    </div>
+                </a>
+                <a class="pub-card" data-tab="promociones"
+                    onclick="openPubModal('Temporada de Rebajas','Promociones Exclusivas','Las mejores marcas con descuentos exclusivos para miembros de Plaza Carso. Hasta 40% en boutiques seleccionadas.','images/home/directorio-bg.jpg',event)">
+                    <img src="images/home/directorio-bg.jpg" alt="Rebajas" loading="lazy">
+                    <div class="pub-overlay"></div>
+                    <div class="pub-info">
+                        <span class="pub-tag">Promoción</span>
+                        <div class="pub-title">Temporada de Rebajas 2026</div>
+                    </div>
+                </a>
+                <a class="pub-card" data-tab="promociones"
+                    onclick="openPubModal('Gourmet Weekend','Gastronomía & Sabor','Un fin de semana dedicado a la alta cocina. Chefs invitados, maridajes y experiencias gastronómicas únicas en el Food Court y restaurantes Roof Garden.','images/home/eventos-bg.jpg',event)">
+                    <img src="images/home/eventos-bg.jpg" alt="Gourmet Weekend" loading="lazy">
+                    <div class="pub-overlay"></div>
+                    <div class="pub-info">
+                        <span class="pub-tag">Gastronomía</span>
+                        <div class="pub-title">Gourmet Weekend</div>
+                    </div>
+                </a>
+                <a class="pub-card" data-tab="eventos"
+                    onclick="openPubModal('Fashion Show','Moda & Tendencias','Desfile de moda en los pasillos de Plaza Carso con las más recientes colecciones de temporada de las principales boutiques.','images/home/hero.jpg',event)">
+                    <img src="images/home/hero.jpg" alt="Fashion Show" loading="lazy">
+                    <div class="pub-overlay"></div>
+                    <div class="pub-info">
+                        <span class="pub-tag">Moda</span>
+                        <div class="pub-title">Fashion Show – Colección Primavera</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Strip -->
+    <div class="social-strip">
+        <div class="social-strip-inner">
+            <div>
+                <h3>Síguenos en redes</h3>
+                <p>Mantente al día con las últimas novedades, activaciones exclusivas y ofertas de temporada.</p>
+            </div>
+            <div class="social-btns">
+                <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener"
+                    class="btn-social btn-fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" class="btn-social btn-tw"><i
+                        class="fab fa-x-twitter"></i> Twitter</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pub Modal - INTEGRATION POINT (publicidadModal.php target) -->
+    <div id="pub-modal" onclick="closePubModalOuter(event)">
+        <div id="pub-modal-content">
+            <button class="pub-modal-close" onclick="closePubModal()"><i class="fas fa-times"></i></button>
+            <img id="pub-modal-img" src="" alt="">
+            <div id="pub-modal-info">
+                <span id="pub-modal-tag"
+                    style="font-family:var(--font-head);font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--grey);display:block;margin-bottom:10px;"></span>
+                <h3 id="pub-modal-title"></h3>
+                <p id="pub-modal-desc" style="margin-top:12px;"></p>
+            </div>
+        </div>
+    </div>
+    <!-- miModalPublicidad: Bootstrap div requerido por el servidor para cargar publicidadModal.php via AJAX -->
+    <div class="modal fade" id="miModalPublicidad" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+        <div class="modal-dialog" role="document" style="width:90%;max-width:960px;margin:2% auto;">
+            <div class="modal-content" id="miModalContenidoPublicidad" style="border-radius:0;border:none;"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/plazacarsomx" target="_blank"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/carsoplaza" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+        window.addEventListener('scroll', () => {
+            document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 40);
+        });
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+        }
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.pub-card').forEach(c => {
+                c.style.display = (tab === 'todos' || c.dataset.tab === tab) ? '' : 'none';
+            });
+        }
+        function openPubModal(title, tag, desc, img, e) {
+            if (e) e.preventDefault();
+            document.getElementById('pub-modal-title').textContent = title;
+            document.getElementById('pub-modal-tag').textContent = tag;
+            document.getElementById('pub-modal-desc').textContent = desc;
+            document.getElementById('pub-modal-img').src = img;
+            document.getElementById('pub-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePubModal() {
+            document.getElementById('pub-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function closePubModalOuter(e) {
+            if (e.target === document.getElementById('pub-modal')) closePubModal();
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePubModal(); });
+    </script>
+</body>
+
+</html>

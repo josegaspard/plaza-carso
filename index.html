@@ -285,10 +285,13 @@
             opacity: 1;
         }
 
-        /* ─── HERO SPLIT ──────────────────────────────── */
+        /* ─── HERO ──────────────────────────────── */
         #hero {
-            display: grid;
-            grid-template-columns: 46% 1fr;
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 100svh;
             min-height: 600px;
             overflow: hidden;
@@ -598,13 +601,11 @@
             will-change: transform;
         }
 
-        /* Sophisticated overlay: warm gradient left + cinematic vignette */
+        /* Sophisticated overlay: vignette to highlight center */
         .h-ov {
             position: absolute;
             inset: 0;
-            background:
-                linear-gradient(115deg, rgba(245, 243, 239, .95) 0%, rgba(245, 243, 239, .82) 28%, rgba(245, 243, 239, .4) 52%, rgba(245, 243, 239, .05) 72%, transparent 88%),
-                radial-gradient(ellipse at 85% 50%, transparent 40%, rgba(8, 7, 6, .25) 100%);
+            background: radial-gradient(circle at center, rgba(245, 243, 239, 0.9) 0%, rgba(245, 243, 239, 0.75) 45%, rgba(245, 243, 239, 0.4) 100%);
         }
 
         /* Grain texture */
@@ -621,16 +622,22 @@
         .h-content {
             position: relative;
             z-index: 4;
-            padding: 0 48px 72px;
-            max-width: 720px;
+            padding: 0 48px;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         /* Kicker line with animated bar */
         .h-kicker {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 14px;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             overflow: hidden;
         }
 
@@ -648,12 +655,12 @@
 
         .h-kicker-text {
             font-family: var(--sans);
-            font-size: 9px;
+            font-size: 11px;
             font-weight: 500;
-            letter-spacing: .45em;
+            letter-spacing: .35em;
             text-transform: uppercase;
             color: var(--grey);
-            transform: translateX(-12px);
+            transform: translateY(10px);
             opacity: 0;
             transition: transform .7s var(--ease-out), opacity .7s;
             transition-delay: .2s;
@@ -679,11 +686,13 @@
             display: block;
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(58px, 9.5vw, 148px);
+            font-size: clamp(40px, 6.5vw, 92px);
+            /* REDUCED SIGNIFICANTLY */
             font-weight: 300;
             color: var(--ink);
             transform: translateY(110%);
             opacity: 0;
+            line-height: 1.05;
         }
 
         .h-line-inner.strong {
@@ -695,31 +704,32 @@
         .h-divider {
             width: 0;
             height: 1px;
-            background: rgba(8, 7, 6, .2);
-            margin-bottom: 28px;
+            background: rgba(8, 7, 6, .15);
+            margin: 0 auto 32px auto;
             transition: width 1s var(--ease-out);
         }
 
         .h-divider.in {
             width: 100%;
-            max-width: 380px;
+            max-width: 240px;
         }
 
         .h-sub {
             font-family: var(--sans);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 300;
-            color: var(--grey);
-            line-height: 1.85;
-            max-width: 380px;
-            margin-bottom: 40px;
-            transform: translateY(20px);
+            color: var(--mid);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            transform: translateY(16px);
             opacity: 0;
         }
 
         .h-btns {
             display: flex;
-            gap: 14px;
+            justify-content: center;
+            gap: 16px;
             flex-wrap: wrap;
             transform: translateY(18px);
             opacity: 0;
@@ -1651,31 +1661,9 @@
                 display: flex;
             }
 
-            /* Hero stacks on mobile: image top, content below */
-            #hero {
-                grid-template-columns: 1fr;
-                grid-template-rows: 52vw 1fr;
-                height: auto;
-                min-height: auto;
-            }
-
-            .h-left {
-                order: 2;
-                padding: 48px 20px 52px;
-                justify-content: flex-start;
-            }
-
-            .h-right {
-                order: 1;
-                min-height: 52vw;
-            }
-
-            .h-deco-num {
-                display: none;
-            }
-
-            .h-connector {
-                display: none;
+            /* Mobile Hero Adjustments */
+            .h-content {
+                padding: 0 32px;
             }
 
             .h-scroll {
@@ -1799,7 +1787,8 @@
 
     <!-- NAV -->
     <nav id="nav">
-        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso" style="height:28px; width:auto; filter:brightness(0);"></a>
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso"
+                style="height:28px; width:auto; filter:brightness(0);"></a>
         <div class="nav-links">
             <a href="index.html" class="act">Inicio</a>
             <a href="directorio.html">Directorio</a>
@@ -2053,7 +2042,8 @@
         <div class="f-bg" aria-hidden="true">CARSO</div>
         <div class="f-grid">
             <div>
-                <div class="f-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso" style="height:36px; width:auto; filter:brightness(0) invert(1);"></div>
+                <div class="f-logo"><img src="images/logos/logo-carso.webp" alt="Plaza Carso"
+                        style="height:36px; width:auto; filter:brightness(0) invert(1);"></div>
                 <p class="f-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco. Lago Zúrich
                     219-245, Granada, CDMX.</p>
             </div>

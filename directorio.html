@@ -358,6 +358,7 @@
             background: var(--ink);
             padding: 64px 52px;
             margin: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .espac-inner {
@@ -404,6 +405,64 @@
 
         .btn-wh:hover {
             background: var(--smoke);
+        }
+
+        /* Espacios section — igual que contacto.html */
+        .espacios-section {
+            background: var(--ink);
+            padding: 80px 52px;
+        }
+        .espacios-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .espac-text h3 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(30px, 3.5vw, 46px);
+            font-weight: 300;
+            color: var(--warm-white);
+        }
+        .espac-text p {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 10px;
+            line-height: 1.8;
+            max-width: 400px;
+        }
+        .espac-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        .espac-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: .1em;
+            color: var(--silver);
+            transition: color .2s;
+        }
+        .espac-link:hover { color: var(--warm-white); }
+        .espac-link-ico {
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255,255,255,.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         @media(max-width:768px) {
@@ -605,16 +664,22 @@
         </div>
     </section>
 
-    <div class="espacios-band">
-        <div class="espac-inner">
-            <div>
-                <h3>¿Tu marca en Plaza Carso?</h3>
-                <p>Espacios disponibles en distintos niveles con las mejores condiciones de renta en el corazón de
-                    Polanco.</p>
+    <section class="espacios-section">
+        <div class="espacios-inner">
+            <div class="espac-text">
+                <h3>¿Tu marca<br>en Plaza Carso?</h3>
+                <p>Locales disponibles en distintos niveles con las mejores condiciones de renta en el corazón de Polanco. Contáctanos.</p>
             </div>
-            <a href="contacto.html" class="btn-wh">Solicitar Información</a>
+            <div class="espac-contacts">
+                <a href="tel:4976 0346" class="espac-link">
+                    <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="11" height="11"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg></div>4976 0346
+                </a>
+                <a href="mailto:asistentecc@plazacarso.com.mx" class="espac-link">
+                    <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="11" height="11"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>asistentecc@plazacarso.com.mx
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- Store modal -->
     <div id="s-modal" onclick="closeMod(event)">
@@ -665,7 +730,7 @@
         </div>
     </div>
 
-        <footer>
+    <footer>
         <div class="footer-bg-text" aria-hidden="true">CARSO</div>
         <div class="footer-top">
             <div>

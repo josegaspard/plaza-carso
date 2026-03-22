@@ -70,7 +70,7 @@ for t in targets:
                 print("Replaced footer perfectly in directorio.html")
                 
         elif t['file'] == 'eventosypromociones.html':
-            start_target = content.find('<section class="social-links">')
+            start_target = content.find('<section class="social-section">')
             end_target = content.find('</footer>') + len('</footer>')
             
             if start_target != -1 and end_target != -1:

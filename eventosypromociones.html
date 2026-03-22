@@ -571,6 +571,24 @@
         function closePubOuter(e) { if (e.target === document.getElementById('pub-modal')) closePub(); }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
     </script>
+
+    <script>
+        // Footer Cursor Auto-Inversion
+        document.querySelectorAll('footer').forEach(f => {
+            f.addEventListener('mouseenter', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = '#fff'; 
+                if(dot) dot.style.background = '#fff'; 
+            });
+            f.addEventListener('mouseleave', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = ''; 
+                if(dot) dot.style.background = ''; 
+            });
+        });
+    </script>
 </body>
 
 </html>

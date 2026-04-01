@@ -7,11 +7,27 @@
     <title>Plaza Carso | Polanco · Ciudad de México</title>
     <meta name="description"
         content="Plaza Carso – El destino de moda, gastronomía y cultura en el corazón de Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
+    <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/" />
+    <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Plaza Carso | Polanco · Ciudad de México" />
+    <meta property="og:description" content="El destino de moda, gastronomía y cultura en Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg" />
+    <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/" />
+    <meta property="og:site_name" content="Plaza Carso" />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Plaza Carso | Polanco · Ciudad de México" />
+    <meta name="twitter:description" content="El destino de moda, gastronomía y cultura en Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080706" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
@@ -374,9 +390,8 @@
             font-weight: 500;
             letter-spacing: .35em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            /* Improved visibility over background */
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            color: var(--grey);
+            /* Visible against warm overlay */
             transform: translateY(10px);
             opacity: 0;
             transition: transform .7s var(--ease-out), opacity .7s;
@@ -1493,16 +1508,54 @@
             }
         }
 
+        /* ─── FOCUS VISIBLE ───────────────────────────── */
+        :focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 3px;
+        }
+
+        footer :focus-visible {
+            outline-color: var(--warm);
+        }
+
+        /* ─── SKIP TO CONTENT ────────────────────────── */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            z-index: 9999;
+            background: var(--ink);
+            color: var(--warm);
+            padding: 12px 24px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            transition: top .2s;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+        }
+
         @media(prefers-reduced-motion:reduce) {
-            * {
+            *,
+            *::before,
+            *::after {
                 animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
                 transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
 
 <body>
+
+    <!-- SKIP TO CONTENT -->
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
 
     <!-- LOADER -->
     <div id="loader" aria-hidden="true">
@@ -1538,6 +1591,9 @@
         <a href="contacto.html">Contacto</a>
     </div>
 
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+
     <!-- HERO -->
     <section id="hero" aria-labelledby="h-main-title">
         <div class="h-img" id="hImg"></div>
@@ -1547,11 +1603,11 @@
         <div class="h-content">
 
 
-            <div class="h-headline" id="h-main-title">
+            <h1 class="h-headline" id="h-main-title">
                 <span class="h-line"><span class="h-line-inner" id="hl1">El destino</span></span>
                 <span class="h-line"><span class="h-line-inner" id="hl2">más sofisticado</span></span>
                 <span class="h-line"><span class="h-line-inner strong" id="hl3">de Polanco.</span></span>
-            </div>
+            </h1>
 
             <div class="h-divider" id="hDiv"></div>
 
@@ -1764,6 +1820,8 @@
         </form>
     </section>
 
+    </main>
+
     <!-- FOOTER -->
         <footer>
         <div class="footer-bg-text" aria-hidden="true">CARSO</div>
@@ -1823,7 +1881,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script>
         gsap.registerPlugin(ScrollTrigger);
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1998,6 +2055,45 @@
                 1400: { slidesPerView: 4, spaceBetween: 22 }
             }
         });
+    </script>
+
+    <!-- STRUCTURED DATA -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ShoppingCenter",
+        "name": "Plaza Carso",
+        "description": "El destino de moda, gastronomía y cultura en el corazón de Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya.",
+        "url": "https://josegaspard.github.io/plaza-carso/",
+        "image": "https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Lago Zúrich 219-245",
+            "addressLocality": "Ciudad de México",
+            "addressRegion": "CDMX",
+            "postalCode": "11529",
+            "addressCountry": "MX"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 19.4402,
+            "longitude": -99.2041
+        },
+        "telephone": "+525549760346",
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                "opens": "11:00",
+                "closes": "21:00"
+            }
+        ],
+        "numberOfStores": 120,
+        "sameAs": [
+            "https://www.facebook.com/plazacarsomx",
+            "https://twitter.com/carsoplaza"
+        ]
+    }
     </script>
 
     <script>

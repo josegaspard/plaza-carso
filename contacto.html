@@ -8,6 +8,21 @@
     <title>Contacto | Plaza Carso</title>
     <meta name="description"
         content="Contáctanos en Plaza Carso, Polanco. Tel. 4976 0346 · asistentecc@plazacarso.com.mx" />
+    <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/contacto.html" />
+    <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contacto | Plaza Carso" />
+    <meta property="og:description" content="Contáctanos en Plaza Carso, Polanco. Tel. 4976 0346 · asistentecc@plazacarso.com.mx" />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-contacto.jpg" />
+    <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/contacto.html" />
+    <meta property="og:site_name" content="Plaza Carso" />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contacto | Plaza Carso" />
+    <meta name="twitter:description" content="Contáctanos en Plaza Carso, Polanco. Tel. 4976 0346 · asistentecc@plazacarso.com.mx" />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-contacto.jpg" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080706" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -436,6 +451,7 @@
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
     <div id="cursor"></div>
     <div id="cursor-dot"></div>
     <nav id="nav">
@@ -457,6 +473,7 @@
         <a href="contacto.html" onclick="toggleMob()">Contacto</a>
     </div>
 
+    <main id="main-content">
     <section class="page-hero" style="min-height:360px;">
         <div class="page-hero-img"
             style="background-image:url('images/home/hero-contacto.jpg');background-position:center 30%;"></div>
@@ -632,6 +649,7 @@
             </div>
         </div>
     </section>
+    </main>
 
         <footer>
         <div class="footer-bg-text" aria-hidden="true">CARSO</div>
@@ -715,6 +733,30 @@
                 if(dot) dot.style.background = ''; 
             });
         });
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contacto - Plaza Carso",
+        "description": "Contáctanos en Plaza Carso, Polanco.",
+        "url": "https://josegaspard.github.io/plaza-carso/contacto.html",
+        "mainEntity": {
+            "@type": "ShoppingCenter",
+            "name": "Plaza Carso",
+            "telephone": "+525549760346",
+            "email": "asistentecc@plazacarso.com.mx",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Lago Zúrich 219-245",
+                "addressLocality": "Ciudad de México",
+                "addressRegion": "CDMX",
+                "postalCode": "11529",
+                "addressCountry": "MX"
+            }
+        }
+    }
     </script>
 </body>
 

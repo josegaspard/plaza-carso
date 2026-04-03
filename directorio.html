@@ -481,8 +481,31 @@
         }
 
         @media(max-width:768px) {
+            /* Fix cursor:none breaking mobile taps */
+            *, *::before, *::after { cursor: auto !important; }
+            a, button, input, select, textarea { cursor: pointer !important; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+
             .filter-bar {
                 padding: 0 0 0 12px;
+                top: 60px; /* Match mobile nav height */
+            }
+
+            .f-btn {
+                padding: 14px 14px;
+                min-height: 44px;
+            }
+
+            .search-wrap {
+                padding: 8px 12px 8px 12px;
+                border-left: none;
+                border-top: 1px solid var(--smoke);
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .search-wrap input {
+                width: 100%;
+                font-size: 16px; /* Prevent iOS zoom */
             }
 
             .dir-inner {
@@ -491,22 +514,84 @@
 
             #store-grid {
                 grid-template-columns: 1fr 1fr;
+                gap: 2px;
+            }
+
+            .s-card-name {
+                font-size: 16px;
             }
 
             #s-modal-box {
                 grid-template-columns: 1fr;
+                max-height: 90vh;
             }
 
             .smod-img {
-                max-height: 260px;
+                max-height: 220px;
             }
 
             .smod-body {
-                padding: 28px 20px;
+                padding: 24px 20px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .smod-close {
+                min-width: 44px;
+                min-height: 44px;
+                z-index: 10;
             }
 
             .espacios-band {
                 padding: 48px 20px;
+            }
+
+            .espac-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .espacios-section {
+                padding: 48px 20px;
+            }
+
+            .espacios-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Mobile nav */
+            .nav-ham {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mob-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            #mob-menu a {
+                padding: 8px 0;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media(max-width:374px) {
+            #store-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -524,10 +609,10 @@
             <a href="mapa.html">Mapa</a><a href="eventosypromociones.html">Novedades</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
-        <button class="nav-ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </nav>
-    <div id="mob-menu">
-        <button class="mob-close" onclick="toggleMob()">✕</button>
+    <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navegación">
+        <button class="mob-close" onclick="toggleMob()" aria-label="Cerrar menú">✕</button>
         <a href="index.html" onclick="toggleMob()">Inicio</a><a href="directorio.html"
             onclick="toggleMob()">Directorio</a>
         <a href="mapa.html" onclick="toggleMob()">Mapa</a><a href="eventosypromociones.html"
@@ -763,7 +848,7 @@
             document.querySelectorAll('a,button,.s-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
         }
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
-        function toggleMob() { document.getElementById('mob-menu').classList.toggle('open'); document.body.style.overflow = document.getElementById('mob-menu').classList.contains('open') ? 'hidden' : ''; }
+        function toggleMob() { var m=document.getElementById('mob-menu'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         function filt(cat, btn) {
             document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
             let v = 0; document.querySelectorAll('.s-card').forEach(c => { const s = cat === 'Todos' || c.dataset.cat === cat; c.style.display = s ? '' : 'none'; if (s) v++; });

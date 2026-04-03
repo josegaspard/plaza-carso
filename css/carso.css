@@ -67,7 +67,26 @@ footer{background:var(--ink);padding:80px 52px 36px;position:relative;overflow:h
 .footer-socials a:hover{border-color:rgba(255,255,255,.5);color:rgba(255,255,255,.8);}
 .modal-fade{display:none;}
 @media(max-width:1024px){.footer-top{grid-template-columns:1fr 1fr;}}
-@media(max-width:768px){nav#nav{padding:0 20px;}.nav-links{display:none;}.nav-ham{display:flex;}.page-hero-content,.footer-top{padding-left:20px;padding-right:20px;}footer{padding:60px 20px 28px;}.footer-top{grid-template-columns:1fr;}}
+@media(max-width:768px){
+  nav#nav{padding:0 20px;height:60px;}
+  nav#nav.scrolled{height:54px;}
+  .nav-links{display:none;}
+  .nav-ham{display:flex;}
+  .page-hero{margin-top:60px;min-height:280px;}
+  .page-hero-content{padding:32px 20px;}
+  .page-hero-content,.footer-top{padding-left:20px;padding-right:20px;}
+  footer{padding:60px 20px 28px;}
+  .footer-top{grid-template-columns:1fr;gap:28px;}
+  .footer-bottom{flex-direction:column;gap:16px;text-align:center;}
+  .footer-bg-text{display:none;}
+  /* Mobile tap targets */
+  .nav-ham{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;}
+  #mob-menu a{padding:8px 0;margin-bottom:12px;}
+  .mob-close{min-width:44px;min-height:44px;font-size:24px;}
+  /* Espacios section mobile */
+  .espacios-section{padding:48px 20px;}
+  .espacios-inner{flex-direction:column;align-items:flex-start;}
+}
 
 
 /* Espacios section — Globalized */
@@ -97,4 +116,17 @@ footer :focus-visible { outline-color: var(--warm-white); }
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── MOBILE GLOBAL FIXES ── */
+@media(max-width:768px) {
+  /* Fix cursor:none that breaks tapping on mobile */
+  *, *::before, *::after { cursor: auto !important; }
+  a, button, input, select, textarea, [role="button"] { cursor: pointer !important; }
+  /* Remove tap highlight flash */
+  a, button, input, select, textarea { -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+  /* Minimum tap target sizes */
+  a, button { min-height: 44px; }
+  /* Prevent horizontal overflow */
+  html, body { overflow-x: hidden; }
 }

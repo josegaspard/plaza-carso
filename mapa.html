@@ -447,6 +447,10 @@
         }
 
         @media(max-width:768px) {
+            /* Fix cursor:none breaking mobile taps */
+            *, *::before, *::after { cursor: auto !important; }
+            a, button, input, select, textarea { cursor: pointer !important; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+
             .header-inner {
                 padding: 0 20px;
             }
@@ -459,13 +463,6 @@
                 display: flex;
             }
 
-            .map-sidebar {
-                width: 100%;
-                max-height: 250px;
-                border-right: none;
-                border-bottom: 1px solid var(--smoke);
-            }
-
             .map-wrapper {
                 flex-direction: column;
             }
@@ -474,8 +471,115 @@
                 overflow: auto;
             }
 
+            .map-sidebar {
+                width: 100%;
+                max-height: none;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--smoke);
+                flex-shrink: 0;
+            }
+
+            .sidebar-head {
+                padding: 20px 20px;
+            }
+
+            .sidebar-head h2 {
+                font-size: 28px;
+            }
+
+            .floor-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .floor-tab {
+                padding: 14px 12px;
+                min-height: 44px;
+                font-size: 9px;
+            }
+
+            .sidebar-filters {
+                padding: 12px 16px;
+            }
+
+            .sidebar-filters select {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 12px 16px;
+                min-height: 44px;
+            }
+
+            .store-list {
+                max-height: 200px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .store-list-item {
+                padding: 12px 20px;
+                min-height: 44px;
+            }
+
             .map-canvas {
-                min-height: 400px;
+                min-height: 50vh;
+                flex: 1;
+            }
+
+            /* Info panel mobile - bottom sheet style */
+            .map-info-panel {
+                top: auto;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                transform: translateY(100%);
+                border: none;
+                border-top: 1px solid var(--silver-light);
+                box-shadow: 0 -4px 24px rgba(0,0,0,.12);
+            }
+
+            .map-info-panel.visible {
+                transform: translateY(0);
+            }
+
+            .panel-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            /* Legend mobile */
+            .map-legend {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                grid-template-columns: 1fr 1fr;
+                padding: 16px;
+                gap: 8px 16px;
+            }
+
+            .legend-label {
+                font-size: 10px;
+            }
+
+            /* Nav overrides */
+            .nav-ham {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mob-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            #mob-menu a {
+                padding: 8px 0;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     </style>
@@ -493,10 +597,10 @@
             <a href="mapa.html" class="active">Mapa</a><a href="eventosypromociones.html">Novedades</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
-        <button class="nav-ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </nav>
-    <div id="mob-menu">
-        <button class="mob-close" onclick="toggleMob()">✕</button>
+    <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navegación">
+        <button class="mob-close" onclick="toggleMob()" aria-label="Cerrar menú">✕</button>
         <a href="index.html" onclick="toggleMob()">Inicio</a><a href="directorio.html"
             onclick="toggleMob()">Directorio</a>
         <a href="mapa.html" onclick="toggleMob()">Mapa</a><a href="eventosypromociones.html"
@@ -715,6 +819,13 @@
 
         function toggleMenu() {
             document.getElementById('mobile-menu').classList.toggle('open');
+        }
+        function toggleMob() {
+            var mob = document.getElementById('mob-menu');
+            var btn = document.querySelector('.nav-ham');
+            mob.classList.toggle('open');
+            document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+            if (btn) btn.setAttribute('aria-expanded', mob.classList.contains('open'));
         }
         
         // Floor logic extension

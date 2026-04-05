@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
     <?php include("header.php"); ?>
+    <?php
+    echo '<meta property="og:type" content="website" />';
+    echo '<meta property="og:title" content="Mapa Interactivo | ' . $nombrePlaza . '" />';
+    echo '<meta property="og:description" content="Mapa interactivo de ' . $nombrePlaza . '. Ubica tiendas en nuestros niveles." />';
+    echo '<meta name="twitter:card" content="summary_large_image" />';
+    echo '<meta name="twitter:title" content="Mapa | ' . $nombrePlaza . '" />';
+    echo '<meta name="twitter:description" content="Mapa interactivo de ' . $nombrePlaza . '." />';
+    echo '<link rel="canonical" href="mapa.php" />';
+    ?>
     <style>
         :root{--ink:#080706;--warm:#F5F3EF;--smoke:#EDEBE6;--silver:#C0B9B0;--grey:#857E76;--mid:#3A3530;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;}
         html,body{height:100%;}
@@ -88,7 +97,7 @@
         <!-- SIDEBAR -->
         <aside class="map-sidebar">
             <div class="sidebar-head">
-                <h2>Mapa</h2>
+                <h1>Mapa</h1>
                 <p>Ubica tu tienda favorita</p>
             </div>
 
@@ -266,6 +275,16 @@
 
         /* Cursor */
         (function(){var cur=document.getElementById('cursor');if(cur&&window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){gsap.to(cur,{x:e.clientX,y:e.clientY,duration:.25,ease:'power2.out'});});}})();
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "<?php echo $nombrePlaza; ?>", "item": "index.php"},
+            {"@type": "ListItem", "position": 2, "name": "Mapa", "item": "mapa.php"}
+        ]
+    }
     </script>
 </body>
 </html>

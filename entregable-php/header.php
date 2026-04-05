@@ -23,6 +23,8 @@
 		<link rel="shortcut icon" type="image/x-icon" href="logos/icono.ico" />
 
 		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+		<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -51,5 +53,10 @@
 		<script src="Scripts/logoLocatario.js"></script>
 
 		'.analyticsCC($CentroComercial).'
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#080706" />
+		<meta name="author" content="'.$nombrePlaza.'" />
+		<meta property="og:site_name" content="'.$nombrePlaza.'" />
+		<meta property="og:locale" content="es_MX" />
 	';
 ?>

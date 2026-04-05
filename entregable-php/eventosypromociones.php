@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
     <?php include("header.php"); ?>
+    <?php
+    echo '<meta property="og:type" content="website" />';
+    echo '<meta property="og:title" content="Novedades | ' . $nombrePlaza . '" />';
+    echo '<meta property="og:description" content="Eventos, promociones y novedades de ' . $nombrePlaza . '." />';
+    echo '<meta name="twitter:card" content="summary_large_image" />';
+    echo '<meta name="twitter:title" content="Novedades | ' . $nombrePlaza . '" />';
+    echo '<meta name="twitter:description" content="Eventos y promociones de ' . $nombrePlaza . '." />';
+    echo '<link rel="canonical" href="eventosypromociones.php" />';
+    ?>
     <style>
         :root{--ink:#080706;--warm:#F5F3EF;--smoke:#EDEBE6;--silver:#C0B9B0;--grey:#857E76;--mid:#3A3530;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;}
         body{font-family:var(--sans);background:var(--warm);color:var(--ink);overflow-x:hidden;}
@@ -164,6 +173,16 @@
 
         /* Cursor */
         (function(){var cur=document.getElementById('cursor');if(cur&&window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){gsap.to(cur,{x:e.clientX,y:e.clientY,duration:.25,ease:'power2.out'});});}})();
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "<?php echo $nombrePlaza; ?>", "item": "index.php"},
+            {"@type": "ListItem", "position": 2, "name": "Novedades", "item": "eventosypromociones.php"}
+        ]
+    }
     </script>
 </body>
 </html>

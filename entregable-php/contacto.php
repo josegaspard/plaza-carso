@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
     <?php include("header.php"); ?>
+    <?php
+    echo '<meta property="og:type" content="website" />';
+    echo '<meta property="og:title" content="Contacto | ' . $nombrePlaza . '" />';
+    echo '<meta property="og:description" content="Contactanos en ' . $nombrePlaza . '. Tel. ' . telefonoCC($CentroComercial) . '" />';
+    echo '<meta name="twitter:card" content="summary_large_image" />';
+    echo '<meta name="twitter:title" content="Contacto | ' . $nombrePlaza . '" />';
+    echo '<meta name="twitter:description" content="Contactanos en ' . $nombrePlaza . '." />';
+    echo '<link rel="canonical" href="contacto.php" />';
+    ?>
     <style>
         :root{--ink:#080706;--warm:#F5F3EF;--smoke:#EDEBE6;--silver:#C0B9B0;--grey:#857E76;--mid:#3A3530;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;}
         body{font-family:var(--sans);background:var(--warm);color:var(--ink);overflow-x:hidden;}
@@ -118,7 +127,7 @@
                 </div>
                 <div class="map-box">
                     <!-- INCARSO: Reemplazar con el embed de Google Maps de Plaza Universidad -->
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.4!2d-99.178!3d19.376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDIyJzMzLjYiTiA5OcKwMTAnNDAuOCJX!5e0!3m2!1ses!2smx!4v1" allowfullscreen loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.4!2d-99.178!3d19.376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDIyJzMzLjYiTiA5OcKwMTAnNDAuOCJX!5e0!3m2!1ses!2smx!4v1" title="Ubicacion en Google Maps" allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
 
@@ -218,6 +227,36 @@
 
         /* Cursor */
         (function(){var cur=document.getElementById('cursor');if(cur&&window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){gsap.to(cur,{x:e.clientX,y:e.clientY,duration:.25,ease:'power2.out'});});}})();
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contacto - <?php echo $nombrePlaza; ?>",
+        "url": "contacto.php",
+        "mainEntity": {
+            "@type": "ShoppingCenter",
+            "name": "<?php echo $nombrePlaza; ?>",
+            "telephone": "<?php echo telefonoCC($CentroComercial); ?>",
+            "email": "<?php echo emailCC($CentroComercial); ?>",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "<?php echo strip_tags(str_replace('<br>',', ',direccionCC($CentroComercial))); ?>",
+                "addressLocality": "Ciudad de Mexico",
+                "addressCountry": "MX"
+            }
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "<?php echo $nombrePlaza; ?>", "item": "index.php"},
+            {"@type": "ListItem", "position": 2, "name": "Contacto", "item": "contacto.php"}
+        ]
+    }
     </script>
 </body>
 </html>

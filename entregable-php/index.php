@@ -2,6 +2,19 @@
 <html lang="es">
 <head>
     <?php include("header.php"); ?>
+    <?php
+    $pageTitle = $nombrePlaza . ' | Ciudad de Mexico';
+    $pageDesc = 'El destino de moda, gastronomia y cultura. Boutiques exclusivas, alta cocina y entretenimiento en ' . $nombrePlaza . '.';
+    $pageUrl = ''; // root
+    echo '<meta property="og:type" content="website" />';
+    echo '<meta property="og:title" content="' . $pageTitle . '" />';
+    echo '<meta property="og:description" content="' . $pageDesc . '" />';
+    echo '<meta property="og:url" content="' . $pageUrl . '" />';
+    echo '<meta name="twitter:card" content="summary_large_image" />';
+    echo '<meta name="twitter:title" content="' . $pageTitle . '" />';
+    echo '<meta name="twitter:description" content="' . $pageDesc . '" />';
+    echo '<link rel="canonical" href="index.php" />';
+    ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root {
@@ -434,6 +447,31 @@
 
         /* SWIPER */
         new Swiper('.swiper-sl',{slidesPerView:1.2,spaceBetween:12,loop:false,pagination:{el:'.swiper-pagination-sl',clickable:true},breakpoints:{540:{slidesPerView:1.8,spaceBetween:16},768:{slidesPerView:2.4,spaceBetween:18},1024:{slidesPerView:3.2,spaceBetween:20},1400:{slidesPerView:4,spaceBetween:22}}});
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ShoppingCenter",
+        "name": "<?php echo $nombrePlaza; ?>",
+        "description": "<?php echo strip_tags(descripcionCC_Completo($CentroComercial)); ?>",
+        "telephone": "<?php echo telefonoCC($CentroComercial); ?>",
+        "email": "<?php echo emailCC($CentroComercial); ?>",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "<?php echo strip_tags(str_replace('<br>',', ',direccionCC($CentroComercial))); ?>",
+            "addressLocality": "Ciudad de Mexico",
+            "addressRegion": "CDMX",
+            "addressCountry": "MX"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "11:00",
+            "closes": "21:00"
+        },
+        "priceRange": "$$$$",
+        "currenciesAccepted": "MXN"
+    }
     </script>
 </body>
 </html>

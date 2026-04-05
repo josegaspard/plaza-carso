@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
     <?php include("header.php"); ?>
+    <?php
+    echo '<meta property="og:type" content="website" />';
+    echo '<meta property="og:title" content="Directorio | ' . $nombrePlaza . '" />';
+    echo '<meta property="og:description" content="Directorio completo de tiendas en ' . $nombrePlaza . '. Filtra por categoria." />';
+    echo '<meta name="twitter:card" content="summary_large_image" />';
+    echo '<meta name="twitter:title" content="Directorio | ' . $nombrePlaza . '" />';
+    echo '<meta name="twitter:description" content="Directorio completo de tiendas en ' . $nombrePlaza . '." />';
+    echo '<link rel="canonical" href="directorio.php" />';
+    ?>
     <style>
         :root{--ink:#080706;--warm:#F5F3EF;--smoke:#EDEBE6;--silver:#C0B9B0;--grey:#857E76;--mid:#3A3530;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;}
         body{font-family:var(--sans);background:var(--warm);color:var(--ink);overflow-x:hidden;}
@@ -166,6 +175,16 @@
         });
 
         /* El filtro se maneja via el select.giroComercial del backend */
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "<?php echo $nombrePlaza; ?>", "item": "index.php"},
+            {"@type": "ListItem", "position": 2, "name": "Directorio", "item": "directorio.php"}
+        ]
+    }
     </script>
 </body>
 </html>

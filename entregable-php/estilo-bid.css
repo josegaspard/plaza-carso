@@ -1,0 +1,346 @@
+/***** 
+HOJA DE ESTILOS PARA SITIOS PLAZAS GRUPO CARSO
+Fecha de creación: 02 Septiembre 2024
+Autor: @ionsoniko
+********/
+
+*{
+    margin:0;
+    padding:0;
+}
+.grales{
+    width: 100% !important;
+    float: left !important;
+}
+.font-10{
+    font-size: 10px;
+}
+.font-11{
+    font-size: 11px;
+}
+.font-12{
+    font-size: 12px;
+}
+.font-13{
+    font-size: 13px;
+}
+.font-14{
+    font-size: 14px;
+}
+.font-15{
+    font-size: 15px;
+}
+.font-16{
+    font-size: 16px;
+}
+.font-17{
+    font-size: 17px;
+}
+.font-18{
+    font-size: 18px;
+}
+.font-19{
+    font-size: 19px;
+}
+.font-20{
+    font-size: 20px;
+}
+.font-21{
+    font-size: 21px;
+}
+.font-22{
+    font-size: 22px;
+}
+.font-23{
+    font-size: 23px;
+}
+.font-24{
+    font-size: 24px;
+}
+.font-25{
+    font-size: 25px;
+}
+.font-30{
+    font-size: 30px;
+}
+.font-35{
+    font-size: 35px;
+}
+.font-40{
+    font-size: 40px;
+}
+.color-blanco{
+    color: #fff;
+}
+.enlace-blanco{
+    color: #fff;
+    text-decoration: none;
+}
+.enlace-blanco:hover{
+    color: #fff;
+    text-decoration: none;
+}
+.enlace-negro{
+    color: #020002;
+    text-decoration: none;
+}
+.enlace-negro:hover{
+    color: #020002;
+    text-decoration: none;
+}
+.justify-content-center {
+    justify-content: center !important;
+}
+.text-center{
+    text-align: center !important;
+}
+.enlace-logo-top-carso{
+    float: none;
+    height: auto;
+}
+.logotipo-carso-top{
+    margin: 0 auto;
+    height: auto !important;
+    float: none;
+    width: 108px;
+}
+.enlace-logotipo-plaza{
+    float: right;
+    height: auto;
+    padding-top: 20px;
+}
+.py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.py-1 {
+    padding-top: .25rem !important;
+    padding-bottom: .25rem !important;
+}
+.py-2 {
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
+}
+.py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+.py-4 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+.contenedor-slider {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 73vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    background-position: center;
+}
+#containerbody2 {
+    padding-top: 1% !important;
+}
+#titulos-gral{
+    padding: 0 30px;
+}
+.txtTitulo {
+    font-size: 35px;
+}
+.txtfooter {
+    font-size: 15px !important;
+    color: white;
+}
+#esc-directorio{
+    padding-bottom: 200px;
+}
+#esc-contacto{
+    padding-bottom: 200px;
+}
+#esc-contacto #bodyID{
+    padding-bottom: 0;
+}
+#divMapa{
+    padding-bottom: 200px;
+}
+.mb-1 {
+    margin-bottom: .25rem !important;
+}
+.mb-2 {
+    margin-bottom: .5rem !important;
+}
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+.px-3{
+    padding: 0 30px;
+}
+.Descripcion_Pagina {
+    display: none !important;
+}
+.txtTituloLocatario{
+    text-transform: uppercase !important;
+}
+.abrirModalLocatario{
+    text-transform: uppercase !important;
+}
+.col-al-centro{
+    width: 50% !important;
+    margin: 0 auto !important;
+    float: none;
+}
+.ContenedorFull {
+    top: 0;
+}
+footer{
+    color: #000;
+}
+/*--------------------------------------------------------------
+# Media Query
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+## Notebook
+--------------------------------------------------------------*/
+@media only screen and (max-width: 1280px) {
+    html {
+      font-size: 95%;
+    }
+    .col-6{
+        width: 50%;
+        float: left;
+    }
+  }
+  
+  @media screen and (max-width: 1199px) {
+    html {
+        font-size: 95%;
+    }
+    .col-6{
+        width: 50%;
+        float: left;
+    }
+  }
+  /*--------------------------------------------------------------
+  ## Netbook
+  --------------------------------------------------------------*/
+  @media only screen and (max-width: 1024px) {
+    .col-6{
+        width: 50%;
+        float: left;
+    }
+  }
+  /*--------------------------------------------------------------
+  ## iPad
+  --------------------------------------------------------------*/
+  @media only screen and (max-width: 960px) {
+    .col-6{
+        width: 50%;
+        float: left;
+    }
+  }
+  /*--------------------------------------------------------------
+  ## iPad
+  --------------------------------------------------------------*/
+  @media only screen and (max-width: 768px) {
+    .Descripcion_Pagina {
+        display: none !important;
+    }
+    .col-6{
+        width: 50%;
+        float: left;
+    }
+    #containerbody2 {
+        padding-top: 10% !important;
+    }
+    .contenedor-slider {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 472px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-top: 0%;
+        background-position: center;
+    }
+    .al-centro{
+        text-align: center !important;
+    }
+    #footerID {
+        position: relative;
+        height: auto !important;
+    }
+    #menuHorizontal {
+        display: none;
+    }
+    .logoFooter {
+        border: 0px solid white;
+        width: 30% !important;
+    }
+  }
+  /*--------------------------------------------------------------
+  ## iPad
+  --------------------------------------------------------------*/
+  @media only screen and (max-width: 480px) {
+    .contenedor-slider{
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 50vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-top: 0;
+    }
+    .Descripcion_Pagina {
+        display: none !important;
+    }
+    #containerbody2 {
+        padding-top: 5% !important;
+    }
+    .al-centro{
+        text-align: center !important;
+    }
+    #footerID {
+        position: relative;
+        height: auto !important;
+    }
+    #menuHorizontal {
+        display: none;
+    }
+    .logoFooter {
+        border: 0px solid white;
+        width: 30% !important;
+    }
+    .col-al-centro{
+        width: 90% !important;
+    }
+    #bodyID {
+        padding-top: 10%;
+        padding-bottom: 0;
+    }
+    #esc-contacto{
+        padding-bottom: 0;
+    }
+    #esc-contacto #bodyID{
+        padding-bottom: 0;
+    }
+    .pag-contacto #bodyID{
+        padding-bottom: 0;
+    }
+    #esc-directorio{
+        padding-bottom: 0;
+    }
+    #divMapa {
+        padding-bottom: 0;
+    }
+}

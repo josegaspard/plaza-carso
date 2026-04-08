@@ -22,9 +22,7 @@ nav#nav.s{background:rgba(245,243,239,.96);backdrop-filter:blur(18px);-webkit-ba
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:0;background:var(--ink);transition:width .3s;}
 .nav-links a:hover,.nav-links a.act{color:var(--ink);}
 .nav-links a:hover::after,.nav-links a.act::after{width:100%;}
-.nav-cta-link{border:1px solid var(--ink) !important;padding:10px 22px;color:var(--ink) !important;transition:background .25s,color .25s !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;height:38px !important;}
-.nav-cta-link:hover,.nav-cta-link.act{background:var(--ink) !important;color:var(--warm-white) !important;}
-.nav-cta-link::after{display:none !important;}
+/* Contacto link — same style as other nav links, no button/border */
 .nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
 .nav-ham span{display:block;width:22px;height:1px;background:var(--ink);transition:all .35s;}
 #mob-nav{position:fixed;inset:0;background:var(--ink);z-index:700;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;}

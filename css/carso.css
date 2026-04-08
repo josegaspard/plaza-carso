@@ -22,8 +22,8 @@ nav#nav.scrolled{background:rgba(246,244,240,.95);backdrop-filter:blur(16px);box
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:0;background:var(--ink);transition:width .3s;}
 .nav-links a:hover{color:var(--ink);}
 .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-.nav-cta-link{border:1px solid var(--ink) !important;padding:10px 22px;color:var(--ink) !important;transition:background .25s,color .25s !important;}
-.nav-cta-link:hover{background:var(--ink) !important;color:var(--warm-white) !important;}
+.nav-cta-link{border:1px solid var(--ink) !important;padding:10px 22px;color:var(--ink) !important;transition:background .25s,color .25s !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;height:38px !important;}
+.nav-cta-link:hover,.nav-cta-link.active{background:var(--ink) !important;color:var(--warm-white) !important;}
 .nav-cta-link::after{display:none !important;}
 .nav-ham{display:none;flex-direction:column;gap:6px;cursor:pointer;background:none;border:none;padding:4px;}
 .nav-ham span{display:block;width:24px;height:1px;background:var(--ink);}

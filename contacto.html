@@ -546,12 +546,15 @@
         <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </nav>
     <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
-        <button onclick="toggleMob()" aria-label="Cerrar menú" style="position:absolute;top:18px;right:20px;background:none;border:none;cursor:pointer;z-index:9999;padding:10px;font-size:36px;color:#fff;line-height:1;">✕</button>
+        <div onclick="toggleMob()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;-webkit-tap-highlight-color:transparent;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </div>
         <a href="index.html">Inicio</a>
         <a href="directorio.html">Directorio</a>
         <a href="mapa.html">Mapa</a>
         <a href="eventosypromociones.html">Novedades</a>
         <a href="contacto.html">Contacto</a>
+        <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
     </div>
 
     <main id="main-content">

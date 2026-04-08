@@ -70,20 +70,12 @@
             color: var(--charcoal);
             -webkit-font-smoothing: antialiased;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Navigation overrides for map layout */
-        nav#nav {
-            position: relative;
-        }
-
-        /* since map body is flex column */
-
-        /* Map layout: takes remaining height */
+        /* Map layout: push below fixed nav, take remaining height */
         .map-wrapper {
-            flex: 1;
+            margin-top: 68px;
+            height: calc(100vh - 68px);
             display: flex;
             overflow: hidden;
         }
@@ -469,6 +461,8 @@
 
             .map-wrapper {
                 flex-direction: column;
+                margin-top: 60px;
+                height: auto;
             }
 
             body {

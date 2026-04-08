@@ -450,7 +450,7 @@
                 min-height: 44px;
             }
 
-            #mob-menu a {
+            #mob-nav a {
                 padding: 8px 0;
                 min-height: 48px;
                 display: flex;
@@ -475,19 +475,20 @@
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
                 style="height:32px; width:auto; filter:brightness(0);"></a>
         <div class="nav-links">
-            <a href="index.html">Inicio</a><a href="directorio.html">Directorio</a>
-            <a href="mapa.html">Mapa</a><a href="eventosypromociones.html" class="active">Novedades</a>
+            <a href="index.html">Inicio</a>
+            <a href="directorio.html">Directorio</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="eventosypromociones.html" class="act">Novedades</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
         <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </nav>
-    <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navegación">
-        <button class="mob-close" onclick="toggleMob()" aria-label="Cerrar menú">✕</button>
-        <a href="index.html" onclick="toggleMob()">Inicio</a><a href="directorio.html"
-            onclick="toggleMob()">Directorio</a>
-        <a href="mapa.html" onclick="toggleMob()">Mapa</a><a href="eventosypromociones.html"
-            onclick="toggleMob()">Novedades</a>
-        <a href="contacto.html" onclick="toggleMob()">Contacto</a>
+    <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="directorio.html">Directorio</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="eventosypromociones.html">Novedades</a>
+        <a href="contacto.html">Contacto</a>
     </div>
 
     <main id="main-content">
@@ -647,8 +648,8 @@
             document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
             document.querySelectorAll('a,button,.e-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
         }
-        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
-        function toggleMob() { var m=document.getElementById('mob-menu'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
+        function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         function switchTab(tab, btn) {
             document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
             document.querySelectorAll('.e-card').forEach(c => { c.style.display = (tab === 'todos' || c.dataset.tab === tab) ? '' : 'none'; });

@@ -28,6 +28,8 @@ nav#nav.s{background:rgba(245,243,239,.96);backdrop-filter:blur(18px);-webkit-ba
 #mob-nav{position:fixed;inset:0;background:var(--ink);z-index:700;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;}
 #mob-nav.open{opacity:1;pointer-events:all;}
 #mob-nav a{font-family:var(--serif);font-style:italic;font-size:clamp(36px,8vw,68px);color:var(--warm-white);display:block;margin:8px 0;opacity:.75;transition:opacity .2s;text-align:center;}
+.mob-close{position:absolute;top:24px;right:28px;background:none;border:none;font-size:32px;color:var(--warm-white);cursor:pointer;opacity:.6;transition:opacity .2s;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;}
+.mob-close:hover{opacity:1;}
 /* PAGE HERO */
 .page-hero{margin-top:68px;position:relative;min-height:400px;display:flex;align-items:flex-end;overflow:hidden;}
 .page-hero-img{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.04);}

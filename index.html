@@ -12,14 +12,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Plaza Carso | Polanco · Ciudad de México" />
     <meta property="og:description" content="El destino de moda, gastronomía y cultura en Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
-    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg" />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-elegancia.jpg" />
     <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/" />
     <meta property="og:site_name" content="Plaza Carso" />
     <meta property="og:locale" content="es_MX" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Plaza Carso | Polanco · Ciudad de México" />
     <meta name="twitter:description" content="El destino de moda, gastronomía y cultura en Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya." />
-    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg" />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-elegancia.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="author" content="Plaza Carso" />
@@ -27,6 +27,8 @@
     <meta name="theme-color" content="#080706" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="images/home/hero-elegancia.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+    <link rel="preload" as="image" href="images/home/hero-elegancia-mob.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
@@ -302,7 +304,7 @@
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             height: 100svh;
             min-height: 600px;
             overflow: hidden;
@@ -314,16 +316,30 @@
         .h-img {
             position: absolute;
             inset: 0;
-            background: url('images/home/back-slide-home.jpg') center/cover no-repeat;
+            background: url('images/home/hero-elegancia.jpg') center/cover no-repeat;
+            background-image: image-set(
+                url('images/home/hero-elegancia.webp') type('image/webp'),
+                url('images/home/hero-elegancia.jpg') type('image/jpeg')
+            );
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             transform: scale(1.08);
             will-change: transform;
         }
 
-        /* Sophisticated overlay: vignette to highlight center */
+        /* Soft overlay only on the right half — keeps left side fully visible */
         .h-ov {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(245, 243, 239, 0.9) 0%, rgba(245, 243, 239, 0.75) 45%, rgba(245, 243, 239, 0.4) 100%);
+            background: linear-gradient(
+                to right,
+                rgba(245, 243, 239, 0) 0%,
+                rgba(245, 243, 239, 0) 42%,
+                rgba(245, 243, 239, 0.35) 60%,
+                rgba(245, 243, 239, 0.62) 80%,
+                rgba(245, 243, 239, 0.78) 100%
+            );
         }
 
         /* Grain texture */
@@ -336,24 +352,24 @@
             background-size: 200px;
         }
 
-        /* Content */
+        /* Content — pinned to the right half on desktop */
         .h-content {
             position: relative;
             z-index: 4;
-            padding: 0 48px;
-            max-width: 900px;
+            padding: 0 64px 0 24px;
+            max-width: 560px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            align-items: flex-end;
+            text-align: right;
         }
 
         /* Kicker line with animated bar */
         .h-kicker {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             gap: 14px;
             margin-bottom: 24px;
             overflow: hidden;
@@ -429,7 +445,7 @@
             width: 0;
             height: 1px;
             background: rgba(8, 7, 6, .15);
-            margin: 0 auto 32px auto;
+            margin: 0 0 32px auto;
             transition: width 1s var(--ease-out);
         }
 
@@ -444,15 +460,15 @@
             font-weight: 300;
             color: var(--mid);
             line-height: 1.7;
-            max-width: 500px;
-            margin: 0 auto 40px auto;
+            max-width: 460px;
+            margin: 0 0 40px auto;
             transform: translateY(16px);
             opacity: 0;
         }
 
         .h-btns {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             gap: 16px;
             flex-wrap: wrap;
             transform: translateY(18px);
@@ -1399,15 +1415,39 @@
                 justify-content: center;
             }
 
-            /* Mobile Hero Adjustments */
+            /* Mobile Hero Adjustments — restore centered layout & full-image overlay */
             #hero {
                 min-height: 100svh;
                 min-height: -webkit-fill-available;
+                justify-content: center;
+            }
+
+            .h-img {
+                background-image: url('images/home/hero-elegancia-mob.jpg');
+                background-image: image-set(
+                    url('images/home/hero-elegancia-mob.webp') type('image/webp'),
+                    url('images/home/hero-elegancia-mob.jpg') type('image/jpeg')
+                );
+            }
+
+            .h-ov {
+                background: radial-gradient(circle at center,
+                    rgba(245, 243, 239, 0.9) 0%,
+                    rgba(245, 243, 239, 0.78) 45%,
+                    rgba(245, 243, 239, 0.55) 100%);
             }
 
             .h-content {
                 padding: 0 20px;
+                max-width: 900px;
+                align-items: center;
+                text-align: center;
             }
+
+            .h-kicker { justify-content: center; }
+            .h-divider { margin: 0 auto 32px auto; }
+            .h-sub { margin: 0 auto 40px auto; max-width: 100%; }
+            .h-btns { justify-content: center; }
 
             .h-scroll {
                 display: none;
@@ -2119,7 +2159,7 @@
         "name": "Plaza Carso",
         "description": "El destino de moda, gastronomía y cultura en el corazón de Polanco. Boutiques exclusivas, alta cocina y Roof Garden frente al Museo Soumaya.",
         "url": "https://josegaspard.github.io/plaza-carso/",
-        "image": "https://josegaspard.github.io/plaza-carso/images/home/back-slide-home.jpg",
+        "image": "https://josegaspard.github.io/plaza-carso/images/home/hero-elegancia.jpg",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Lago Zúrich 219-245",

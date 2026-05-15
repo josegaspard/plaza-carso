@@ -147,14 +147,18 @@
             position: relative;
             overflow: hidden;
             cursor: none;
-            background: var(--silver);
+            background: var(--warm);
         }
 
         .s-card-img {
             width: 100%;
             aspect-ratio: 3/4;
-            object-fit: cover;
+            object-fit: contain;
+            object-position: center center;
             display: block;
+            margin: 0 auto;
+            padding: 18px;
+            background: var(--warm);
             filter: grayscale(30%);
             transition: filter .6s, transform .7s;
         }

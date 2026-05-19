@@ -139,82 +139,123 @@
 
         #store-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 3px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
 
         .s-card {
             position: relative;
             overflow: hidden;
             cursor: none;
-            background: var(--warm);
+            background: var(--warm-white);
+            display: flex;
+            flex-direction: column;
+            transition: transform .35s ease, box-shadow .35s ease;
+            box-shadow: 0 1px 0 rgba(10, 9, 9, .04);
+        }
+
+        .s-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px -22px rgba(10, 9, 9, .28);
+        }
+
+        .s-card-imgwrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--smoke);
+            overflow: hidden;
         }
 
         .s-card-img {
             width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
             object-position: center center;
             display: block;
-            margin: 0 auto;
-            padding: 18px;
-            background: var(--warm);
-            filter: grayscale(30%);
-            transition: filter .6s, transform .7s;
+            transition: transform .9s var(--ease-out, ease);
         }
 
         .s-card:hover .s-card-img {
-            filter: grayscale(0%);
-            transform: scale(1.07);
+            transform: scale(1.06);
         }
 
-        .s-card-overlay {
+        .s-card-floorbadge {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(10, 9, 9, .72) 0%, transparent 50%);
-            pointer-events: none;
-            opacity: .8;
-            transition: opacity .4s;
-        }
-
-        .s-card:hover .s-card-overlay {
-            opacity: 1;
+            top: 12px;
+            right: 12px;
+            background: rgba(246, 244, 240, .94);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            padding: 6px 10px;
         }
 
         .s-card-body {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 18px;
-            transition: padding .3s;
+            padding: 18px 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .s-card-cat {
             font-family: var(--sans);
-            font-size: 14px;
+            font-size: 11px;
             font-weight: 500;
             letter-spacing: .3em;
             text-transform: uppercase;
-            color: var(--silver);
-            display: block;
-            margin-bottom: 6px;
+            color: var(--grey);
         }
 
         .s-card-name {
             font-family: var(--serif);
             font-size: 22px;
             font-weight: 300;
-            color: var(--warm-white);
-            line-height: 1.1;
+            color: var(--ink);
+            line-height: 1.15;
+            transition: color .25s;
+        }
+
+        .s-card:hover .s-card-name {
+            color: var(--mid);
         }
 
         .s-card-floor {
             font-family: var(--sans);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 300;
-            color: rgba(255, 255, 255, .5);
-            margin-top: 4px;
+            color: var(--grey);
+            margin-top: 2px;
+        }
+
+        .s-card-detail {
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            opacity: .7;
+            transition: opacity .25s, gap .25s;
+        }
+
+        .s-card:hover .s-card-detail {
+            opacity: 1;
+            gap: 14px;
+        }
+
+        .s-card-detail::after {
+            content: '→';
+            font-size: 14px;
         }
 
         /* Store Modal */
@@ -222,12 +263,13 @@
             position: fixed;
             inset: 0;
             z-index: 900;
-            background: rgba(10, 9, 9, .88);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 9, 9, .92);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 0;
         }
 
         #s-modal.open {
@@ -236,16 +278,15 @@
 
         #s-modal-box {
             background: var(--warm-white);
-            max-width: 860px;
             width: 100%;
+            height: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            max-height: 88vh;
             overflow: hidden;
             position: relative;
-            transform: translateY(30px) scale(.97);
+            transform: translateY(20px);
             opacity: 0;
-            transition: transform .4s ease, opacity .4s ease;
+            transition: transform .45s ease, opacity .45s ease;
         }
 
         #s-modal.open #s-modal-box {
@@ -254,22 +295,104 @@
         }
 
         .smod-img {
+            position: relative;
             overflow: hidden;
+            background: var(--smoke);
+            height: 100%;
+            cursor: none;
         }
 
         .smod-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center center;
             display: block;
+            transition: opacity .4s ease;
+        }
+
+        .smod-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(246, 244, 240, .92);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            border: none;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink);
+            opacity: 0;
+            transition: opacity .25s, background .2s;
+            z-index: 3;
+        }
+
+        .smod-img:hover .smod-nav {
+            opacity: 1;
+        }
+
+        .smod-nav:hover {
+            background: var(--ink);
+            color: var(--warm-white);
+        }
+
+        .smod-nav.prev { left: 14px; }
+        .smod-nav.next { right: 14px; }
+
+        .smod-counter {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 9, 9, .55);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: var(--warm-white);
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: 7px 14px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .smod-hint {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: rgba(246, 244, 240, .92);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            opacity: 0;
+            transition: opacity .25s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .smod-img:hover .smod-hint {
+            opacity: 1;
         }
 
         .smod-body {
-            padding: 52px 44px;
+            padding: 64px 56px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             overflow-y: auto;
+            max-width: 640px;
         }
 
         #smod-cat {
@@ -521,32 +644,63 @@
 
             #store-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 2px;
+                gap: 14px;
+            }
+
+            .s-card-imgwrap {
+                aspect-ratio: 4/3;
+            }
+
+            .s-card-body {
+                padding: 14px 14px 18px;
             }
 
             .s-card-name {
-                font-size: 16px;
+                font-size: 18px;
+            }
+
+            .s-card-detail {
+                font-size: 9px;
+                letter-spacing: .22em;
+            }
+
+            #s-modal {
+                padding: 0;
             }
 
             #s-modal-box {
                 grid-template-columns: 1fr;
-                max-height: 90vh;
+                grid-template-rows: 52vh 1fr;
+                height: 100%;
+                max-height: 100%;
             }
 
             .smod-img {
-                max-height: 220px;
+                height: 100%;
+                min-height: 0;
+            }
+
+            .smod-nav {
+                opacity: 1 !important;
+                width: 40px;
+                height: 40px;
             }
 
             .smod-body {
-                padding: 24px 20px;
+                padding: 28px 22px 32px;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                max-width: 100%;
             }
 
             .smod-close {
                 min-width: 44px;
                 min-height: 44px;
                 z-index: 10;
+            }
+
+            #smod-name {
+                font-size: clamp(28px, 7vw, 36px);
             }
 
             .espacios-band {
@@ -664,119 +818,39 @@
     <section class="dir-section">
         <div class="dir-inner">
             <p class="dir-count" id="dir-count">Mostrando todas las tiendas</p>
-            <!-- INTEGRATION: <?php echo directorioCC($CentroComercial, $giroComercial); ?> -->
-            <div id="store-grid">
-                <div class="s-card" data-cat="Moda"
-                    onclick="openMod('Armani Exchange','Moda','images/stores/armani-exchange.jpg','Colecciones contemporáneas de la icónica casa italiana. Estilo urbano con sofisticación mediterránea.','PB','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/armani-exchange.jpg" alt="Armani Exchange" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Moda</span>
-                        <div class="s-card-name">Armani Exchange</div>
-                        <div class="s-card-floor">Planta Baja</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Moda"
-                    onclick="openMod('Tommy Hilfiger','Moda','images/stores/tommy-hilfiger.jpg','El clásico americano con un toque global y cosmopolita.','PA','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/tommy-hilfiger.jpg" alt="Tommy Hilfiger" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Moda</span>
-                        <div class="s-card-name">Tommy Hilfiger</div>
-                        <div class="s-card-floor">Planta Alta</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Joyería"
-                    onclick="openMod('Swarovski','Joyería','images/stores/swarovski.jpg','Cristales y joyas de precisión austríaca desde 1895.','PB','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/swarovski.jpg" alt="Swarovski" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Joyería</span>
-                        <div class="s-card-name">Swarovski</div>
-                        <div class="s-card-floor">Planta Baja</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Tecnología"
-                    onclick="openMod('Telcel','Tecnología','images/stores/telcel.jpg','Conectividad y tecnología de vanguardia.','PA','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/telcel.jpg" alt="Telcel" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Tecnología</span>
-                        <div class="s-card-name">Telcel</div>
-                        <div class="s-card-floor">Planta Alta</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Gastronomía"
-                    onclick="openMod('Roof Garden Restaurants','Gastronomía','images/stores/roof-garden.jpg','Alta cocina con vista al Museo Soumaya y la ciudad.','Roof Garden','11:00–23:00')">
-                    <img class="s-card-img" src="images/stores/roof-garden.jpg" alt="Area de gastronomia y restaurantes en Plaza Carso Polanco" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Gastronomía</span>
-                        <div class="s-card-name">Restaurantes RG</div>
-                        <div class="s-card-floor">Roof Garden</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Entretenimiento"
-                    onclick="openMod('Cinépolis','Entretenimiento','images/stores/cinepolis.jpg','Experiencia cinematográfica de primer nivel en Polanco.','PA','11:00–23:00')">
-                    <img class="s-card-img" src="images/stores/cinepolis.jpg" alt="Cinépolis" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Entretenimiento</span>
-                        <div class="s-card-name">Cinépolis</div>
-                        <div class="s-card-floor">Planta Alta</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Moda"
-                    onclick="openMod('Calvin Klein','Moda','images/stores/calvin-klein.jpg','Diseño minimalista, sofisticado y atemporal.','PB','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/calvin-klein.jpg" alt="Calvin Klein" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Moda</span>
-                        <div class="s-card-name">Calvin Klein</div>
-                        <div class="s-card-floor">Planta Baja</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Gastronomía"
-                    onclick="openMod('Sanborns','Gastronomía','images/stores/sanborns.jpg','Café, restaurante y librería icónica de México.','PB','8:00–22:00')">
-                    <img class="s-card-img" src="images/stores/sanborns.jpg" alt="Sanborns" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Gastronomía</span>
-                        <div class="s-card-name">Sanborns</div>
-                        <div class="s-card-floor">Planta Baja</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Salud"
-                    onclick="openMod('GNC','Salud','images/stores/gnc.jpg','Suplementos y nutrición para tu bienestar.','PA','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/gnc.jpg" alt="GNC" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Salud</span>
-                        <div class="s-card-name">GNC</div>
-                        <div class="s-card-floor">Planta Alta</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Departamental"
-                    onclick="openMod('Liverpool','Departamental','images/stores/liverpool.jpg','El favorito de México en moda, tecnología y hogar.','PB–PA','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/liverpool.jpg" alt="Liverpool" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Departamental</span>
-                        <div class="s-card-name">Liverpool</div>
-                        <div class="s-card-floor">PB – PA</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Moda"
-                    onclick="openMod('ZARA','Moda','images/stores/zara.jpg','Las últimas tendencias internacionales cada semana.','PA','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/zara.jpg" alt="ZARA" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Moda</span>
-                        <div class="s-card-name">ZARA</div>
-                        <div class="s-card-floor">Planta Alta</div>
-                    </div>
-                </div>
-                <div class="s-card" data-cat="Gastronomía"
-                    onclick="openMod('Food Court','Gastronomía','images/stores/food-court.jpg','Amplia selección de propuestas gastronómicas en un ambiente abierto.','Nivel 2','11:00–21:00')">
-                    <img class="s-card-img" src="images/stores/food-court.jpg" alt="Patio de comidas gourmet en Plaza Carso" loading="lazy">
-                    <div class="s-card-overlay"></div>
-                    <div class="s-card-body"><span class="s-card-cat">Gastronomía</span>
-                        <div class="s-card-name">Food Court</div>
-                        <div class="s-card-floor">Nivel 2</div>
-                    </div>
+            <div id="store-grid"></div>
+            <div id="no-results" style="display:none;text-align:center;padding:80px 20px;font-family:var(--serif);font-style:italic;font-size:28px;color:var(--grey);">Sin resultados</div>
+        </div>
+    </section>
+
+    <!-- STORE MODAL -->
+    <div id="s-modal" onclick="closeMod(event)">
+        <div id="s-modal-box" onclick="event.stopPropagation()">
+            <div class="smod-img">
+                <img id="smod-img" src="" alt="" onclick="nextStore()" title="Siguiente tienda">
+                <div class="smod-hint">→ Siguiente</div>
+                <button class="smod-nav prev" onclick="prevStore()" aria-label="Tienda anterior">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="smod-nav next" onclick="nextStore()" aria-label="Tienda siguiente">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="smod-counter" id="smod-counter">1 / 1</div>
+            </div>
+            <div class="smod-body">
+                <button class="smod-close" onclick="closeMod()" aria-label="Cerrar">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                </button>
+                <span id="smod-cat"></span>
+                <h2 id="smod-name"></h2>
+                <p id="smod-desc"></p>
+                <div class="smod-meta">
+                    <div class="smod-meta-item"><span>Ubicación</span><span id="smod-loc"></span></div>
+                    <div class="smod-meta-item"><span>Horario</span><span id="smod-time"></span></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <section class="espacios-section">
         <div class="espacios-inner">
@@ -861,20 +935,169 @@
         }
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
+        // ── DIRECTORIO DATA ──────────────────────────────────────────
+        const STORES = [
+            { name:"Armani Exchange", cat:"Moda", img:"images/stores/armani-exchange.jpg", desc:"Colecciones contemporáneas de la icónica casa italiana. Estilo urbano con sofisticación mediterránea.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbg-maxazria.jpg", desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Calvin Klein", cat:"Moda", img:"images/stores/calvin-klein.jpg", desc:"Diseño minimalista, sofisticado y atemporal. La esencia de la moda americana moderna.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"DAX", cat:"Moda", img:"images/stores/dax.jpg", desc:"Calzado y accesorios de manufactura mexicana con un acabado clásico y refinado.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Dolphy", cat:"Moda", img:"images/stores/dolphy.jpg", desc:"Calzado de dama de diseño nacional. Comodidad, color y tendencia en cada par.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Hello Kitty", cat:"Moda", img:"images/stores/hello-kitty.jpg", desc:"El universo Sanrio en una tienda dedicada. Accesorios, papelería y lifestyle para fans de todas las edades.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Jimmy Joe", cat:"Moda", img:"images/stores/jimmy-joe.jpg", desc:"Moda casual con espíritu joven. Looks listos para llevar todos los días.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Julio", cat:"Moda", img:"images/stores/julio.jpg", desc:"Casa de moda peruana para el hombre moderno. Sastrería contemporánea y básicos premium.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Loma", cat:"Moda", img:"images/stores/loma.jpg", desc:"Boutique boutique con piezas únicas y curaduría enfocada en diseñadores emergentes.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Scappino", cat:"Moda", img:"images/stores/scappino.jpg", desc:"Trajes y vestir formal de inspiración italiana. La marca mexicana del hombre elegante desde 1960.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"SOHO", cat:"Moda", img:"images/stores/soho.jpg", desc:"Boutique de autor con curaduría exclusiva. Una de las tiendas más icónicas de Polanco.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Tommy Hilfiger", cat:"Moda", img:"images/stores/tommy-hilfiger.jpg", desc:"El clásico americano con un toque global y cosmopolita.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"ZARA", cat:"Moda", img:"images/stores/zara.jpg", desc:"Las últimas tendencias internacionales cada semana en tienda.", loc:"Planta Alta", time:"11:00–21:00" },
+
+            { name:"Omega", cat:"Joyería", img:"images/stores/omega.jpg", desc:"Relojería suiza de alta precisión desde 1848. Iconos como el Speedmaster y el Seamaster.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Swarovski", cat:"Joyería", img:"images/stores/swarovski.jpg", desc:"Cristales y joyas de precisión austríaca desde 1895.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"TAG Heuer", cat:"Joyería", img:"images/stores/tag-heuer.jpg", desc:"Relojería suiza de inspiración deportiva y herencia automovilística. Precisión y diseño.", loc:"Planta Baja", time:"11:00–21:00" },
+
+            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.jpg", desc:"Tecnología wearable, GPS y dispositivos para deporte y aventura.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Steren", cat:"Tecnología", img:"images/stores/steren.jpg", desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Telcel", cat:"Tecnología", img:"images/stores/telcel.jpg", desc:"Conectividad y tecnología móvil de vanguardia.", loc:"Planta Alta", time:"11:00–21:00" },
+
+            { name:"Acuario Inbursa", cat:"Entretenimiento", img:"images/stores/aquario-inbursa.jpg", desc:"El acuario más grande de América Latina. Tres niveles con tiburones, pingüinos y vida marina.", loc:"Plaza Carso", time:"10:00–18:00" },
+            { name:"Cinépolis", cat:"Entretenimiento", img:"images/stores/cinepolis.jpg", desc:"Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", loc:"Planta Alta", time:"11:00–23:00" },
+            { name:"Museo Soumaya · Inbursa", cat:"Entretenimiento", img:"images/stores/inbursa.jpg", desc:"Edificio icónico con la colección de arte privada más importante de México. Entrada gratuita.", loc:"Plaza Carso", time:"10:30–18:30" },
+            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.jpg", desc:"Música, cine, libros y cultura pop en un solo lugar.", loc:"Planta Alta", time:"11:00–21:00" },
+
+            { name:"Sport City", cat:"Salud", img:"images/stores/sport-city.jpg", desc:"Club deportivo premium con equipo de última generación, alberca y clases grupales.", loc:"Planta Alta", time:"05:30–22:30" },
+            { name:"GNC", cat:"Salud", img:"images/stores/gnc.jpg", desc:"Suplementos y nutrición para tu bienestar.", loc:"Planta Alta", time:"11:00–21:00" },
+
+            { name:"Liverpool", cat:"Departamental", img:"images/stores/liverpool.jpg", desc:"El favorito de México en moda, tecnología y hogar.", loc:"PB – PA", time:"11:00–21:00" },
+
+            { name:"Applebee's", cat:"Gastronomía", img:"images/stores/applebees.jpg", desc:"Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", loc:"Planta Alta", time:"12:00–23:00" },
+            { name:"Asaderos Grill", cat:"Gastronomía", img:"images/stores/asaderos-grill.jpg", desc:"Cortes de carne a la parrilla con tradición norteña.", loc:"Planta Alta", time:"12:00–23:00" },
+            { name:"Carolo", cat:"Gastronomía", img:"images/stores/carolo.jpg", desc:"Cocina italiana con horno de leña. Pizzas, pastas frescas y antipastos.", loc:"Roof Garden", time:"13:00–23:00" },
+            { name:"City Café", cat:"Gastronomía", img:"images/stores/city-cafe.jpg", desc:"Café de especialidad, desayunos y postres en un ambiente urbano.", loc:"Planta Baja", time:"07:30–22:00" },
+            { name:"De Costa a Costa", cat:"Gastronomía", img:"images/stores/de-costa-a-costa.jpg", desc:"Mariscos frescos y cocina marinera con recetas de los litorales mexicanos.", loc:"Planta Alta", time:"12:00–22:00" },
+            { name:"Domino's Pizza", cat:"Gastronomía", img:"images/stores/dominos.jpg", desc:"La pizza favorita del mundo, lista en minutos.", loc:"Planta Baja", time:"11:00–23:00" },
+            { name:"Dynasty", cat:"Gastronomía", img:"images/stores/dynasty.jpg", desc:"Cocina cantonesa y oriental con técnicas tradicionales.", loc:"Planta Alta", time:"12:00–22:00" },
+            { name:"Food Court", cat:"Gastronomía", img:"images/stores/food-court.jpg", desc:"Amplia selección de propuestas gastronómicas en un ambiente abierto.", loc:"Nivel 2", time:"11:00–21:00" },
+            { name:"La Crêpe", cat:"Gastronomía", img:"images/stores/la-crepe.jpg", desc:"Crêpes dulces y salados al estilo francés. Una pausa parisina en Polanco.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.jpg", desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica.", loc:"Planta Alta", time:"13:00–23:00" },
+            { name:"Odiseo México", cat:"Gastronomía", img:"images/stores/odiseo-mexico.jpg", desc:"Steakhouse con cortes premium, ambiente sofisticado y carta de vinos curada.", loc:"Roof Garden", time:"13:00–24:00" },
+            { name:"Okai Poké", cat:"Gastronomía", img:"images/stores/okai-poke.jpg", desc:"Poke bowls hawaianos con ingredientes frescos y combinaciones personalizadas.", loc:"Planta Baja", time:"11:00–22:00" },
+            { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.jpg", desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Roof Garden", time:"13:00–23:00" },
+            { name:"Pío", cat:"Gastronomía", img:"images/stores/pio.jpg", desc:"Pollo rostizado con receta de la casa y guarniciones reconfortantes.", loc:"Planta Baja", time:"12:00–22:00" },
+            { name:"Poxtli", cat:"Gastronomía", img:"images/stores/poxtli.jpg", desc:"Cocina mexicana de raíces con presentación contemporánea. Mezcales y vinos de autor.", loc:"Planta Alta", time:"13:00–23:00" },
+            { name:"Restaurantes RG", cat:"Gastronomía", img:"images/stores/roof-garden.jpg", desc:"Alta cocina con vista al Museo Soumaya y la ciudad.", loc:"Roof Garden", time:"11:00–23:00" },
+            { name:"Sanborns", cat:"Gastronomía", img:"images/stores/sanborns.jpg", desc:"Café, restaurante y librería icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"Starbucks", cat:"Gastronomía", img:"images/stores/starbucks.jpg", desc:"Café de especialidad, bebidas frías y un lugar para encontrarse.", loc:"Planta Baja", time:"06:30–22:00" },
+            { name:"Sushiitto", cat:"Gastronomía", img:"images/stores/sushiitto.jpg", desc:"Sushi fusión con rolls clásicos y creaciones de la casa.", loc:"Planta Alta", time:"12:00–22:00" },
+            { name:"Vapiano", cat:"Gastronomía", img:"images/stores/vapiano.jpg", desc:"Pasta y pizza italiana frescas, preparadas frente a ti.", loc:"Planta Alta", time:"12:00–23:00" }
+        ];
+
+        let _activeCat = 'Todos';
+        let _activeSearch = '';
+        let _visible = []; // filtered subset (objects from STORES)
+        let _modalIdx = 0;
+
+        function _matches(s) {
+            const catOk = _activeCat === 'Todos' || s.cat === _activeCat;
+            const q = _activeSearch.trim().toLowerCase();
+            const qOk = !q || s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q);
+            return catOk && qOk;
+        }
+
+        function _renderGrid() {
+            _visible = STORES.filter(_matches);
+            const grid = document.getElementById('store-grid');
+            const empty = document.getElementById('no-results');
+            if (_visible.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+            } else {
+                empty.style.display = 'none';
+                grid.innerHTML = _visible.map((s, i) => `
+                    <div class="s-card" data-cat="${s.cat}" onclick="openMod(${i})">
+                        <div class="s-card-imgwrap">
+                            <img class="s-card-img" src="${s.img}" alt="${s.name} en Plaza Carso" loading="lazy">
+                            <span class="s-card-floorbadge">${s.loc}</span>
+                        </div>
+                        <div class="s-card-body">
+                            <span class="s-card-cat">${s.cat}</span>
+                            <div class="s-card-name">${s.name}</div>
+                            <span class="s-card-detail">Ver detalle</span>
+                        </div>
+                    </div>
+                `).join('');
+                // re-bind custom cursor hover on freshly-rendered cards
+                if (window.matchMedia('(pointer:fine)').matches) {
+                    document.querySelectorAll('#store-grid .s-card').forEach(el => {
+                        el.addEventListener('mouseenter', () => cur && cur.classList.add('hover'));
+                        el.addEventListener('mouseleave', () => cur && cur.classList.remove('hover'));
+                    });
+                }
+            }
+            const n = _visible.length;
+            const ct = document.getElementById('dir-count');
+            if (_activeSearch) {
+                ct.textContent = `${n} resultado${n !== 1 ? 's' : ''} para "${_activeSearch}"`;
+            } else if (_activeCat === 'Todos') {
+                ct.textContent = `${STORES.length} tiendas y experiencias`;
+            } else {
+                ct.textContent = `${n} tienda${n !== 1 ? 's' : ''} en ${_activeCat}`;
+            }
+        }
+
         function filt(cat, btn) {
-            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-            let v = 0; document.querySelectorAll('.s-card').forEach(c => { const s = cat === 'Todos' || c.dataset.cat === cat; c.style.display = s ? '' : 'none'; if (s) v++; });
-            document.getElementById('dir-count').textContent = cat === 'Todos' ? 'Mostrando todas las tiendas' : `${v} tienda${v !== 1 ? 's' : ''} en ${cat}`;
+            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            _activeCat = cat;
+            _renderGrid();
         }
-        function doSearch(q) { const l = q.toLowerCase(); let v = 0; document.querySelectorAll('.s-card').forEach(c => { const n = (c.querySelector('.s-card-name') || {}).innerText || ''; const s = n.toLowerCase().includes(l); c.style.display = s ? '' : 'none'; if (s) v++; }); document.getElementById('dir-count').textContent = q ? `${v} resultado${v !== 1 ? 's' : ''} para "${q}"` : 'Mostrando todas las tiendas'; }
-        function openMod(name, cat, img, desc, loc, time) {
-            document.getElementById('smod-name').textContent = name; document.getElementById('smod-cat').textContent = cat;
-            document.getElementById('smod-img').src = img; document.getElementById('smod-img').alt = name;
-            document.getElementById('smod-desc').textContent = desc; document.getElementById('smod-loc').textContent = loc; document.getElementById('smod-time').textContent = time;
-            document.getElementById('s-modal').classList.add('open'); document.body.style.overflow = 'hidden';
+
+        function doSearch(q) {
+            _activeSearch = q || '';
+            _renderGrid();
         }
-        function closeMod(e) { if (e && e.target !== document.getElementById('s-modal')) return; document.getElementById('s-modal').classList.remove('open'); document.body.style.overflow = ''; }
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('s-modal').classList.remove('open'); document.body.style.overflow = ''; } });
+
+        function _applyStore(s) {
+            document.getElementById('smod-name').textContent = s.name;
+            document.getElementById('smod-cat').textContent = s.cat;
+            document.getElementById('smod-desc').textContent = s.desc;
+            document.getElementById('smod-loc').textContent = s.loc;
+            document.getElementById('smod-time').textContent = s.time;
+            const imgEl = document.getElementById('smod-img');
+            imgEl.style.opacity = '0';
+            const pre = new Image();
+            pre.onload = pre.onerror = () => {
+                imgEl.src = s.img;
+                imgEl.alt = s.name;
+                requestAnimationFrame(() => { imgEl.style.opacity = '1'; });
+            };
+            pre.src = s.img;
+            document.getElementById('smod-counter').textContent = `${_modalIdx + 1} / ${_visible.length}`;
+        }
+
+        function openMod(idx) {
+            if (!_visible.length) return;
+            _modalIdx = ((idx % _visible.length) + _visible.length) % _visible.length;
+            _applyStore(_visible[_modalIdx]);
+            document.getElementById('s-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function nextStore() { if (!_visible.length) return; _modalIdx = (_modalIdx + 1) % _visible.length; _applyStore(_visible[_modalIdx]); }
+        function prevStore() { if (!_visible.length) return; _modalIdx = (_modalIdx - 1 + _visible.length) % _visible.length; _applyStore(_visible[_modalIdx]); }
+        function closeMod(e) {
+            if (e && e.target.closest('#s-modal-box')) return;
+            document.getElementById('s-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => {
+            const modal = document.getElementById('s-modal');
+            if (!modal || !modal.classList.contains('open')) return;
+            if (e.key === 'Escape') closeMod();
+            if (e.key === 'ArrowRight') nextStore();
+            if (e.key === 'ArrowLeft') prevStore();
+        });
+
+        // Initial render
+        _renderGrid();
     </script>
 
     <script>

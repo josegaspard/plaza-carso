@@ -643,13 +643,18 @@
             font-weight: 400;
             letter-spacing: .45em;
             text-transform: uppercase;
-            color: #fff;
+            color: #ffffff !important;
             padding: 0 32px;
             flex-shrink: 0;
         }
 
+        .marquee .mi,
+        .marquee .md {
+            color: #ffffff !important;
+        }
+
         .md {
-            color: #fff;
+            color: #ffffff !important;
         }
 
         @keyframes mq {
@@ -1016,11 +1021,12 @@
 
         .roof-desc {
             font-family: var(--sans);
-            font-size: 14px;
+            font-size: clamp(18px, 1.4vw, 22px);
             font-weight: 300;
-            color: rgba(245, 243, 239, .6);
-            line-height: 1.85;
+            color: rgba(245, 243, 239, .78);
+            line-height: 1.75;
             margin-bottom: 38px;
+            max-width: 620px;
         }
 
         /* ─── NOVEDADES ───────────────────────────────── */
@@ -1153,10 +1159,11 @@
 
         .nl-sub {
             font-family: var(--sans);
-            font-size: 18px;
+            font-size: clamp(20px, 1.5vw, 24px);
             font-weight: 300;
             color: var(--grey);
             margin-bottom: 40px;
+            line-height: 1.5;
         }
 
         .nl-form {
@@ -1864,7 +1871,7 @@
     <!-- PANELS -->
     <section class="panels">
         <div class="panel rv">
-            <div class="p-img"><img src="images/home/pasillo.jpg" alt="Pasillos de boutiques de lujo en Plaza Carso Polanco" loading="lazy">
+            <div class="p-img"><img src="images/home/julio.jpg" alt="Boutique de moda en Plaza Carso Polanco" loading="lazy">
             </div>
             <div class="p-body">
                 <span class="p-num">01</span>

@@ -818,7 +818,7 @@
 
     <section class="dir-section">
         <div class="dir-inner">
-            <p class="dir-count" id="dir-count">Mostrando todas las tiendas</p>
+            <p class="dir-count" id="dir-count">Todas las marcas. En un solo lugar.</p>
             <div id="store-grid"></div>
             <div id="no-results" style="display:none;text-align:center;padding:80px 20px;font-family:var(--serif);font-style:italic;font-size:28px;color:var(--grey);">Sin resultados</div>
         </div>
@@ -857,8 +857,7 @@
         <div class="espacios-inner">
             <div class="espac-text">
                 <h3>¿Tu marca<br>en Plaza Carso?</h3>
-                <p>Locales disponibles en distintos niveles con las mejores condiciones de renta en el corazón de
-                    Polanco. Contáctanos.</p>
+                <p>Locales disponibles en distintos niveles, en el corazón de Polanco. Conversemos.</p>
             </div>
             <div class="espac-contacts">
                 <a href="tel:4976 0346" class="espac-link">
@@ -885,7 +884,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
+                <p class="footer-brand-desc">Moda, gastronomía y Roof Garden en el corazón de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -1041,7 +1040,7 @@
             if (_activeSearch) {
                 ct.textContent = `${n} resultado${n !== 1 ? 's' : ''} para "${_activeSearch}"`;
             } else if (_activeCat === 'Todos') {
-                ct.textContent = `${STORES.length} tiendas y experiencias`;
+                ct.textContent = 'Todas las marcas. En un solo lugar.';
             } else {
                 ct.textContent = `${n} tienda${n !== 1 ? 's' : ''} en ${_activeCat}`;
             }

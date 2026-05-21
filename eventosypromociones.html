@@ -500,17 +500,17 @@
         <div class="page-hero-img"
             style="background-image:url('images/home/hero-eventos.jpg');background-position:center 35%;"></div>
         <div class="page-hero-content">
-            <span class="page-kicker">Agenda & Actividades</span>
-            <h1 class="page-h1">Novedades<br>& Eventos.</h1>
-            <p class="page-sub">Experiencias, activaciones y las mejores propuestas gastronómicas y culturales de
-                Polanco.</p>
+            <span class="page-kicker">En Plaza Carso</span>
+            <h1 class="page-h1">Novedades<br>y aperturas.</h1>
+            <p class="page-sub">Experiencias, activaciones y propuestas gastronómicas y culturales. Lo que está
+                pasando, en una sola pantalla.</p>
         </div>
     </section>
 
     <div class="tab-bar">
         <div class="tab-inner">
             <button class="t-btn active" onclick="switchTab('todos',this)">Todos</button>
-            <button class="t-btn" onclick="switchTab('eventos',this)">Eventos</button>
+            <button class="t-btn" onclick="switchTab('eventos',this)">Nuevas Aperturas</button>
             <button class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
         </div>
     </div>
@@ -520,27 +520,27 @@
             <!-- INTEGRATION: <?php echo publicaciones($CentroComercial); ?> genera .e-card con class="publicidad" -->
             <div class="editorial-grid" id="editGrid">
                 <a class="e-card large" data-tab="eventos"
-                    onclick="openPub('Roof Garden · Primavera 2026','Evento Especial','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','images/home/evento-41.jpg',event)">
-                    <img src="images/home/evento-41.jpg" alt="Evento especial en el Roof Garden de Plaza Carso Polanco" loading="lazy">
+                    onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','images/home/evento-41.jpg',event)">
+                    <img src="images/home/evento-41.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Evento Especial</span>
-                        <div class="e-title">Roof Garden · Temporada de Primavera 2026</div>
+                    <div class="e-card-body"><span class="e-tag">Temporada</span>
+                        <div class="e-title">Primavera en el Roof Garden</div>
                     </div>
                 </a>
                 <a class="e-card medium" data-tab="eventos"
-                    onclick="openPub('Arte & Cultura','Exposición','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','images/home/evento-42.jpg',event)">
-                    <img src="images/home/evento-42.jpg" alt="Exposicion de arte y cultura en Plaza Carso Polanco" loading="lazy">
+                    onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','images/home/evento-42.jpg',event)">
+                    <img src="images/home/evento-42.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Cultural</span>
-                        <div class="e-title">Arte & Cultura en Plaza Carso</div>
+                    <div class="e-card-body"><span class="e-tag">Cultura</span>
+                        <div class="e-title">Arte y cultura, todo el año</div>
                     </div>
                 </a>
                 <a class="e-card medium" data-tab="promociones"
-                    onclick="openPub('Temporada de Rebajas 2026','Promoción','Las boutiques más deseadas con descuentos exclusivos. Hasta 40% en marcas seleccionadas por tiempo limitado.','images/home/evento-43.jpg',event)">
-                    <img src="images/home/evento-43.jpg" alt="Temporada de rebajas y promociones en Plaza Carso Polanco" loading="lazy">
+                    onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','images/home/evento-43.jpg',event)">
+                    <img src="images/home/evento-43.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Promoción</span>
-                        <div class="e-title">Temporada de Rebajas 2026</div>
+                    <div class="e-card-body"><span class="e-tag">Temporada</span>
+                        <div class="e-title">Rebajas 2026</div>
                     </div>
                 </a>
                 <a class="e-card small" data-tab="eventos"
@@ -552,7 +552,7 @@
                     </div>
                 </a>
                 <a class="e-card small" data-tab="promociones"
-                    onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la alta cocina. Chefs invitados, maridajes y degustaciones exclusivas en Roof Garden.','images/home/evento-45.jpg',event)">
+                    onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','images/home/evento-45.jpg',event)">
                     <img src="images/home/evento-45.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><span class="e-tag">Gastronomía</span>
@@ -560,7 +560,7 @@
                     </div>
                 </a>
                 <a class="e-card small" data-tab="eventos"
-                    onclick="openPub('Nuevas Aperturas','Novedad','Las marcas más esperadas llegan a Plaza Carso. Descubre antes que nadie las boutiques que se suman a nuestro directorio este temporada.','images/home/evento-46.jpg',event)">
+                    onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','images/home/evento-46.jpg',event)">
                     <img src="images/home/evento-46.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><span class="e-tag">Nuevas Aperturas</span>
@@ -575,8 +575,7 @@
         <div class="espacios-inner">
             <div class="espac-text">
                 <h3>¿Tu marca<br>en Plaza Carso?</h3>
-                <p>Locales disponibles en distintos niveles con las mejores condiciones de renta en el corazón de
-                    Polanco. Contáctanos.</p>
+                <p>Locales disponibles en distintos niveles, en el corazón de Polanco. Conversemos.</p>
             </div>
             <div class="espac-contacts">
                 <a href="tel:4976 0346" class="espac-link">
@@ -603,7 +602,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Boutiques exclusivas, alta cocina y el Roof Garden más icónico de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
+                <p class="footer-brand-desc">Moda, gastronomía y Roof Garden en el corazón de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>

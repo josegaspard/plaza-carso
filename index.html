@@ -1805,7 +1805,7 @@
             </div>
             <div class="h-strip-item">
                 <span class="h-strip-label">Tiendas</span>
-                <span class="h-strip-val">+120 tiendas</span>
+                <span class="h-strip-val">120 tiendas</span>
             </div>
             <div class="h-strip-item">
                 <span class="h-strip-label">Estacionamiento</span>
@@ -1849,7 +1849,7 @@
                 día a día.</em></p>
         <div class="stats rv rv-d2">
             <div class="sc">
-                <div class="sn" data-count="120">0</div>
+                <div class="sn" data-count="120">120</div>
                 <div class="sl">Tiendas</div>
             </div>
             <div class="sc">
@@ -2141,7 +2141,7 @@
                 trigger: el, start: 'top 85%', once: true, onEnter: () => {
                     gsap.fromTo({ v: 0 }, {
                         v: target, duration: 1.6, ease: 'power2.out',
-                        onUpdate: function () { el.textContent = '+' + Math.round(this.targets()[0].v); }
+                        onUpdate: function () { el.textContent = Math.round(this.targets()[0].v); }
                     });
                 }
             });

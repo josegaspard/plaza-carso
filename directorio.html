@@ -170,9 +170,11 @@
         .s-card-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center center;
             display: block;
+            padding: 6px;
+            background: var(--warm-white);
             transition: transform .9s var(--ease-out, ease);
         }
 
@@ -305,9 +307,10 @@
         .smod-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center center;
             display: block;
+            background: var(--warm-white);
             transition: opacity .4s ease;
         }
 
@@ -963,6 +966,7 @@
             // Moda
             { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbg-maxazria.jpg", desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"Julio", cat:"Moda", img:"images/stores/julio.jpg", desc:"Casa de moda contemporánea con colección primavera-verano y básicos premium.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Pineda Covalín", cat:"Moda", img:"images/stores/pineda-covalin.webp", desc:"Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte y la cultura de México.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"Scappino", cat:"Moda", img:"images/stores/scappino.jpg", desc:"Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"SOHO", cat:"Moda", img:"images/stores/soho.jpg", desc:"Boutique de vestidos de noche, ocasión especial y trajes para caballero. Curaduría premium.", loc:"Planta Alta", time:"11:00–21:00" },
 
@@ -971,26 +975,33 @@
             { name:"TAG Heuer", cat:"Joyería", img:"images/stores/tag-heuer.jpg", desc:"Relojería suiza de inspiración deportiva y herencia automovilística. Designed to Win.", loc:"Planta Baja", time:"11:00–21:00" },
 
             // Tecnología
-            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.jpg", desc:"Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Huawei", cat:"Tecnología", img:"images/stores/huawei.jpg", desc:"Discover Huawei: smartphones, smartwatches y dispositivos. Pura 80 Ultra disponible.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"Steren Shop", cat:"Tecnología", img:"images/stores/steren.jpg", desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.webp", desc:"Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Huawei", cat:"Tecnología", img:"images/stores/huawei.webp", desc:"Discover Huawei: smartphones, smartwatches y dispositivos. Pura 80 Ultra disponible.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Samsung", cat:"Tecnología", img:"images/stores/samsung.webp", desc:"Galaxy Experience Store. Smartphones, tabletas, wearables y el ecosistema Galaxy AI con demostraciones en vivo.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Steren Shop", cat:"Tecnología", img:"images/stores/steren.webp", desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Alta", time:"11:00–21:00" },
             { name:"Telcel", cat:"Tecnología", img:"images/stores/telcel.jpg", desc:"Conectividad 5G y tecnología móvil de vanguardia.", loc:"Planta Alta", time:"11:00–21:00" },
 
             // Entretenimiento
             { name:"Acuario Interactivo", cat:"Entretenimiento", img:"images/stores/acuario-interactivo.jpg", desc:"Aquadoc Interactivo: experiencia inmersiva con vida marina y túnel acuático para toda la familia.", loc:"Planta Alta", time:"11:00–20:00" },
             { name:"Cinépolis", cat:"Entretenimiento", img:"images/stores/cinepolis.jpg", desc:"Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", loc:"Planta Alta", time:"11:00–23:00" },
-            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.jpg", desc:"Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.webp", desc:"Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", loc:"Planta Alta", time:"11:00–21:00" },
             { name:"Odisea México", cat:"Entretenimiento", img:"images/stores/odiseo-mexico.jpg", desc:"Atracción familiar con tren temático y recorrido interactivo por destinos icónicos de México.", loc:"Planta Alta", time:"11:00–20:00" },
 
             // Salud y bienestar
             { name:"DAX", cat:"Salud", img:"images/stores/dax.jpg", desc:"Perfumería, cosméticos y dermocosmética. Marcas internacionales y servicio de asesoría.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Moor Spa & Nails", cat:"Salud", img:"images/stores/moor-spa-nails.webp", desc:"Spa boutique con servicios de manicura, pedicura, masajes y tratamientos faciales. Una pausa de bienestar en Polanco.", loc:"Planta Alta", time:"10:00–21:00" },
             { name:"Sport City", cat:"Salud", img:"images/stores/sport-city.jpg", desc:"Fitness Club premium con equipo de última generación, clases grupales y áreas funcionales.", loc:"Planta Alta", time:"05:30–22:30" },
+            { name:"Svenson", cat:"Salud", img:"images/stores/svenson.webp", desc:"Clínica capilar líder en tratamientos contra la caída del cabello, diagnóstico tricológico y micropigmentación.", loc:"Planta Alta", time:"10:00–20:00" },
+
+            // Gastronomía adicional
+            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable para cualquier momento.", loc:"Planta Baja", time:"11:00–22:00" },
 
             // Departamental
-            { name:"Sanborns", cat:"Departamental", img:"images/stores/sanborns.jpg", desc:"Café, restaurante, librería, perfumería y tienda departamental icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"Miniso", cat:"Departamental", img:"images/stores/miniso.webp", desc:"Marca lifestyle japonesa con productos de diseño minimalista: hogar, belleza, electrónicos, papelería y accesorios.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Sanborns", cat:"Departamental", img:"images/stores/sanborns.webp", desc:"Café, restaurante, librería, perfumería y tienda departamental icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
 
             // Servicios
-            { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.jpg", desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" }
+            { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" }
         ];
 
         let _activeCat = 'Todos';

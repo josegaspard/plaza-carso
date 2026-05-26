@@ -850,6 +850,7 @@
                 <div class="smod-meta">
                     <div class="smod-meta-item"><span>Ubicación</span><span id="smod-loc"></span></div>
                     <div class="smod-meta-item"><span>Horario</span><span id="smod-time"></span></div>
+                    <div class="smod-meta-item" id="smod-num-row"><span>Directorio</span><span id="smod-num"></span></div>
                 </div>
             </div>
         </div>
@@ -937,97 +938,98 @@
         }
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
-        // ── DIRECTORIO DATA — fotos verificadas visualmente ──────────
+        // ── DIRECTORIO DATA — datos oficiales del cartel de Plaza Carso ──────────
+        // num = número en el cartel físico (PB=53–83, C1=40–52, C2=1–39, C3=2–5, Planta Carso II=84–93)
         const STORES = [
             // Gastronomía
-            { name:"Applebee's", cat:"Gastronomía", img:"images/stores/applebees.webp", desc:"Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", loc:"Planta Alta", time:"12:00–23:00" },
-            { name:"Asadero", cat:"Gastronomía", img:"images/stores/asadero.webp", desc:"", loc:"", time:"" },
-            { name:"Asaderos Grill", cat:"Gastronomía", img:"images/stores/asaderos-grill.webp", desc:"Cortes de carne a la parrilla con tradición norteña.", loc:"Planta Alta", time:"12:00–23:00" },
-            { name:"Biscotto", cat:"Gastronomía", img:"images/stores/biscotto.webp", desc:"", loc:"", time:"" },
-            { name:"Burger King", cat:"Gastronomía", img:"images/stores/burger-king.webp", desc:"", loc:"", time:"" },
-            { name:"Caballo Bayo", cat:"Gastronomía", img:"images/stores/caballo-bayo.webp", desc:"", loc:"", time:"" },
-            { name:"Carolo", cat:"Gastronomía", img:"images/stores/carolo.webp", desc:"Restaurante italiano de inspiración contemporánea. Pastas, pizzas al horno y carta de vinos.", loc:"Roof Garden", time:"13:00–23:00" },
-            { name:"Chilim Balam", cat:"Gastronomía", img:"images/stores/chilim-balam.webp", desc:"", loc:"", time:"" },
-            { name:"City Café Natural", cat:"Gastronomía", img:"images/stores/city-cafe.webp", desc:"Comida saludable, jugos prensados, desayunos y café de especialidad.", loc:"Planta Baja", time:"07:30–22:00" },
-            { name:"Coffee Tree", cat:"Gastronomía", img:"images/stores/coffee-tree.webp", desc:"", loc:"", time:"" },
-            { name:"Cosecha Sana", cat:"Gastronomía", img:"images/stores/cosecha-sana.webp", desc:"", loc:"", time:"" },
-            { name:"Daylight Salads", cat:"Gastronomía", img:"images/stores/daylight-salads.webp", desc:"", loc:"", time:"" },
-            { name:"De Costa a Costa", cat:"Gastronomía", img:"images/stores/de-costa-a-costa.webp", desc:"Mariscos frescos y cocina marinera con recetas de los litorales mexicanos.", loc:"Planta Alta", time:"12:00–22:00" },
-            { name:"Dolphy", cat:"Gastronomía", img:"images/stores/dolphy.webp", desc:"Heladería clásica. Helados artesanales, malteadas y postres helados para toda la familia.", loc:"Planta Baja", time:"11:00–22:00" },
-            { name:"Domino's Pizza", cat:"Gastronomía", img:"images/stores/dominos.webp", desc:"La pizza favorita del mundo, lista en minutos.", loc:"Planta Baja", time:"11:00–23:00" },
-            { name:"Dynasty", cat:"Gastronomía", img:"images/stores/dinasty.webp", desc:"Legendary Chinese Food. Cocina cantonesa lista para llevar en el food court.", loc:"Planta Alta", time:"11:00–22:00" },
-            { name:"Gong Cha", cat:"Gastronomía", img:"images/stores/gong-cha.webp", desc:"", loc:"", time:"" },
-            { name:"Hello Kitty Café", cat:"Gastronomía", img:"images/stores/hello-kitty-cafe.webp", desc:"Café temático del universo Sanrio. Postres, malteadas y desayunos en un set de Instagram.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Jimmy Joe Chicken & Grill", cat:"Gastronomía", img:"images/stores/jimmy-joe.webp", desc:"Pollo a la parrilla y antojitos al carbón con opciones healthy.", loc:"Planta Alta", time:"11:00–22:00" },
-            { name:"La Crêpe Parisienne", cat:"Gastronomía", img:"images/stores/la-crepe-parisinnee.webp", desc:"Crêpes dulces y salados al estilo francés. Una pausa parisina en Polanco.", loc:"Planta Baja", time:"08:00–22:00" },
-            { name:"La Europea", cat:"Gastronomía", img:"images/stores/la-europea.webp", desc:"", loc:"", time:"" },
-            { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.webp", desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica. Abierto desde las 13:00 hrs.", loc:"Planta Alta", time:"13:00–23:00" },
-            { name:"La Raclette", cat:"Gastronomía", img:"images/stores/la-raclette.webp", desc:"", loc:"", time:"" },
-            { name:"Las Flautas", cat:"Gastronomía", img:"images/stores/las-flautas.webp", desc:"", loc:"", time:"" },
-            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", desc:"", loc:"", time:"" },
-            { name:"Loma Linda 1924", cat:"Gastronomía", img:"images/stores/loma-linda.webp", desc:"Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", loc:"Roof Garden", time:"13:00–24:00" },
-            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable para cualquier momento.", loc:"Planta Baja", time:"11:00–22:00" },
-            { name:"O'Kai Poke Bowls", cat:"Gastronomía", img:"images/stores/okai-poke-bowls.webp", desc:"Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", loc:"Planta Alta", time:"11:00–22:00" },
-            { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.webp", desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Roof Garden", time:"13:00–23:00" },
-            { name:"Pizza Maestra", cat:"Gastronomía", img:"images/stores/pizza-maestra.webp", desc:"", loc:"", time:"" },
-            { name:"Poxtli", cat:"Gastronomía", img:"images/stores/poxtli.webp", desc:"Cocina mexicana de raíces con presentación contemporánea, en la terraza Poxtli.", loc:"Roof Garden", time:"13:00–23:00" },
-            { name:"Pío Grill", cat:"Gastronomía", img:"images/stores/pio-grill.webp", desc:"Pollo a la parrilla con receta de la casa, guarniciones frescas y antojos urbanos.", loc:"Planta Alta", time:"12:00–22:00" },
-            { name:"Santa Clara", cat:"Gastronomía", img:"images/stores/santa-clara.webp", desc:"", loc:"", time:"" },
-            { name:"Sonora Taco Fish", cat:"Gastronomía", img:"images/stores/sonora-taco-fish.webp", desc:"", loc:"", time:"" },
-            { name:"Spyral", cat:"Gastronomía", img:"images/stores/spyral.webp", desc:"Helados suaves, conos, malteadas y postres helados al estilo americano.", loc:"Planta Baja", time:"11:00–22:00" },
-            { name:"Starbucks Coffee", cat:"Gastronomía", img:"images/stores/starbucks.webp", desc:"Café de especialidad, bebidas frías y un lugar para encontrarse.", loc:"Planta Baja", time:"06:30–22:00" },
-            { name:"The Coffee", cat:"Gastronomía", img:"images/stores/the-coffee.webp", desc:"", loc:"", time:"" },
-            { name:"Subway", cat:"Gastronomía", img:"images/stores/subway.webp", desc:"", loc:"", time:"" },
-            { name:"Sushiitto", cat:"Gastronomía", img:"images/stores/sushiitto-ya.webp", desc:"Sushi fusión con rolls clásicos y creaciones de la casa. Hora Japi 2x1.", loc:"Planta Alta", time:"12:00–22:00" },
-            { name:"Vapiano", cat:"Gastronomía", img:"images/stores/vapiano.webp", desc:"Pasta y pizza italianas frescas, preparadas frente a ti al momento.", loc:"Planta Alta", time:"12:00–23:00" },
-            { name:"Wings Army", cat:"Gastronomía", img:"images/stores/wings-army.webp", desc:"", loc:"", time:"" },
+            { name:"Applebee's", cat:"Gastronomía", img:"images/stores/applebees.webp", num:2, desc:"Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", loc:"Roof Garden", time:"12:00–23:00" },
+            { name:"Asadero", cat:"Gastronomía", img:"images/stores/asadero.webp", num:24, desc:"Cortes de res, costillas y antojitos al carbón con sabor norteño.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Asaderos Grill", cat:"Gastronomía", img:"images/stores/asaderos-grill.webp", num:9, desc:"Cortes de carne a la parrilla con tradición norteña.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Biscotto", cat:"Gastronomía", img:"images/stores/biscotto.webp", num:72, desc:"Repostería italiana, panes artesanales, café espresso y pastelería gourmet.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"Burger King", cat:"Gastronomía", img:"images/stores/burger-king.webp", num:10, desc:"Hamburguesas a la parrilla, papas y bebidas. Clásico americano para llevar.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Caballo Bayo", cat:"Gastronomía", img:"images/stores/caballo-bayo.webp", num:4, desc:"Cocina mexicana tradicional. Botanas, cortes y antojos en un ambiente cantinero clásico.", loc:"Roof Garden", time:"13:00–23:00" },
+            { name:"Carolo", cat:"Gastronomía", img:"images/stores/carolo.webp", num:3, desc:"Restaurante italiano de inspiración contemporánea. Pastas, pizzas al horno y carta de vinos.", loc:"Roof Garden", time:"13:00–23:00" },
+            { name:"Chilim Balam", cat:"Gastronomía", img:"images/stores/chilim-balam.webp", num:71, desc:"Tacos al pastor de tradición, salsas de la casa y antojitos mexicanos al carbón.", loc:"Planta Baja", time:"11:00–22:00" },
+            { name:"City Café Natural", cat:"Gastronomía", img:"images/stores/city-cafe.webp", num:38, desc:"Comida saludable, jugos prensados, desayunos y café de especialidad.", loc:"Segundo Nivel", time:"07:30–22:00" },
+            { name:"Coffee Tree", cat:"Gastronomía", img:"images/stores/coffee-tree.webp", num:37, desc:"Café de especialidad, bebidas calientes y frías, postres y panadería artesanal.", loc:"Segundo Nivel", time:"08:00–22:00" },
+            { name:"Cosecha Sana", cat:"Gastronomía", img:"images/stores/cosecha-sana.webp", num:21, desc:"Comida saludable. Ensaladas, bowls, wraps y jugos frescos preparados al momento.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Daylight Salads", cat:"Gastronomía", img:"images/stores/daylight-salads.webp", num:18, desc:"Ensaladas frescas, wraps y bowls saludables para el día a día. Opciones veganas.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"De Costa a Costa", cat:"Gastronomía", img:"images/stores/de-costa-a-costa.webp", num:8, desc:"Mariscos frescos y cocina marinera con recetas de los litorales mexicanos.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Dolphy", cat:"Gastronomía", img:"images/stores/dolphy.webp", num:30, desc:"Heladería clásica. Helados artesanales, malteadas y postres helados para toda la familia.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Domino's Pizza", cat:"Gastronomía", img:"images/stores/dominos.webp", num:12, desc:"La pizza favorita del mundo, lista en minutos. Para comer aquí o llevar.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Dynasty", cat:"Gastronomía", img:"images/stores/dinasty.webp", num:20, desc:"Legendary Chinese Food. Cocina cantonesa lista para llevar en el food court.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Gong Cha", cat:"Gastronomía", img:"images/stores/gong-cha.webp", num:null, desc:"Bubble tea premium estilo taiwanés con tés frescos, toppings y opciones personalizadas.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Hello Kitty Café", cat:"Gastronomía", img:"images/stores/hello-kitty-cafe.webp", num:42, desc:"Café temático del universo Sanrio. Postres, malteadas y desayunos en un set de Instagram.", loc:"Primer Nivel", time:"11:00–21:00" },
+            { name:"Jimmy Joe Chicken & Grill", cat:"Gastronomía", img:"images/stores/jimmy-joe.webp", num:19, desc:"Pollo a la parrilla y antojitos al carbón con opciones healthy.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"La Crêpe Parisienne", cat:"Gastronomía", img:"images/stores/la-crepe-parisinnee.webp", num:29, desc:"Crêpes dulces y salados al estilo francés. Una pausa parisina en Polanco.", loc:"Segundo Nivel", time:"08:00–22:00" },
+            { name:"La Europea", cat:"Gastronomía", img:"images/stores/la-europea.webp", num:70, desc:"Vinos, destilados y licores de importación. Quesos, embutidos y delicatessen.", loc:"Planta Baja", time:"11:00–22:00" },
+            { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.webp", num:7, desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"La Raclette", cat:"Gastronomía", img:"images/stores/la-raclette.webp", num:35, desc:"Cocina suizo-francesa especializada en queso raclette fundido, fondues y charcutería.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"Las Flautas", cat:"Gastronomía", img:"images/stores/las-flautas.webp", num:null, desc:"Especialidad en flautas mexicanas con guarniciones tradicionales y salsas de la casa.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", num:76, desc:"Macarons franceses, pasteles y dulces gourmet de inspiración parisina.", loc:"Planta Baja", time:"10:00–21:00" },
+            { name:"Loma Linda 1924", cat:"Gastronomía", img:"images/stores/loma-linda.webp", num:5, desc:"Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", loc:"Roof Garden", time:"13:00–24:00" },
+            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", num:17, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"O'Kai Poke Bowls", cat:"Gastronomía", img:"images/stores/okai-poke-bowls.webp", num:14, desc:"Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.webp", num:1, desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"Pizza Maestra", cat:"Gastronomía", img:"images/stores/pizza-maestra.webp", num:null, desc:"Pizzas artesanales al horno de leña con masa madre e ingredientes seleccionados.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Poxtli", cat:"Gastronomía", img:"images/stores/poxtli.webp", num:25, desc:"Cocina mexicana de raíces con presentación contemporánea, en la terraza Poxtli.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"Pío Grill", cat:"Gastronomía", img:"images/stores/pio-grill.webp", num:null, desc:"Pollo a la parrilla con receta de la casa, guarniciones frescas y antojos urbanos.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Santa Clara", cat:"Gastronomía", img:"images/stores/santa-clara.webp", num:16, desc:"Helados artesanales con tradición lechera. Sabores clásicos, malteadas y postres.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Sonora Taco Fish", cat:"Gastronomía", img:"images/stores/sonora-taco-fish.webp", num:null, desc:"Tacos de pescado y mariscos al estilo Sonora. Frescura del Pacífico mexicano.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Spyral", cat:"Gastronomía", img:"images/stores/spyral.webp", num:36, desc:"Helados suaves, conos, malteadas y postres helados al estilo americano.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Starbucks Coffee", cat:"Gastronomía", img:"images/stores/starbucks.webp", num:31, desc:"Café de especialidad, bebidas frías y un lugar para encontrarse.", loc:"Segundo Nivel", time:"06:30–22:00" },
+            { name:"The Coffee", cat:"Gastronomía", img:"images/stores/the-coffee.webp", num:null, desc:"Café de especialidad de origen, métodos manuales, postres y bebidas frías.", loc:"Segundo Nivel", time:"07:30–22:00" },
+            { name:"Subway", cat:"Gastronomía", img:"images/stores/subway.webp", num:22, desc:"Sándwiches submarino preparados al momento con ingredientes frescos a tu elección.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Sushiitto", cat:"Gastronomía", img:"images/stores/sushiitto-ya.webp", num:27, desc:"Sushi fusión con rolls clásicos y creaciones de la casa. Hora Japi 2x1.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Vapiano", cat:"Gastronomía", img:"images/stores/vapiano.webp", num:6, desc:"Pasta y pizza italianas frescas, preparadas frente a ti al momento.", loc:"Segundo Nivel", time:"12:00–23:00" },
+            { name:"Wings Army", cat:"Gastronomía", img:"images/stores/wings-army.webp", num:15, desc:"Alitas de pollo en más de 20 salsas, antojos y cervezas para compartir.", loc:"Segundo Nivel", time:"12:00–23:00" },
             // Moda
-            { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbgmaxazria.webp", desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"Izlah", cat:"Moda", img:"images/stores/izlah.webp", desc:"", loc:"", time:"" },
-            { name:"Masters", cat:"Moda", img:"images/stores/masters.webp", desc:"", loc:"", time:"" },
-            { name:"Pineda Covalín", cat:"Moda", img:"images/stores/pineda-covalin.webp", desc:"Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte y la cultura de México.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"Scappino", cat:"Moda", img:"images/stores/scappino.webp", desc:"Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbgmaxazria.webp", num:64, desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Izlah", cat:"Moda", img:"images/stores/izlah.webp", num:73, desc:"Moda femenina contemporánea con diseños elegantes y siluetas modernas.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Masters", cat:"Moda", img:"images/stores/masters.webp", num:47, desc:"Sastrería masculina premium. Trajes, camisas y accesorios formales hechos a medida.", loc:"Primer Nivel", time:"11:00–21:00" },
+            { name:"Pineda Covalín", cat:"Moda", img:"images/stores/pineda-covalin.webp", num:68, desc:"Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte mexicano.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Scappino", cat:"Moda", img:"images/stores/scappino.webp", num:46, desc:"Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", loc:"Primer Nivel", time:"11:00–21:00" },
             // Joyería
-            { name:"Alma de Luna", cat:"Joyería", img:"images/stores/alma-de-luna.webp", desc:"", loc:"", time:"" },
-            { name:"Enrique Bricker", cat:"Joyería", img:"images/stores/enrique-bricker.webp", desc:"", loc:"", time:"" },
-            { name:"Ivonne", cat:"Joyería", img:"images/stores/ivonne.webp", desc:"", loc:"", time:"" },
-            { name:"Pandora", cat:"Joyería", img:"images/stores/pandora.webp", desc:"", loc:"", time:"" },
+            { name:"Alma de Luna", cat:"Joyería", img:"images/stores/alma-de-luna.webp", num:34, desc:"Joyería boutique con piezas artesanales en plata, oro y piedras semipreciosas.", loc:"Segundo Nivel", time:"11:00–21:00" },
+            { name:"Enrique Bricker", cat:"Joyería", img:"images/stores/enrique-bricker.webp", num:88, desc:"Joyería boutique con diseños exclusivos en oro y piedras preciosas. Atención personalizada.", loc:"Planta Carso II", time:"11:00–20:00" },
+            { name:"Ivonne", cat:"Joyería", img:"images/stores/ivonne.webp", num:66, desc:"Joyería contemporánea con piezas en plata y oro para uso diario y ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Pandora", cat:"Joyería", img:"images/stores/pandora.webp", num:77, desc:"Joyería danesa con charms, anillos, pulseras y collares personalizables.", loc:"Planta Baja", time:"11:00–21:00" },
             // Tecnología
-            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.webp", desc:"Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Huawei", cat:"Tecnología", img:"images/stores/huawei.webp", desc:"Discover Huawei: smartphones, smartwatches y dispositivos. Pura 80 Ultra disponible.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"iShop", cat:"Tecnología", img:"images/stores/ishop.webp", desc:"", loc:"", time:"" },
-            { name:"Samsung", cat:"Tecnología", img:"images/stores/samsung.webp", desc:"Galaxy Experience Store. Smartphones, tabletas, wearables y el ecosistema Galaxy AI con demostraciones en vivo.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"Steren Shop", cat:"Tecnología", img:"images/stores/steren.webp", desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Telcel", cat:"Tecnología", img:"images/stores/telcel.webp", desc:"Conectividad 5G y tecnología móvil de vanguardia.", loc:"Planta Alta", time:"11:00–21:00" },
+            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.webp", num:58, desc:"Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Huawei", cat:"Tecnología", img:"images/stores/huawei.webp", num:60, desc:"Discover Huawei: smartphones, smartwatches y dispositivos. Pura 80 Ultra disponible.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"iShop", cat:"Tecnología", img:"images/stores/ishop.webp", num:67, desc:"Tienda autorizada Apple. iPhone, iPad, Mac, Apple Watch y accesorios oficiales.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Samsung", cat:"Tecnología", img:"images/stores/samsung.webp", num:59, desc:"Galaxy Experience Store. Smartphones, tabletas, wearables y el ecosistema Galaxy AI con demostraciones en vivo.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Steren Shop", cat:"Tecnología", img:"images/stores/steren.webp", num:57, desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Telcel", cat:"Tecnología", img:"images/stores/telcel.webp", num:63, desc:"Conectividad 5G y tecnología móvil de vanguardia. Planes, equipos y servicios.", loc:"Planta Baja", time:"11:00–21:00" },
             // Entretenimiento
-            { name:"Acuario Interactivo", cat:"Entretenimiento", img:"images/stores/acuario-interactivo.webp", desc:"Aquadoc Interactivo: experiencia inmersiva con vida marina y túnel acuático para toda la familia.", loc:"Planta Alta", time:"11:00–20:00" },
-            { name:"Cinépolis", cat:"Entretenimiento", img:"images/stores/cinepolis.webp", desc:"Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", loc:"Planta Alta", time:"11:00–23:00" },
-            { name:"FlyOver México", cat:"Entretenimiento", img:"images/stores/fly-over-mexico.webp", desc:"", loc:"", time:"" },
-            { name:"GoKart Manía", cat:"Entretenimiento", img:"images/stores/gokart-mania.webp", desc:"", loc:"", time:"" },
-            { name:"Inspark", cat:"Entretenimiento", img:"images/stores/inspark.webp", desc:"", loc:"", time:"" },
-            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.webp", desc:"Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Showroom Carso", cat:"Entretenimiento", img:"images/stores/showroom-carso.webp", desc:"", loc:"", time:"" },
+            { name:"Acuario Interactivo", cat:"Entretenimiento", img:"images/stores/acuario-interactivo.webp", num:40, desc:"Aquadoc Interactivo: experiencia inmersiva con vida marina y túnel acuático para toda la familia.", loc:"Primer Nivel", time:"11:00–20:00" },
+            { name:"Cinépolis", cat:"Entretenimiento", img:"images/stores/cinepolis.webp", num:52, desc:"Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", loc:"Primer Nivel", time:"11:00–23:00" },
+            { name:"FlyOver México", cat:"Entretenimiento", img:"images/stores/fly-over-mexico.webp", num:null, desc:"Atracción de vuelo virtual sobre los paisajes más impresionantes de México.", loc:"Planta Carso II", time:"11:00–21:00" },
+            { name:"GoKart Manía", cat:"Entretenimiento", img:"images/stores/gokart-mania.webp", num:87, desc:"Pista de karts indoor para toda la familia. Adrenalina y diversión en circuito profesional.", loc:"Planta Carso II", time:"12:00–22:00" },
+            { name:"Inspark", cat:"Entretenimiento", img:"images/stores/inspark.webp", num:41, desc:"Parque de entretenimiento interactivo con juegos digitales y experiencias inmersivas para todas las edades.", loc:"Primer Nivel", time:"11:00–21:00" },
+            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.webp", num:56, desc:"Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Showroom Carso", cat:"Entretenimiento", img:"images/stores/showroom-carso.webp", num:74, desc:"Espacio de exposiciones rotativas y experiencias inmersivas en Plaza Carso.", loc:"Planta Baja", time:"11:00–21:00" },
             // Salud
-            { name:"54D", cat:"Salud", img:"images/stores/54d.webp", desc:"", loc:"", time:"" },
-            { name:"Barber Street", cat:"Salud", img:"images/stores/barber-street.webp", desc:"", loc:"", time:"" },
-            { name:"DAX", cat:"Salud", img:"images/stores/dax.webp", desc:"Perfumería, cosméticos y dermocosmética. Marcas internacionales y servicio de asesoría.", loc:"Planta Baja", time:"11:00–21:00" },
-            { name:"Dentalia", cat:"Salud", img:"images/stores/dentalia.webp", desc:"", loc:"", time:"" },
-            { name:"Moor Spa & Nails", cat:"Salud", img:"images/stores/moor-spa-nails.webp", desc:"Spa boutique con servicios de manicura, pedicura, masajes y tratamientos faciales. Una pausa de bienestar en Polanco.", loc:"Planta Alta", time:"10:00–21:00" },
-            { name:"Sport City", cat:"Salud", img:"images/stores/sport-city.webp", desc:"Fitness Club premium con equipo de última generación, clases grupales y áreas funcionales.", loc:"Planta Alta", time:"05:30–22:30" },
-            { name:"Svenson", cat:"Salud", img:"images/stores/svenson.webp", desc:"Clínica capilar líder en tratamientos contra la caída del cabello, diagnóstico tricológico y micropigmentación.", loc:"Planta Alta", time:"10:00–20:00" },
+            { name:"54D", cat:"Salud", img:"images/stores/54d.webp", num:86, desc:"Método de entrenamiento de alto rendimiento. Programa fitness intensivo de 54 días con nutrición y mindset.", loc:"Planta Carso II", time:"06:00–22:00" },
+            { name:"Barber Street", cat:"Salud", img:"images/stores/barber-street.webp", num:83, desc:"Barbería de estilo urbano con cortes clásicos y modernos para caballeros.", loc:"Planta Baja", time:"10:00–20:00" },
+            { name:"DAX", cat:"Salud", img:"images/stores/dax.webp", num:61, desc:"Perfumería, cosméticos y dermocosmética. Marcas internacionales y servicio de asesoría.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Dentalia", cat:"Salud", img:"images/stores/dentalia.webp", num:85, desc:"Clínica dental boutique con servicios de odontología general, estética y especialidades.", loc:"Planta Carso II", time:"09:00–20:00" },
+            { name:"Moor Spa & Nails", cat:"Salud", img:"images/stores/moor-spa-nails.webp", num:82, desc:"Spa boutique con servicios de manicura, pedicura, masajes y tratamientos faciales. Una pausa de bienestar en Polanco.", loc:"Planta Baja", time:"10:00–21:00" },
+            { name:"Sport City", cat:"Salud", img:"images/stores/sport-city.webp", num:39, desc:"Fitness Club premium con equipo de última generación, clases grupales y áreas funcionales.", loc:"Segundo Nivel", time:"05:30–22:30" },
+            { name:"Svenson", cat:"Salud", img:"images/stores/svenson.webp", num:69, desc:"Clínica capilar líder en tratamientos contra la caída del cabello, diagnóstico tricológico y micropigmentación.", loc:"Planta Baja", time:"10:00–20:00" },
             // Departamental
-            { name:"City Market", cat:"Departamental", img:"images/stores/city-market.webp", desc:"", loc:"", time:"" },
-            { name:"Miniso", cat:"Departamental", img:"images/stores/miniso.webp", desc:"Marca lifestyle japonesa con productos de diseño minimalista: hogar, belleza, electrónicos, papelería y accesorios.", loc:"Planta Alta", time:"11:00–21:00" },
-            { name:"Sanborns", cat:"Departamental", img:"images/stores/sanborns.webp", desc:"Café, restaurante, librería, perfumería y tienda departamental icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"City Market", cat:"Departamental", img:"images/stores/city-market.webp", num:93, desc:"Supermercado gourmet. Productos premium, importados y orgánicos. Vinos, quesos y delicatessen.", loc:"Planta Carso II", time:"08:00–22:00" },
+            { name:"Miniso", cat:"Departamental", img:"images/stores/miniso.webp", num:null, desc:"Marca lifestyle japonesa con productos de diseño minimalista: hogar, belleza, electrónicos, papelería y accesorios.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Sanborns", cat:"Departamental", img:"images/stores/sanborns.webp", num:53, desc:"Café, restaurante, librería, perfumería y tienda departamental icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
             // Servicios
-            { name:"Academia Europea", cat:"Servicios", img:"images/stores/academia-europea.webp", desc:"", loc:"", time:"" },
-            { name:"BestDay", cat:"Servicios", img:"images/stores/bestday.webp", desc:"", loc:"", time:"" },
-            { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" },
-            { name:"MAS Studio", cat:"Servicios", img:"images/stores/mas-studio.webp", desc:"", loc:"", time:"" },
-            { name:"Nardo", cat:"Servicios", img:"images/stores/nardo.webp", desc:"", loc:"", time:"" },
+            { name:"Academia Europea", cat:"Servicios", img:"images/stores/academia-europea.webp", num:84, desc:"Academia de idiomas con cursos de inglés, francés, alemán, italiano y más, presencial y en línea.", loc:"Planta Carso II", time:"08:00–21:00" },
+            { name:"BestDay", cat:"Servicios", img:"images/stores/bestday.webp", num:79, desc:"Agencia de viajes con paquetes nacionales e internacionales, vuelos, hoteles y experiencias.", loc:"Planta Baja", time:"10:00–20:00" },
+            { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", num:55, desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" },
+            { name:"MAS Studio", cat:"Servicios", img:"images/stores/mas-studio.webp", num:75, desc:"Estudio fotográfico boutique. Sesiones, retratos profesionales y producción visual.", loc:"Planta Baja", time:"10:00–20:00" },
+            { name:"Nardo", cat:"Servicios", img:"images/stores/nardo.webp", num:50, desc:"Nardo Joyería: piezas finas en oro, plata y piedras preciosas. Atención personalizada.", loc:"Primer Nivel", time:"11:00–20:00" },
             // Automotriz
-            { name:"BYD", cat:"Automotriz", img:"images/stores/byd.webp", desc:"", loc:"", time:"" },
-            { name:"Ford", cat:"Automotriz", img:"images/stores/ford.webp", desc:"", loc:"", time:"" }
+            { name:"BYD", cat:"Automotriz", img:"images/stores/byd.webp", num:78, desc:"Vehículos eléctricos e híbridos BYD. Showroom y centro de pruebas de manejo.", loc:"Planta Baja", time:"10:00–20:00" },
+            { name:"Ford", cat:"Automotriz", img:"images/stores/ford.webp", num:89, desc:"Ford Plaza Carso. Showroom oficial con la línea completa de vehículos Ford.", loc:"Planta Carso II", time:"09:00–20:00" }
         ];
 
         let _activeCat = 'Todos';
@@ -1055,7 +1057,7 @@
                     <div class="s-card" data-cat="${s.cat}" onclick="openMod(${i})">
                         <div class="s-card-imgwrap">
                             <img class="s-card-img" src="${s.img}" alt="${s.name} en Plaza Carso" loading="lazy">
-                            <span class="s-card-floorbadge">${s.loc}</span>
+                            <span class="s-card-floorbadge">${s.num ? '#' + s.num : s.loc}</span>
                         </div>
                         <div class="s-card-body">
                             <span class="s-card-cat">${s.cat}</span>
@@ -1101,6 +1103,13 @@
             document.getElementById('smod-desc').textContent = s.desc;
             document.getElementById('smod-loc').textContent = s.loc;
             document.getElementById('smod-time').textContent = s.time;
+            const numRow = document.getElementById('smod-num-row');
+            if (s.num) {
+                document.getElementById('smod-num').textContent = '#' + s.num;
+                numRow.style.display = '';
+            } else {
+                numRow.style.display = 'none';
+            }
             const imgEl = document.getElementById('smod-img');
             imgEl.style.opacity = '0';
             const pre = new Image();

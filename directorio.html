@@ -118,7 +118,7 @@
         /* Grid */
         .dir-section {
             padding: 72px 0 100px;
-            background: var(--smoke);
+            background: var(--warm-white);
         }
 
         .dir-inner {
@@ -139,124 +139,91 @@
 
         #store-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            column-gap: 32px;
+            row-gap: 52px;
         }
 
+        /* Store tile — estilo Plaza Universidad: nombre en serif, hover invierte a fondo oscuro */
         .s-card {
-            position: relative;
-            overflow: hidden;
             cursor: none;
-            background: var(--warm-white);
             display: flex;
             flex-direction: column;
-            transition: transform .35s ease, box-shadow .35s ease;
-            box-shadow: 0 1px 0 rgba(10, 9, 9, .04);
+            align-items: center;
+            text-align: center;
         }
 
-        .s-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px -22px rgba(10, 9, 9, .28);
-        }
-
-        .s-card-imgwrap {
+        .s-tile {
             position: relative;
             width: 100%;
             aspect-ratio: 1/1;
-            background: var(--smoke);
-            overflow: hidden;
-        }
-
-        .s-card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-            display: block;
-            background: var(--smoke);
-            transition: transform .9s var(--ease-out, ease);
-        }
-
-        .s-card:hover .s-card-img {
-            transform: scale(1.06);
-        }
-
-        .s-card-floorbadge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(246, 244, 240, .94);
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
-            color: var(--ink);
-            font-family: var(--sans);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            padding: 6px 10px;
-        }
-
-        .s-card-body {
-            padding: 18px 20px 22px;
+            border: 1px solid var(--silver);
+            background: var(--warm-white);
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: background-color .45s ease, border-color .45s ease, box-shadow .45s ease;
         }
 
-        .s-card-cat {
+        .s-card:hover .s-tile {
+            background: var(--ink);
+            border-color: var(--ink);
+            box-shadow: 0 22px 48px -26px rgba(10, 9, 9, .45);
+        }
+
+        .s-tile-num {
+            position: absolute;
+            top: 14px;
+            right: 16px;
             font-family: var(--sans);
             font-size: 11px;
             font-weight: 500;
-            letter-spacing: .3em;
+            letter-spacing: .18em;
+            color: var(--silver);
+            transition: color .45s ease;
+        }
+
+        .s-card:hover .s-tile-num {
+            color: var(--warm-white);
+        }
+
+        .s-tile-name {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(18px, 1.6vw, 26px);
+            line-height: 1.08;
+            color: var(--ink);
+            letter-spacing: .01em;
+            transition: color .45s ease;
+        }
+
+        .s-card:hover .s-tile-name {
+            color: var(--warm-white);
+        }
+
+        .s-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: .2em;
             text-transform: uppercase;
             color: var(--grey);
-        }
-
-        .s-card-name {
-            font-family: var(--serif);
-            font-size: 22px;
-            font-weight: 300;
-            color: var(--ink);
-            line-height: 1.15;
             transition: color .25s;
         }
 
-        .s-card:hover .s-card-name {
-            color: var(--mid);
-        }
-
-        .s-card-floor {
-            font-family: var(--sans);
-            font-size: 12px;
-            font-weight: 300;
-            color: var(--grey);
-            margin-top: 2px;
-        }
-
-        .s-card-detail {
-            font-family: var(--sans);
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: .28em;
-            text-transform: uppercase;
+        .s-card:hover .s-meta {
             color: var(--ink);
-            margin-top: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            opacity: .7;
-            transition: opacity .25s, gap .25s;
         }
 
-        .s-card:hover .s-card-detail {
-            opacity: 1;
-            gap: 14px;
-        }
-
-        .s-card-detail::after {
-            content: '→';
-            font-size: 14px;
+        .s-meta-sep {
+            opacity: .35;
         }
 
         /* Store Modal */
@@ -646,24 +613,23 @@
 
             #store-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 14px;
+                column-gap: 14px;
+                row-gap: 32px;
             }
 
-            .s-card-imgwrap {
-                aspect-ratio: 1/1;
+            .s-tile {
+                padding: 0 12px;
+                margin-bottom: 12px;
             }
 
-            .s-card-body {
-                padding: 14px 14px 18px;
+            .s-tile-name {
+                font-size: clamp(15px, 4.4vw, 20px);
             }
 
-            .s-card-name {
-                font-size: 18px;
-            }
-
-            .s-card-detail {
-                font-size: 9px;
-                letter-spacing: .22em;
+            .s-meta {
+                font-size: 10px;
+                letter-spacing: .14em;
+                gap: 8px;
             }
 
             #s-modal {
@@ -1055,14 +1021,14 @@
                 empty.style.display = 'none';
                 grid.innerHTML = _visible.map((s, i) => `
                     <div class="s-card" data-cat="${s.cat}" onclick="openMod(${i})">
-                        <div class="s-card-imgwrap">
-                            <img class="s-card-img" src="${s.img}" alt="${s.name} en Plaza Carso" loading="lazy">
-                            <span class="s-card-floorbadge">${s.num ? '#' + s.num : s.loc}</span>
+                        <div class="s-tile">
+                            ${s.num ? `<span class="s-tile-num">${String(s.num).padStart(2, '0')}</span>` : ''}
+                            <span class="s-tile-name">${s.name}</span>
                         </div>
-                        <div class="s-card-body">
-                            <span class="s-card-cat">${s.cat}</span>
-                            <div class="s-card-name">${s.name}</div>
-                            <span class="s-card-detail">Ver detalle</span>
+                        <div class="s-meta">
+                            <span>${s.cat}</span>
+                            <span class="s-meta-sep">&middot;</span>
+                            <span>Ver detalle</span>
                         </div>
                     </div>
                 `).join('');

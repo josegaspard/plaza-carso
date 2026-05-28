@@ -73,9 +73,9 @@
         .floor-svg svg{ width:100%; height:100%; display:block; }
 
         /* Interactive zones — high specificity beats inline #floor-x .cls-1 */
-        #map-pan svg .store-zone{ fill:var(--accent); fill-opacity:0; stroke:#010101; pointer-events:all; cursor:pointer; transition:fill-opacity .15s ease, stroke .15s ease; }
+        #map-pan svg .store-zone{ fill:var(--silver); fill-opacity:0; stroke:#010101; pointer-events:all; cursor:pointer; transition:fill-opacity .15s ease, stroke .15s ease; }
         #map-pan svg .store-zone.cat-dim{ fill-opacity:0; }
-        #map-pan svg .store-zone.cat-on{ fill:var(--zc,var(--accent)); fill-opacity:.22; }
+        #map-pan svg .store-zone.cat-on{ fill:var(--zc,var(--grey)); fill-opacity:.22; }
         #map-pan svg .store-zone:hover{ fill:var(--silver); fill-opacity:.55; }
         #map-pan svg .store-zone.is-active{ fill:var(--grey); fill-opacity:.4; stroke:var(--ink); stroke-width:3px; }
         /* ocultar los rótulos de nivel/sección impresos en el plano (PLANTA BAJA, PRIMER NIVEL, etc.) */
@@ -98,12 +98,12 @@
         .map-info.show{ opacity:1; pointer-events:all; transform:none; }
         .map-info .pi-close{ position:absolute; top:14px; right:14px; background:none; border:none; color:var(--grey); cursor:pointer; font-size:15px; }
         .map-info .pi-close:hover{ color:var(--ink); }
-        .pi-local{ font-family:var(--serif); font-style:italic; font-size:14px; color:var(--accent); }
+        .pi-local{ font-family:var(--serif); font-style:italic; font-size:14px; color:var(--grey); }
         .pi-cat{ font-family:var(--sans); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--grey); margin-top:8px; display:block; }
         .pi-name{ font-family:var(--serif); font-size:27px; font-style:italic; font-weight:300; color:var(--ink); line-height:1.05; margin:4px 0 6px; }
         .pi-meta{ font-family:var(--sans); font-size:13px; font-weight:300; color:var(--grey); line-height:1.6; }
         .pi-btn{ margin-top:16px; display:inline-flex; align-items:center; gap:8px; font-family:var(--sans); font-size:12px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--warm-white); background:var(--ink); padding:12px 20px; text-decoration:none; transition:background .2s; cursor:pointer; }
-        .pi-btn:hover{ background:var(--accent); }
+        .pi-btn:hover{ background:var(--mid); }
         .pi-empty{ font-family:var(--sans); font-size:13px; font-weight:300; color:var(--grey); line-height:1.6; margin-top:6px; }
 
         .map-hint{ position:absolute; top:20px; left:24px; background:rgba(8,7,6,.82); color:var(--warm-white); padding:9px 16px; font-family:var(--sans); font-size:12px; font-weight:300; letter-spacing:.03em; z-index:15; display:flex; align-items:center; gap:9px; }
@@ -1395,7 +1395,7 @@
         const floor = z.getAttribute('data-floor');
         const local = +z.getAttribute('data-local');
         const st = storeFor(floor, local);
-        if (st){ z.style.setProperty('--zc', CAT_COLOR[st.cat] || 'var(--accent)'); z.setAttribute('data-cat', st.cat); }
+        if (st){ z.style.setProperty('--zc', CAT_COLOR[st.cat] || 'var(--grey)'); z.setAttribute('data-cat', st.cat); }
         z.addEventListener('mouseenter', e => showTip(e, floor, local));
         z.addEventListener('mousemove', moveTip);
         z.addEventListener('mouseleave', hideTip);

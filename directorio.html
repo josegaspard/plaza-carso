@@ -1148,6 +1148,14 @@
 
         // Initial render
         _renderGrid();
+
+        // Deep link from the interactive map: directorio.html?store=Nombre
+        (function () {
+            const s = new URLSearchParams(location.search).get('store');
+            if (!s) return;
+            const i = _visible.findIndex(x => x.name === s);
+            if (i >= 0) openMod(i);
+        })();
     </script>
 
     <script>

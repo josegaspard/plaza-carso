@@ -815,8 +815,7 @@
                 <p id="smod-desc"></p>
                 <div class="smod-meta">
                     <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
-                    <div class="smod-meta-item" id="smod-time-row"><span>Horario</span><span id="smod-time"></span></div>
-                    <div class="smod-meta-item" id="smod-num-row"><span>Directorio</span><span id="smod-num"></span></div>
+                    <div class="smod-meta-item" id="smod-num-row"><span>Local</span><span id="smod-num"></span></div>
                 </div>
             </div>
         </div>
@@ -1072,9 +1071,6 @@
             const locRow = document.getElementById('smod-loc-row');
             if (s.loc) { document.getElementById('smod-loc').textContent = s.loc; locRow.style.display = ''; }
             else { locRow.style.display = 'none'; }
-            const timeRow = document.getElementById('smod-time-row');
-            if (s.time) { document.getElementById('smod-time').textContent = s.time; timeRow.style.display = ''; }
-            else { timeRow.style.display = 'none'; }
             const numRow = document.getElementById('smod-num-row');
             if (s.num) { document.getElementById('smod-num').textContent = '#' + s.num; numRow.style.display = ''; }
             else { numRow.style.display = 'none'; }

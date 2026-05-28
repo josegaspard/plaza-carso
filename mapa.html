@@ -109,6 +109,11 @@
         .map-hint{ position:absolute; top:20px; left:24px; background:rgba(8,7,6,.82); color:var(--warm-white); padding:9px 16px; font-family:var(--sans); font-size:12px; font-weight:300; letter-spacing:.03em; z-index:15; display:flex; align-items:center; gap:9px; }
         .map-hint i{ opacity:.7; }
 
+        /* Floor name badge — visible label of the level currently shown */
+        .floor-badge{ position:absolute; top:20px; right:74px; z-index:21; display:flex; align-items:center; gap:9px; background:rgba(8,7,6,.9); color:var(--warm-white); padding:11px 18px; font-family:var(--sans); font-size:13px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; box-shadow:0 4px 24px rgba(0,0,0,.12); pointer-events:none; max-width:calc(100% - 120px); }
+        .floor-badge i{ opacity:.7; font-size:12px; }
+        .floor-badge span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
         @media(max-width:880px){
             *,*::before,*::after{ cursor:auto !important; }
             a,button,input,select{ cursor:pointer !important; }
@@ -123,6 +128,7 @@
             .map-info{ left:12px; right:12px; bottom:auto; top:12px; width:auto; }
             .map-hint{ display:none; }
             .zoom-ctrl{ top:auto; bottom:78px; right:12px; }
+            .floor-badge{ top:12px; right:12px; left:12px; justify-content:center; max-width:none; padding:12px 14px; font-size:13px; letter-spacing:.12em; }
         }
     </style>
 </head>
@@ -173,6 +179,7 @@
                 <button onclick="zoomBy(1/1.3)" aria-label="Alejar"><i class="fa-solid fa-minus"></i></button>
                 <button onclick="resetView()" aria-label="Centrar"><i class="fa-solid fa-expand"></i></button>
             </div>
+            <div class="floor-badge" id="floor-badge" aria-live="polite"><i class="fa-solid fa-layer-group"></i><span id="floor-badge-label">Planta Baja</span></div>
             <div id="map-stage">
                 <div id="map-pan">
                     <div class="floor-svg active" data-floor="planta_baja" data-vb="0 0 2984 2579.9">
@@ -1381,6 +1388,7 @@
         b.onclick = () => switchFloor(k, b);
         tabsEl.appendChild(b);
     });
+    document.getElementById('floor-badge-label').textContent = FLOOR_META[activeFloor].label;
 
     // ---------- category select ----------
     (function(){
@@ -1505,6 +1513,8 @@
     function switchFloor(floor, btn){
         if (floor===activeFloor && document.querySelector('.floor-svg.active[data-floor="'+floor+'"]')) {}
         activeFloor = floor;
+        const badge = document.getElementById('floor-badge-label');
+        if (badge) badge.textContent = FLOOR_META[floor].label;
         [...tabsEl.children].forEach(b=>b.classList.remove('active'));
         if (btn) btn.classList.add('active');
         document.querySelectorAll('.floor-svg').forEach(d=>d.classList.toggle('active', d.getAttribute('data-floor')===floor));

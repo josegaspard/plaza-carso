@@ -451,24 +451,66 @@
 
         .smod-close {
             position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 36px;
-            height: 36px;
-            background: var(--smoke);
+            top: 18px;
+            right: 18px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--ink);
             border: none;
             cursor: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            color: var(--mid);
-            transition: background .2s;
+            color: var(--warm-white);
+            box-shadow: 0 8px 22px -8px rgba(10, 9, 9, .55);
+            transition: background .2s, transform .2s;
+            z-index: 20;
         }
 
         .smod-close:hover {
+            background: var(--mid);
+            transform: scale(1.08);
+        }
+
+        /* Paginación del modal — "Anterior / Siguiente" arriba del título */
+        .smod-pager {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-right: 60px;
+        }
+
+        .smod-pager-btn {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: none;
+            border: 1px solid var(--silver);
+            padding: 9px 16px;
+            cursor: none;
+            transition: background .2s, color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .smod-pager-btn:hover {
             background: var(--ink);
             color: var(--warm-white);
+            border-color: var(--ink);
+        }
+
+        .smod-pager-count {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .22em;
+            color: var(--grey);
+            font-variant-numeric: tabular-nums;
         }
 
         .smod-socials {
@@ -760,12 +802,12 @@
     <div id="cursor-dot"></div>
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
-                style="height:32px; width:auto; filter:brightness(0);"></a>
+                style="height:46px; width:auto; filter:brightness(0) invert(0.55);"></a>
         <div class="nav-links">
             <a href="index.html">Inicio</a>
             <a href="directorio.html" class="act">Directorio</a>
             <a href="mapa.html">Mapa</a>
-            <a href="eventosypromociones.html">Novedades</a>
+            <a href="eventosypromociones.html">Eventos y Promociones</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
         <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -777,7 +819,7 @@
         <a href="index.html">Inicio</a>
         <a href="directorio.html">Directorio</a>
         <a href="mapa.html">Mapa</a>
-        <a href="eventosypromociones.html">Novedades</a>
+        <a href="eventosypromociones.html">Eventos y Promociones</a>
         <a href="contacto.html">Contacto</a>
         <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:14px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
     </div>
@@ -824,27 +866,25 @@
     <div id="s-modal" onclick="closeMod(event)">
         <div id="s-modal-box" onclick="event.stopPropagation()">
             <div class="smod-img">
-                <img id="smod-img" src="" alt="" onclick="nextStore()" title="Siguiente tienda">
-                <div class="smod-hint">→ Siguiente</div>
-                <button class="smod-nav prev" onclick="prevStore()" aria-label="Tienda anterior">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                </button>
-                <button class="smod-nav next" onclick="nextStore()" aria-label="Tienda siguiente">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="smod-counter" id="smod-counter">1 / 1</div>
+                <img id="smod-img" src="" alt="">
             </div>
             <div class="smod-body">
                 <button class="smod-close" onclick="closeMod()" aria-label="Cerrar">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
                 </button>
+                <div class="smod-pager">
+                    <button type="button" class="smod-pager-btn" onclick="prevStore()"><span aria-hidden="true">←</span> Anterior</button>
+                    <span class="smod-pager-count" id="smod-counter">1 / 1</span>
+                    <button type="button" class="smod-pager-btn" onclick="nextStore()">Siguiente <span aria-hidden="true">→</span></button>
+                </div>
                 <span id="smod-cat"></span>
                 <h2 id="smod-name"></h2>
                 <p id="smod-desc"></p>
                 <div class="smod-meta">
                     <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
-                    <div class="smod-meta-item" id="smod-num-row"><span>Local</span><span id="smod-num"></span></div>
+                    <div class="smod-meta-item" id="smod-time-row"><span>Horario</span><span id="smod-time"></span></div>
                 </div>
+                <div class="smod-socials" id="smod-socials" style="display:none;"></div>
             </div>
         </div>
     </div>
@@ -856,7 +896,7 @@
                 <p>Locales disponibles en distintos niveles, en el corazón de Polanco. Conversemos.</p>
             </div>
             <div class="espac-contacts">
-                <a href="tel:4976 0346" class="espac-link">
+                <a href="tel:5549760346" class="espac-link">
                     <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5" width="11" height="11">
                             <path
@@ -880,7 +920,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Moda, gastronomía y Roof Garden en el corazón de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Granada, 11529, Ciudad de México.</p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -888,13 +928,13 @@
                     <li><a href="index.html">Inicio</a></li>
                     <li><a href="directorio.html">Directorio</a></li>
                     <li><a href="mapa.html">Mapa</a></li>
-                    <li><a href="eventosypromociones.html">Novedades</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Visítanos</h4>
-                <address>Lago Zúrich 219-245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:5549760346">55 4976 0346</a></address>
+                <address>Lago Zúrich 245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:5549760346">55 4976 0346</a></address>
             </div>
             <div class="footer-col">
                 <h4>Horario</h4>
@@ -911,11 +951,11 @@
                 <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
-                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/plazacarsooficial" target="_blank" rel="noopener" aria-label="Instagram">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a href="https://x.com/carsoplaza" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
             </div>
         </div>
@@ -933,6 +973,14 @@
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         // ── DIRECTORIO DATA — datos oficiales del cartel de Plaza Carso ──────────
         // num = número en el cartel físico (PB=53–83, C1=40–52, C2=1–39, C3=2–5, Planta Carso II=84–93)
+        //
+        // CAMPOS ADMINISTRABLES POR TIENDA (todos opcionales — agrega los que tengas):
+        //   time : horario, ej.  time:"11:00–21:00"
+        //   ig   : Instagram,    ej.  ig:"https://www.instagram.com/marca"
+        //   fb   : Facebook,     ej.  fb:"https://www.facebook.com/marca"
+        //   web  : sitio web,    ej.  web:"https://www.marca.com"
+        //   tel  : teléfono,     ej.  tel:"5512345678"
+        // El modal muestra automáticamente sólo los datos que existan.
         const STORES = [
             // Gastronomía
             { name:"Applebee's", cat:"Gastronomía", img:"images/stores/applebees.webp", logo:"images/logos/brands/applebees.webp", num:2, desc:"Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", loc:"Roof Garden", time:"12:00–23:00" },
@@ -959,9 +1007,9 @@
             { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.webp", logo:"images/logos/brands/la-imperial.webp", num:7, desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica.", loc:"Segundo Nivel", time:"13:00–23:00" },
             { name:"La Raclette", cat:"Gastronomía", img:"images/stores/la-raclette.webp", logo:"images/logos/brands/la-raclette.webp", num:35, desc:"", loc:"Segundo Nivel", time:"" },
             { name:"Las Flautas", cat:"Gastronomía", img:"images/stores/las-flautas.webp", logo:"images/logos/brands/las-flautas.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
-            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", logo:"images/logos/brands/le-macaron.webp", num:76, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", logo:"images/logos/brands/le-macaron.webp", num:76, desc:"", loc:"Planta Alta + Planta Baja", time:"" },
             { name:"Loma Linda 1924", cat:"Gastronomía", img:"images/stores/loma-linda.webp", logo:"images/logos/brands/loma-linda.webp", num:5, desc:"Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", loc:"Roof Garden", time:"13:00–24:00" },
-            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", logo:"images/logos/brands/nutrisa.webp", num:17, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", logo:"images/logos/brands/nutrisa.webp", num:17, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Planta Alta + Planta Baja", time:"11:00–22:00" },
             { name:"O'Kai Poke Bowls", cat:"Gastronomía", img:"images/stores/okai-poke-bowls.webp", logo:"images/logos/brands/okai-poke.webp", num:14, desc:"Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", loc:"Segundo Nivel", time:"11:00–22:00" },
             { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.webp", logo:"images/logos/brands/pf-changs.webp", num:1, desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Segundo Nivel", time:"13:00–23:00" },
             { name:"Pizza Maestra", cat:"Gastronomía", img:"images/stores/pizza-maestra.webp", logo:"images/logos/brands/pizza-maestra.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
@@ -1039,7 +1087,7 @@
         }
 
         function _renderGrid() {
-            _visible = STORES.filter(_matches);
+            _visible = STORES.filter(_matches).sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
             const grid = document.getElementById('store-grid');
             const empty = document.getElementById('no-results');
             if (_visible.length === 0) {
@@ -1101,9 +1149,24 @@
             const locRow = document.getElementById('smod-loc-row');
             if (s.loc) { document.getElementById('smod-loc').textContent = s.loc; locRow.style.display = ''; }
             else { locRow.style.display = 'none'; }
-            const numRow = document.getElementById('smod-num-row');
-            if (s.num) { document.getElementById('smod-num').textContent = '#' + s.num; numRow.style.display = ''; }
-            else { numRow.style.display = 'none'; }
+            const timeRow = document.getElementById('smod-time-row');
+            if (s.time) { document.getElementById('smod-time').textContent = s.time; timeRow.style.display = ''; }
+            else { timeRow.style.display = 'none'; }
+            // Redes y contacto administrables (insta / faceb / web / telf)
+            const soc = document.getElementById('smod-socials');
+            const ICON = {
+                ig: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+                fb: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+                web: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+                tel: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>'
+            };
+            let sh = '';
+            if (s.ig)  sh += `<a href="${s.ig}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">${ICON.ig}</a>`;
+            if (s.fb)  sh += `<a href="${s.fb}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">${ICON.fb}</a>`;
+            if (s.web) sh += `<a href="${s.web}" target="_blank" rel="noopener" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>`;
+            if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
+            soc.innerHTML = sh;
+            soc.style.display = sh ? 'flex' : 'none';
             const imgEl = document.getElementById('smod-img');
             imgEl.style.opacity = '0';
             const pre = new Image();

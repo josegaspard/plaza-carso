@@ -43,7 +43,13 @@
         .floor-tab:hover{ color:var(--warm-white); }
         .floor-tab.active{ color:var(--warm-white); background:rgba(255,255,255,.08); }
 
-        .sidebar-filters{ padding:14px 16px; border-bottom:1px solid var(--smoke); display:flex; flex-direction:column; gap:10px; }
+        /* Filtro por categoría con botones */
+        .cat-filters{ display:flex; flex-wrap:wrap; gap:7px; padding:14px 16px 4px; }
+        .cat-fbtn{ font-family:var(--sans); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--mid); background:var(--smoke); border:1px solid transparent; padding:8px 13px; cursor:pointer; transition:background .2s, color .2s, border-color .2s; }
+        .cat-fbtn:hover{ border-color:var(--silver); }
+        .cat-fbtn.active{ background:var(--ink); color:var(--warm-white); border-color:var(--ink); }
+
+        .sidebar-filters{ padding:10px 16px 14px; border-bottom:1px solid var(--smoke); display:flex; flex-direction:column; gap:10px; }
         .sidebar-filters select, .sidebar-search input{ width:100%; font-family:var(--sans); font-size:13px; color:var(--mid); background:var(--smoke); border:none; padding:13px 16px; outline:none; }
         .sidebar-filters select{ letter-spacing:.1em; text-transform:uppercase; cursor:pointer; -webkit-appearance:none; appearance:none; }
         .sidebar-search{ position:relative; }
@@ -135,12 +141,12 @@
 <body>
     <div id="cursor"></div><div id="cursor-dot"></div>
     <nav id="nav">
-        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso" style="height:32px;width:auto;filter:brightness(0);"></a>
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso" style="height:46px;width:auto;filter:brightness(0) invert(0.55);"></a>
         <div class="nav-links">
             <a href="index.html">Inicio</a>
             <a href="directorio.html">Directorio</a>
             <a href="mapa.html" class="act">Mapa</a>
-            <a href="eventosypromociones.html">Novedades</a>
+            <a href="eventosypromociones.html">Eventos y Promociones</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
         <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -149,7 +155,7 @@
         <div onclick="toggleMob()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
         </div>
-        <a href="index.html">Inicio</a><a href="directorio.html">Directorio</a><a href="mapa.html">Mapa</a><a href="eventosypromociones.html">Novedades</a><a href="contacto.html">Contacto</a>
+        <a href="index.html">Inicio</a><a href="directorio.html">Directorio</a><a href="mapa.html">Mapa</a><a href="eventosypromociones.html">Eventos y Promociones</a><a href="contacto.html">Contacto</a>
     </div>
 
     <main id="main-content">
@@ -157,13 +163,11 @@
         <aside class="map-sidebar">
             <div class="sidebar-head">
                 <h1>Mapa</h1>
-                <p>Explora cada nivel · pasa el cursor sobre un local</p>
+                <p>Encuentra tu tienda · toca un local en el plano</p>
             </div>
-            <div class="floor-tabs" id="floor-tabs"></div>
+            <div class="floor-tabs" id="floor-tabs" style="display:none;"></div>
+            <div class="cat-filters" id="cat-filters"></div>
             <div class="sidebar-filters">
-                <select id="cat-select" title="Filtrar por categoría" onchange="onFilter(this.value)">
-                    <option value="">Todas las categorías</option>
-                </select>
                 <div class="sidebar-search">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     <input type="text" id="store-search" placeholder="Buscar tienda..." oninput="onSearch(this.value)">
@@ -179,7 +183,6 @@
                 <button onclick="zoomBy(1/1.3)" aria-label="Alejar"><i class="fa-solid fa-minus"></i></button>
                 <button onclick="resetView()" aria-label="Centrar"><i class="fa-solid fa-expand"></i></button>
             </div>
-            <div class="floor-badge" id="floor-badge" aria-live="polite"><i class="fa-solid fa-layer-group"></i><span id="floor-badge-label">Planta Baja</span></div>
             <div id="map-stage">
                 <div id="map-pan">
                     <div class="floor-svg active" data-floor="planta_baja" data-vb="0 0 2984 2579.9">
@@ -1284,9 +1287,9 @@
             { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.webp", num:7, desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica.", loc:"Segundo Nivel", time:"13:00–23:00" },
             { name:"La Raclette", cat:"Gastronomía", img:"images/stores/la-raclette.webp", num:35, desc:"", loc:"Segundo Nivel", time:"" },
             { name:"Las Flautas", cat:"Gastronomía", img:"images/stores/las-flautas.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
-            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", num:76, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", num:76, desc:"", loc:"Planta Alta + Planta Baja", time:"" },
             { name:"Loma Linda 1924", cat:"Gastronomía", img:"images/stores/loma-linda.webp", num:5, desc:"Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", loc:"Roof Garden", time:"13:00–24:00" },
-            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", num:17, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", num:17, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Planta Alta + Planta Baja", time:"11:00–22:00" },
             { name:"O'Kai Poke Bowls", cat:"Gastronomía", img:"images/stores/okai-poke-bowls.webp", num:14, desc:"Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", loc:"Segundo Nivel", time:"11:00–22:00" },
             { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.webp", num:1, desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Segundo Nivel", time:"13:00–23:00" },
             { name:"Pizza Maestra", cat:"Gastronomía", img:"images/stores/pizza-maestra.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
@@ -1304,6 +1307,7 @@
             // Moda
             { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbgmaxazria.webp", num:64, desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"Izlah", cat:"Moda", img:"images/stores/izlah.webp", num:73, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Julio", cat:"Moda", img:"images/stores/julio.webp", num:0, desc:"", loc:"Planta Baja", time:"" },
             { name:"Masters", cat:"Moda", img:"images/stores/masters.webp", num:47, desc:"", loc:"Primer Nivel", time:"" },
             { name:"Pineda Covalín", cat:"Moda", img:"images/stores/pineda-covalin.webp", num:68, desc:"Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte mexicano.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"Scappino", cat:"Moda", img:"images/stores/scappino.webp", num:46, desc:"Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", loc:"Primer Nivel", time:"11:00–21:00" },
@@ -1344,7 +1348,7 @@
             { name:"BestDay", cat:"Servicios", img:"images/stores/bestday.webp", num:79, desc:"", loc:"Planta Baja", time:"" },
             { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", num:55, desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" },
             { name:"Lomas Studio", cat:"Servicios", img:"images/stores/mas-studio.webp", num:75, desc:"", loc:"Planta Baja", time:"" },
-            { name:"Narda Joyería", cat:"Servicios", img:"images/stores/nardo.webp", num:50, desc:"", loc:"Primer Nivel", time:"" },
+            { name:"Nardo Joyería", cat:"Joyería", img:"images/stores/nardo.webp", num:50, desc:"", loc:"Primer Nivel", time:"" },
             // Automotriz
             { name:"BYD", cat:"Automotriz", img:"images/stores/byd.webp", num:78, desc:"", loc:"Planta Baja", time:"" },
             { name:"Ford", cat:"Automotriz", img:"images/stores/ford.webp", num:89, desc:"", loc:"Planta Carso II", time:"" }
@@ -1379,22 +1383,24 @@
     let activeCat = '';
     let selectedZone = null;
 
-    // ---------- build floor tabs ----------
-    const tabsEl = document.getElementById('floor-tabs');
-    FLOOR_ORDER.forEach((k,i) => {
-        const b = document.createElement('button');
-        b.className = 'floor-tab' + (i===0?' active':'');
-        b.textContent = FLOOR_META[k].label;
-        b.onclick = () => switchFloor(k, b);
-        tabsEl.appendChild(b);
-    });
-    document.getElementById('floor-badge-label').textContent = FLOOR_META[activeFloor].label;
+    // ---------- floor tabs removidos (cliente: sin "tema de pisos") ----------
+    // El plano del nivel correcto se muestra automáticamente al elegir una tienda.
+    const tabsEl = document.getElementById('floor-tabs'); // oculto; conservado para compatibilidad
 
-    // ---------- category select ----------
+    // ---------- ubicación de cada tienda: nombre -> {floor, local} ----------
+    const STORE_LOCATION = {};
+    FLOOR_ORDER.forEach(f => { [...new Set(FLOOR_META[f].locals)].forEach(local => {
+        const st = storeFor(f, local);
+        if (st && !STORE_LOCATION[st.name]) STORE_LOCATION[st.name] = { floor:f, local };
+    }); });
+
+    // ---------- filtro por categoría con BOTONES ----------
     (function(){
-        const cats = [...new Set(STORES.map(s=>s.cat))].sort();
-        const sel = document.getElementById('cat-select');
-        cats.forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); });
+        const cats = [...new Set(STORES.filter(s=>STORE_LOCATION[s.name]).map(s=>s.cat))].sort((a,b)=>a.localeCompare(b,'es'));
+        const wrap = document.getElementById('cat-filters');
+        const mk = (val,label) => { const b=document.createElement('button'); b.type='button'; b.className='cat-fbtn'+(val===''?' active':''); b.textContent=label; b.onclick=()=>onFilter(val,b); wrap.appendChild(b); };
+        mk('', 'Todas');
+        cats.forEach(c => mk(c, c));
     })();
 
     // ---------- prepare every zone: category color + listeners ----------
@@ -1415,7 +1421,7 @@
     function tipText(floor, local){
         const st = storeFor(floor, local);
         const num = '<span class="tip-num">'+local+'</span>';
-        return st ? (num+'<b>'+st.name+'</b> · '+st.cat) : (num+'Local '+local);
+        return st ? ('<b>'+st.name+'</b>') : (num+'Local '+local);
     }
     function showTip(e, floor, local){ tip.innerHTML = tipText(floor, local); tip.classList.add('show'); moveTip(e); }
     function moveTip(e){ tip.style.left = e.clientX+'px'; tip.style.top = e.clientY+'px'; }
@@ -1432,7 +1438,7 @@
         const st = storeFor(floor, local);
         document.getElementById('pi-local').textContent = 'Local ' + local;
         if (st){
-            document.getElementById('pi-cat').textContent = st.cat;
+            document.getElementById('pi-cat').textContent = '';
             document.getElementById('pi-name').textContent = st.name;
             const meta = [st.loc, st.time].filter(Boolean).join(' · ');
             document.getElementById('pi-meta').textContent = meta;
@@ -1456,35 +1462,19 @@
     }
     document.getElementById('map-stage').addEventListener('click', e=>{ if(justDragged) return; if(e.target.id==='map-stage'||e.target.id==='map-pan'||e.target.tagName==='svg') clearSelection(); });
 
-    // ---------- sidebar store list ----------
+    // ---------- sidebar store list (todas las tiendas, alfabético, SOLO NOMBRE) ----------
     function buildList(){
         const wrap = document.getElementById('store-list');
-        const locals = [...new Set(FLOOR_META[activeFloor].locals)];
-        // build entries
-        let entries = locals.map(local => {
-            const st = storeFor(activeFloor, local);
-            return { local, st, name: st? st.name : ('Local '+local), cat: st? st.cat : '' };
-        });
         const q = (document.getElementById('store-search').value||'').trim().toLowerCase();
-        entries = entries.filter(e => {
-            const catOk = !activeCat || e.cat === activeCat;
-            const qOk = !q || e.name.toLowerCase().includes(q) || (''+e.local).includes(q);
-            return catOk && qOk;
-        });
-        // assigned stores first (alpha), then unassigned locals (numeric)
-        const assigned = entries.filter(e=>e.st).sort((a,b)=>a.name.localeCompare(b.name,'es'));
-        const unassigned = entries.filter(e=>!e.st).sort((a,b)=>a.local-b.local);
-        let html='';
-        if (assigned.length){
-            html += '<div class="sl-group-label">Tiendas en este nivel</div>';
-            html += assigned.map(itemHTML).join('');
-        }
-        if (unassigned.length){
-            html += '<div class="sl-group-label">Locales sin asignar</div>';
-            html += unassigned.map(itemHTML).join('');
-        }
-        if (!assigned.length && !unassigned.length) html = '<div class="sl-group-label">Sin resultados</div>';
-        wrap.innerHTML = html;
+        const items = STORES
+            .filter(s => STORE_LOCATION[s.name])
+            .filter(s => (!activeCat || s.cat===activeCat) && (!q || s.name.toLowerCase().includes(q)))
+            .sort((a,b)=>a.name.localeCompare(b.name,'es',{sensitivity:'base'}));
+        if (!items.length){ wrap.innerHTML = '<div class="sl-group-label">Sin resultados</div>'; return; }
+        wrap.innerHTML = items.map(s => {
+            const loc = STORE_LOCATION[s.name];
+            return '<div class="store-item" data-floor="'+loc.floor+'" data-local="'+loc.local+'"><div class="store-name">'+s.name+'</div></div>';
+        }).join('');
         wrap.querySelectorAll('.store-item').forEach(el => {
             const f=el.getAttribute('data-floor'), l=+el.getAttribute('data-local');
             el.addEventListener('click', ()=>selectZone(f,l));
@@ -1492,14 +1482,13 @@
             el.addEventListener('mouseleave', ()=>{ if(!selectedZone||selectedZone.local!=l){ const z=document.querySelector('#floor-'+f+' .store-zone[data-local="'+l+'"]'); if(z) z.classList.remove('is-active'); } });
         });
     }
-    function itemHTML(e){
-        const cls = 'store-item'+(e.st?'':' unassigned');
-        const cat = e.cat? '<div class="store-cat">'+e.cat+'</div>' : '';
-        return '<div class="'+cls+'" data-floor="'+activeFloor+'" data-local="'+e.local+'">'
-             + '<span class="store-num">'+e.local+'</span><div><div class="store-name">'+e.name+'</div>'+cat+'</div></div>';
-    }
 
-    function onFilter(cat){ activeCat=cat; applyCatTint(); buildList(); }
+    function onFilter(cat, btn){
+        activeCat=cat;
+        document.querySelectorAll('#cat-filters .cat-fbtn').forEach(b=>b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        applyCatTint(); buildList();
+    }
     function onSearch(){ buildList(); }
     function applyCatTint(){
         document.querySelectorAll('.store-zone').forEach(z=>{ z.classList.remove('cat-on','cat-dim'); });
@@ -1580,7 +1569,7 @@
       "description":"Mapa interactivo por niveles de Plaza Carso, Polanco.",
       "url":"https://josegaspard.github.io/plaza-carso/mapa.html",
       "about":{ "@type":"ShoppingCenter","name":"Plaza Carso",
-        "address":{ "@type":"PostalAddress","streetAddress":"Lago Zurich 219-245","addressLocality":"Ciudad de Mexico","postalCode":"11529","addressCountry":"MX" } } }
+        "address":{ "@type":"PostalAddress","streetAddress":"Lago Zurich 245","addressLocality":"Ciudad de Mexico","postalCode":"11529","addressCountry":"MX" } } }
     </script>
 </body>
 </html>

@@ -5,19 +5,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Novedades | Plaza Carso</title>
+    <title>Eventos y Promociones | Plaza Carso</title>
     <meta name="description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
     <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/eventosypromociones.html" />
     <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Novedades | Plaza Carso" />
+    <meta property="og:title" content="Eventos y Promociones | Plaza Carso" />
     <meta property="og:description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
     <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-eventos.jpg" />
     <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/eventosypromociones.html" />
     <meta property="og:site_name" content="Plaza Carso" />
     <meta property="og:locale" content="es_MX" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Novedades | Plaza Carso" />
+    <meta name="twitter:title" content="Eventos y Promociones | Plaza Carso" />
     <meta name="twitter:description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
     <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-eventos.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -353,6 +353,104 @@
             background: var(--ink);
         }
 
+        /* Lightbox — imagen COMPLETA del evento */
+        #img-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(8, 7, 6, .92);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        #img-lightbox.open {
+            display: flex;
+        }
+
+        .lb-figure {
+            margin: 0;
+            max-width: 92vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        #lb-img {
+            max-width: 92vw;
+            max-height: 76vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            background: #111;
+            box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8);
+        }
+
+        .lb-cap {
+            background: var(--warm-white);
+            width: 100%;
+            padding: 18px 24px;
+            text-align: center;
+        }
+
+        .lb-tag {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .lb-title {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 300;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .lb-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.7;
+            display: block;
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            z-index: 1001;
+        }
+
+        .lb-close:hover {
+            background: rgba(255, 255, 255, .28);
+        }
+
         @media(max-width:1024px) {
             .e-card.large {
                 grid-column: span 12;
@@ -473,12 +571,12 @@
     <div id="cursor-dot"></div>
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
-                style="height:32px; width:auto; filter:brightness(0);"></a>
+                style="height:46px; width:auto; filter:brightness(0) invert(0.55);"></a>
         <div class="nav-links">
             <a href="index.html">Inicio</a>
             <a href="directorio.html">Directorio</a>
             <a href="mapa.html">Mapa</a>
-            <a href="eventosypromociones.html" class="act">Novedades</a>
+            <a href="eventosypromociones.html" class="act">Eventos y Promociones</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
         </div>
         <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -490,7 +588,7 @@
         <a href="index.html">Inicio</a>
         <a href="directorio.html">Directorio</a>
         <a href="mapa.html">Mapa</a>
-        <a href="eventosypromociones.html">Novedades</a>
+        <a href="eventosypromociones.html">Eventos y Promociones</a>
         <a href="contacto.html">Contacto</a>
         <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:14px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
     </div>
@@ -501,17 +599,15 @@
             style="background-image:url('images/home/eventos-hero.jpg?v=2');background-position:center 35%;"></div>
         <div class="page-hero-content">
             <span class="page-kicker">En Plaza Carso</span>
-            <h1 class="page-h1">Novedades<br>y aperturas.</h1>
-            <p class="page-sub">Experiencias, activaciones y propuestas gastronómicas y culturales. Lo que está
-                pasando, en una sola pantalla.</p>
+            <h1 class="page-h1">Eventos y<br>promociones.</h1>
+            <p class="page-sub">Descubre lo nuevo en Plaza Carso.</p>
         </div>
     </section>
 
     <div class="tab-bar">
         <div class="tab-inner">
-            <button class="t-btn active" onclick="switchTab('todos',this)">Todos</button>
-            <button class="t-btn" onclick="switchTab('eventos',this)">Nuevas Aperturas</button>
-            <button class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
+            <button type="button" class="t-btn active" onclick="switchTab('eventos',this)">Eventos</button>
+            <button type="button" class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
         </div>
     </div>
 
@@ -578,7 +674,7 @@
                 <p>Locales disponibles en distintos niveles, en el corazón de Polanco. Conversemos.</p>
             </div>
             <div class="espac-contacts">
-                <a href="tel:4976 0346" class="espac-link">
+                <a href="tel:5549760346" class="espac-link">
                     <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5" width="11" height="11">
                             <path
@@ -595,6 +691,21 @@
             </div>
         </div>
     </section>
+
+    <!-- LIGHTBOX: imagen completa del evento/promoción -->
+    <div id="img-lightbox" onclick="closePub(event)">
+        <button type="button" class="lb-close" onclick="closePub()" aria-label="Cerrar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+        <figure class="lb-figure" onclick="event.stopPropagation()">
+            <img id="lb-img" src="" alt="">
+            <figcaption class="lb-cap">
+                <span class="lb-tag" id="lb-tag"></span>
+                <span class="lb-title" id="lb-title"></span>
+                <span class="lb-desc" id="lb-desc"></span>
+            </figcaption>
+        </figure>
+    </div>
     </main>
 
         <footer>
@@ -602,7 +713,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Moda, gastronomía y Roof Garden en el corazón de Polanco. Lago Zúrich 219-245, Granada, CDMX.</p>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Granada, 11529, Ciudad de México.</p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -610,13 +721,13 @@
                     <li><a href="index.html">Inicio</a></li>
                     <li><a href="directorio.html">Directorio</a></li>
                     <li><a href="mapa.html">Mapa</a></li>
-                    <li><a href="eventosypromociones.html">Novedades</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Visítanos</h4>
-                <address>Lago Zúrich 219-245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:5549760346">55 4976 0346</a></address>
+                <address>Lago Zúrich 245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:5549760346">55 4976 0346</a></address>
             </div>
             <div class="footer-col">
                 <h4>Horario</h4>
@@ -633,11 +744,11 @@
                 <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
-                <a href="https://twitter.com/carsoplaza" target="_blank" rel="noopener" aria-label="Twitter">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/plazacarsooficial" target="_blank" rel="noopener" aria-label="Instagram">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a href="https://x.com/carsoplaza" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
             </div>
         </div>
@@ -654,12 +765,29 @@
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         function switchTab(tab, btn) {
-            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-            document.querySelectorAll('.e-card').forEach(c => { c.style.display = (tab === 'todos' || c.dataset.tab === tab) ? '' : 'none'; });
+            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active');
+            document.querySelectorAll('.e-card').forEach(c => { c.style.display = (c.dataset.tab === tab) ? '' : 'none'; });
         }
-        function openPub(title, tag, desc, img, e) { if (e) e.preventDefault(); document.getElementById('pub-title').textContent = title; document.getElementById('pub-tag').textContent = tag; document.getElementById('pub-desc').textContent = desc; document.getElementById('pub-modal-img').src = img; document.getElementById('pub-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
-        function closePub() { document.getElementById('pub-modal').classList.remove('open'); document.body.style.overflow = ''; }
-        function closePubOuter(e) { if (e.target === document.getElementById('pub-modal')) closePub(); }
+        // Filtro inicial: mostrar "Eventos" por defecto
+        switchTab('eventos', null);
+
+        // Lightbox: abre la imagen COMPLETA del evento/promoción
+        function openPub(title, tag, desc, img, e) {
+            if (e) e.preventDefault();
+            const lb = document.getElementById('img-lightbox');
+            const im = document.getElementById('lb-img');
+            im.src = img; im.alt = title;
+            document.getElementById('lb-title').textContent = title || '';
+            document.getElementById('lb-tag').textContent = tag || '';
+            document.getElementById('lb-desc').textContent = desc || '';
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePub(e) {
+            if (e && e.target && e.target.closest('.lb-figure')) return;
+            document.getElementById('img-lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
     </script>
 
@@ -700,7 +828,7 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Plaza Carso", "item": "https://josegaspard.github.io/plaza-carso/"},
-            {"@type": "ListItem", "position": 2, "name": "Novedades", "item": "https://josegaspard.github.io/plaza-carso/eventosypromociones.html"}
+            {"@type": "ListItem", "position": 2, "name": "Eventos y Promociones", "item": "https://josegaspard.github.io/plaza-carso/eventosypromociones.html"}
         ]
     }
     </script>

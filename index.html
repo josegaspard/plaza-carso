@@ -195,16 +195,17 @@
             font-style: italic;
         }
 
-        /* Logo: full color por defecto, se transforma a tenue (gris) al colocarse en el nav */
+        /* Logo: full color por defecto, se transforma a tenue (gris) suavemente al colocarse en el nav (solo en el home) */
         .nav-logo img {
             filter: brightness(1) invert(0);
-            transition: filter 1.2s ease;
+            transition: filter 1.8s cubic-bezier(.33, 0, .2, 1);
         }
         .nav-logo img.tenue {
             filter: brightness(0) invert(.55);
         }
         .nav-logo:hover img {
             filter: brightness(1) invert(0);
+            transition: filter .6s ease;
         }
 
         .nav-links {
@@ -1804,7 +1805,7 @@
         <div class="h-strip" id="hStrip">
             <div class="h-strip-item">
                 <span class="h-strip-label">Ubicación</span>
-                <span class="h-strip-val">Lago Zúrich 245, Granada</span>
+                <span class="h-strip-val">Lago Zúrich 245, Col. Ampliación Granada</span>
             </div>
             <div class="h-strip-item">
                 <span class="h-strip-label">Horario</span>
@@ -1933,7 +1934,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Lago Zúrich 245, Col. Granada, 11529, Ciudad de México.</p>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -1947,7 +1948,7 @@
             </div>
             <div class="footer-col">
                 <h4>Visítanos</h4>
-                <address>Lago Zúrich 245<br>Granada, 11529<br>Ciudad de México<br><a href="tel:5549760346">55 4976 0346</a></address>
+                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
             </div>
             <div class="footer-col">
                 <h4>Horario</h4>
@@ -2035,7 +2036,7 @@
                                 document.querySelector('.nav-logo').style.opacity = '1';
                                 loader.classList.add('gone');
                                 // El logo llega a color full y se transforma a tenue
-                                setTimeout(() => { if (navImg) navImg.classList.add('tenue'); }, 450);
+                                setTimeout(() => { if (navImg) navImg.classList.add("tenue"); }, 750);
                             }
                         });
 
@@ -2056,7 +2057,7 @@
 
                 // Logo a tenue (móvil / sin vuelo de intro)
                 const navImgFallback = document.querySelector('.nav-logo img');
-                setTimeout(() => { if (navImgFallback) navImgFallback.classList.add('tenue'); }, 1100);
+                setTimeout(() => { if (navImgFallback) navImgFallback.classList.add("tenue"); }, 1100);
             }
         })();
 
@@ -2174,7 +2175,7 @@
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Lago Zúrich 245",
-            "addressLocality": "Ciudad de México",
+            "addressLocality": "Miguel Hidalgo, Ciudad de México",
             "addressRegion": "CDMX",
             "postalCode": "11529",
             "addressCountry": "MX"
@@ -2184,7 +2185,7 @@
             "latitude": 19.4402,
             "longitude": -99.2041
         },
-        "telephone": "+525549760346",
+        "telephone": "+525511037300",
         "openingHoursSpecification": [
             {
                 "@type": "OpeningHoursSpecification",
@@ -2195,7 +2196,7 @@
         ],
         "numberOfStores": 120,
         "priceRange": "$$$$",
-        "email": "asistentecc@plazacarso.com.mx",
+        "email": "contacto@plazacarso.com.mx",
         "currenciesAccepted": "MXN",
         "paymentAccepted": "Efectivo, Tarjeta de credito, Tarjeta de debito",
         "sameAs": [

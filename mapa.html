@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/carso.css?v=20260603e">
+    <link rel="stylesheet" href="css/carso.css?v=20260603f">
     <style>
         :root{ --accent:#94145a; }
         *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -58,6 +58,15 @@
 
         .store-list{ flex:1; overflow-y:auto; padding:4px 0 20px; }
         .store-list::-webkit-scrollbar{ width:4px; } .store-list::-webkit-scrollbar-thumb{ background:var(--silver); }
+        /* Pie del sidebar: dirección / ubicación de la plaza */
+        .sidebar-foot{ padding:16px 24px 20px; border-top:1px solid var(--smoke); background:var(--warm-white); flex-shrink:0; }
+        .sidebar-foot .sf-label{ font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--grey); display:block; margin-bottom:8px; }
+        .sidebar-foot a.sf-addr{ display:flex; gap:10px; align-items:flex-start; color:var(--mid); text-decoration:none; font-family:var(--sans); font-size:12.5px; line-height:1.5; transition:color .2s; }
+        .sidebar-foot a.sf-addr i{ color:var(--ink); margin-top:3px; font-size:13px; }
+        .sidebar-foot a.sf-addr:hover{ color:var(--ink); }
+        .sidebar-foot .sf-tel{ display:inline-flex; gap:8px; align-items:center; margin-top:11px; font-family:var(--sans); font-size:12.5px; color:var(--mid); text-decoration:none; transition:color .2s; }
+        .sidebar-foot .sf-tel i{ color:var(--ink); font-size:12px; }
+        .sidebar-foot .sf-tel:hover{ color:var(--ink); }
         .sl-group-label{ font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--grey); padding:18px 24px 8px; }
         .store-item{ display:flex; align-items:center; gap:14px; padding:12px 24px; cursor:pointer; border-bottom:1px solid var(--smoke); background:transparent; transition:background .2s, padding-left .2s; position:relative; }
         .store-item::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--grey); transition:width .2s; }
@@ -184,6 +193,14 @@
                 </div>
             </div>
             <div class="store-list" id="store-list"></div>
+            <div class="sidebar-foot">
+                <span class="sf-label">Ubicación</span>
+                <a class="sf-addr" href="https://www.google.com/maps/search/?api=1&query=Plaza+Carso+Lago+Z%C3%BArich+245+Granada" target="_blank" rel="noopener">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México</span>
+                </a>
+                <a class="sf-tel" href="tel:5511037300"><i class="fa-solid fa-phone"></i> 55 1103 7300</a>
+            </div>
         </aside>
 
         <div class="map-canvas">
@@ -1458,7 +1475,7 @@
       "description":"Mapa interactivo por niveles de Plaza Carso, Polanco.",
       "url":"https://josegaspard.github.io/plaza-carso/mapa.html",
       "about":{ "@type":"ShoppingCenter","name":"Plaza Carso",
-        "address":{ "@type":"PostalAddress","streetAddress":"Lago Zurich 245","addressLocality":"Ciudad de Mexico","postalCode":"11529","addressCountry":"MX" } } }
+        "address":{ "@type":"PostalAddress","streetAddress":"Lago Zurich 245","addressLocality":"Miguel Hidalgo, Ciudad de México","postalCode":"11529","addressCountry":"MX" } } }
     </script>
 </body>
 </html>

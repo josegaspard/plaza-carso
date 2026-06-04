@@ -1275,6 +1275,19 @@
     const CAT_COLOR = {"Gastronomía": "#C28A3E", "Moda": "#7E6CA8", "Tecnología": "#4E8FA8", "Joyería": "#C06A9E", "Entretenimiento": "#5BA47E", "Salud": "#6FA86F", "Departamental": "#B5793F", "Servicios": "#8A8FA0", "Automotriz": "#9A6A5A"};
     const STORES_BY_NAME = {}; STORES.forEach(s => STORES_BY_NAME[s.name] = s);
     function storeFor(floor, local){ const m=LOCAL_STORE[floor]; if(!m) return null; const nm=m[local]; return nm? (STORES_BY_NAME[nm]||{name:nm,cat:'',img:'',desc:'',time:''}) : null; }
+    // Pisos donde está la MISMA tienda (mismo nombre en el mismo número de local) -> tiendas que ocupan varios pisos
+    function floorsForLocal(floor, local){
+        const st = storeFor(floor, local); if(!st) return [floor];
+        const res = FLOOR_ORDER.filter(f => LOCAL_STORE[f] && LOCAL_STORE[f][local] === st.name);
+        return res.length ? res : [floor];
+    }
+    // "Primer Nivel" + "Segundo Nivel" -> "Primer + Segundo Nivel"
+    function combinedFloorLabel(floors){
+        const labels = floors.map(f => FLOOR_LABELS[f]);
+        if (labels.length === 1) return labels[0];
+        if (labels.every(l => / Nivel$/.test(l))) return labels.map(l => l.replace(/ Nivel$/,'')).join(' + ') + ' Nivel';
+        return labels.join(' + ');
+    }
 
     let activeFloor = FLOOR_ORDER[0];
     let activeCat = '';
@@ -1316,7 +1329,7 @@
         if (zoneEl) zoneEl.classList.add('is-active');
         selectedZone = {floor, local};
         const st = storeFor(floor, local);
-        document.getElementById('pi-local').textContent = 'Local ' + local + ' · ' + FLOOR_META[floor].label;
+        document.getElementById('pi-local').textContent = 'Local ' + local + ' · ' + combinedFloorLabel(floorsForLocal(floor, local));
         const imgEl = document.getElementById('pi-img');
         if (st){
             document.getElementById('pi-cat').textContent = '';
@@ -1352,22 +1365,38 @@
         const wrap = document.getElementById('store-list');
         const _se = document.getElementById('store-search');
         const q = ((_se && _se.value)||'').trim().toLowerCase();
-        let html = '';
-        // Todos los niveles, uno tras otro (sin tabs). Solo tiendas reales, alfabético por nombre.
+        // 1) Recolectar locales fusionando los que son la MISMA tienda en varios pisos (mismo nombre + mismo local).
+        const seen = new Set();
+        const items = [];
         FLOOR_ORDER.forEach(floor => {
-            const codes = [...new Set(FLOOR_META[floor].locals.map(String))];
-            const items = codes
-                .filter(c => storeFor(floor, c))
-                .map(c => ({ code:c, st:storeFor(floor, c) }))
-                .sort((a,b) => a.st.name.localeCompare(b.st.name,'es',{sensitivity:'base'}));
-            let rows = '';
-            items.forEach(({code, st}) => {
-                const name = st.name;
-                if (q && !(name.toLowerCase().includes(q) || (''+code).toLowerCase().includes(q))) return;
-                rows += '<div class="store-item" data-floor="'+floor+'" data-local="'+code+'">'
-                     + '<span class="store-num">'+code+'</span><div class="store-name">'+name+'</div></div>';
+            [...new Set(FLOOR_META[floor].locals.map(String))].forEach(code => {
+                const st = storeFor(floor, code);
+                if (!st) return;
+                const key = st.name + '|' + code;
+                if (seen.has(key)) return;            // ya se contó desde un piso anterior
+                seen.add(key);
+                const floors = floorsForLocal(floor, code);
+                items.push({ code, name: st.name, floors,
+                    label: combinedFloorLabel(floors),
+                    minIdx: Math.min(...floors.map(f => FLOOR_ORDER.indexOf(f))),
+                    span: floors.length });
             });
-            if (rows) html += '<div class="sl-group-label">'+FLOOR_LABELS[floor]+'</div>' + rows;
+        });
+        // 2) Filtro de búsqueda
+        const filt = items.filter(it => !q || it.name.toLowerCase().includes(q) || (''+it.code).includes(q));
+        // 3) Agrupar por etiqueta de piso(s); orden: por piso más bajo y luego los multi-piso
+        const groups = {};
+        filt.forEach(it => { (groups[it.label] = groups[it.label] || {label: it.label, minIdx: it.minIdx, span: it.span, rows: []}).rows.push(it); });
+        const ordered = Object.values(groups).sort((a,b) => a.minIdx - b.minIdx || a.span - b.span || a.label.localeCompare(b.label,'es'));
+        // 4) Render
+        let html = '';
+        ordered.forEach(g => {
+            const rows = g.rows.sort((a,b) => a.name.localeCompare(b.name,'es',{sensitivity:'base'}));
+            html += '<div class="sl-group-label">'+g.label+'</div>';
+            rows.forEach(it => {
+                html += '<div class="store-item" data-floor="'+it.floors[0]+'" data-local="'+it.code+'">'
+                     + '<span class="store-num">'+it.code+'</span><div class="store-name">'+it.name+'</div></div>';
+            });
         });
         if (!html) html = '<div class="sl-group-label">Sin resultados</div>';
         wrap.innerHTML = html;

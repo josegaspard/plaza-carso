@@ -173,7 +173,10 @@
     <main id="main-content">
     <div class="map-wrapper">
         <aside class="map-sidebar">
-            <div class="floor-tabs" id="floor-tabs"></div>
+            <div class="sidebar-head">
+                <h1>Directorio</h1>
+                <p>Encuentra tu tienda y ubícala en el mapa.</p>
+            </div>
             <div class="sidebar-filters">
                 <div class="sidebar-search">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -185,6 +188,7 @@
 
         <div class="map-canvas">
             <div class="map-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Arrastra para mover · rueda para acercar · clic en un local</div>
+            <div class="floor-badge"><i class="fa-solid fa-layer-group"></i><span id="floor-badge-label">Planta Baja</span></div>
             <div class="zoom-ctrl">
                 <button onclick="zoomBy(1.3)" aria-label="Acercar"><i class="fa-solid fa-plus"></i></button>
                 <button onclick="zoomBy(1/1.3)" aria-label="Alejar"><i class="fa-solid fa-minus"></i></button>
@@ -1282,16 +1286,7 @@
     let activeCat = '';
     let selectedZone = null;
 
-    // ---------- tabs de PISO (estilo oficial) ----------
-    const tabsEl = document.getElementById('floor-tabs');
-    FLOOR_ORDER.forEach((k,i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'floor-tab' + (i===0?' active':'');
-        b.textContent = FLOOR_META[k].label;
-        b.onclick = () => switchFloor(k, b);
-        tabsEl.appendChild(b);
-    });
+    // (Las tabs de piso se quitaron: el listado muestra todos los niveles y el mapa salta solo al piso correcto al elegir una tienda.)
     function codeSort(a,b){ const na=parseInt(a,10), nb=parseInt(b,10); const xa=isNaN(na)?9999:na, xb=isNaN(nb)?9999:nb; if(xa!==xb) return xa-xb; return (''+a).localeCompare(''+b,'es'); }
 
     // ---------- prepare every zone: category color + listeners ----------
@@ -1321,7 +1316,7 @@
     // ---------- selection / info panel ----------
     const info = document.getElementById('map-info');
     function selectZone(floor, local, zoneEl){
-        if (floor !== activeFloor){ const tabBtn=[...tabsEl.children][FLOOR_ORDER.indexOf(floor)]; switchFloor(floor, tabBtn); }
+        if (floor !== activeFloor){ switchFloor(floor); }
         document.querySelectorAll('.store-zone.is-active').forEach(z=>z.classList.remove('is-active'));
         if (!zoneEl) zoneEl = document.querySelector('#floor-'+floor+' .store-zone[data-local="'+local+'"]');
         if (zoneEl) zoneEl.classList.add('is-active');
@@ -1362,18 +1357,22 @@
     function buildList(){
         const wrap = document.getElementById('store-list');
         const q = (document.getElementById('store-search').value||'').trim().toLowerCase();
-        const codes = [...new Set(FLOOR_META[activeFloor].locals.map(String))];
-        // tiendas reales primero (orden de local), luego locales disponibles
-        const assigned = codes.filter(c => storeFor(activeFloor, c)).sort(codeSort);
-        const empty    = codes.filter(c => !storeFor(activeFloor, c)).sort(codeSort);
         let html = '';
-        [...assigned, ...empty].forEach(code => {
-            const st = storeFor(activeFloor, code);
-            const name = st ? st.name : 'Local disponible';
-            if (q && !(name.toLowerCase().includes(q) || (''+code).toLowerCase().includes(q))) return;
-            const cls = 'store-item' + (st?'':' unassigned');
-            html += '<div class="'+cls+'" data-floor="'+activeFloor+'" data-local="'+code+'">'
-                 + '<span class="store-num">'+code+'</span><div class="store-name">'+name+'</div></div>';
+        // Todos los niveles, uno tras otro (sin tabs). Solo tiendas reales, alfabético por nombre.
+        FLOOR_ORDER.forEach(floor => {
+            const codes = [...new Set(FLOOR_META[floor].locals.map(String))];
+            const items = codes
+                .filter(c => storeFor(floor, c))
+                .map(c => ({ code:c, st:storeFor(floor, c) }))
+                .sort((a,b) => a.st.name.localeCompare(b.st.name,'es',{sensitivity:'base'}));
+            let rows = '';
+            items.forEach(({code, st}) => {
+                const name = st.name;
+                if (q && !(name.toLowerCase().includes(q) || (''+code).toLowerCase().includes(q))) return;
+                rows += '<div class="store-item" data-floor="'+floor+'" data-local="'+code+'">'
+                     + '<span class="store-num">'+code+'</span><div class="store-name">'+name+'</div></div>';
+            });
+            if (rows) html += '<div class="sl-group-label">'+FLOOR_LABELS[floor]+'</div>' + rows;
         });
         if (!html) html = '<div class="sl-group-label">Sin resultados</div>';
         wrap.innerHTML = html;
@@ -1394,17 +1393,12 @@
     }
 
     // ---------- floor switching ----------
-    function switchFloor(floor, btn){
-        if (floor===activeFloor && document.querySelector('.floor-svg.active[data-floor="'+floor+'"]')) {}
+    function switchFloor(floor){
         activeFloor = floor;
         const badge = document.getElementById('floor-badge-label');
         if (badge) badge.textContent = FLOOR_META[floor].label;
-        [...tabsEl.children].forEach(b=>b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
         document.querySelectorAll('.floor-svg').forEach(d=>d.classList.toggle('active', d.getAttribute('data-floor')===floor));
-        clearSelection();
         applyCatTint();
-        buildList();
         resetView();
     }
 
@@ -1455,7 +1449,7 @@
         resetView();
         const p = new URLSearchParams(location.search);
         const f = p.get('floor'), l = p.get('local');
-        if (f && FLOOR_META[f]){ const btn=[...tabsEl.children][FLOOR_ORDER.indexOf(f)]; switchFloor(f, btn); if(l) setTimeout(()=>selectZone(f, +l), 60); }
+        if (f && FLOOR_META[f]){ switchFloor(f); if(l) setTimeout(()=>selectZone(f, +l), 60); }
     })();
     </script>
 

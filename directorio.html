@@ -519,8 +519,10 @@
         .smod-socials {
             display: flex;
             gap: 14px;
-            margin-top: 0px;
+            margin-top: 22px;
         }
+
+        .smod-socials a.no-link { cursor: default; }
 
         .smod-socials a {
             display: flex;
@@ -974,7 +976,6 @@
                 </button>
                 <div class="smod-pager">
                     <button type="button" class="smod-pager-btn" onclick="prevStore()"><span aria-hidden="true">←</span> Anterior</button>
-                    <span class="smod-pager-count" id="smod-counter">1 / 1</span>
                     <button type="button" class="smod-pager-btn" onclick="nextStore()">Siguiente <span aria-hidden="true">→</span></button>
                 </div>
                 <span id="smod-cat"></span>
@@ -1006,23 +1007,8 @@
         <div class="espacios-inner">
             <div class="espac-text">
                 <h3>¿Tu marca<br>en Plaza Carso?</h3>
-                <p>Locales disponibles en distintos niveles, en el corazón de Polanco. Conversemos.</p>
-            </div>
-            <div class="espac-contacts">
-                <a href="tel:5511037300" class="espac-link">
-                    <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" width="11" height="11">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z" />
-                        </svg></div>55 1103 7300
-                </a>
-                <a href="mailto:contacto@plazacarso.com.mx" class="espac-link">
-                    <div class="espac-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" width="11" height="11">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg></div>contacto@plazacarso.com.mx
-                </a>
+                <p>Contáctanos, Informes de locales:<br>
+                    <a href="tel:5511037300" style="color:var(--warm-white);">55 1103 7300</a> &nbsp;·&nbsp; <a href="mailto:contacto@plazacarso.com.mx" style="color:var(--warm-white);">contacto@plazacarso.com.mx</a></p>
             </div>
         </div>
     </section>
@@ -1131,7 +1117,6 @@
             { name:"Helados Dolphy", cat:"Gastronomía", img:"images/stores/dolphy.webp", logo:"images/logos/brands/dolphy.webp", num:30, desc:"Heladería clásica. Helados artesanales, malteadas y postres helados para toda la familia.", loc:"Segundo Nivel", time:"11:00–22:00" },
             { name:"Helados Santa Clara", cat:"Gastronomía", img:"images/stores/santa-clara.webp", logo:"images/logos/brands/santa-clara.webp", num:16, desc:"", loc:"Segundo Nivel", time:"" },
             { name:"Hello Kitty Café", cat:"Gastronomía", img:"images/stores/hello-kitty-cafe.webp", logo:"images/logos/brands/hello-kitty-cafe.webp", num:42, desc:"Café temático del universo Sanrio. Postres, malteadas y desayunos en un set de Instagram.", loc:"Primer Nivel", time:"11:00–21:00" },
-            { name:"Huawei", cat:"Tecnología", img:"images/stores/huawei.webp", logo:"images/logos/brands/huawei.webp", num:60, desc:"Discover Huawei: smartphones, smartwatches y dispositivos. Pura 80 Ultra disponible.", loc:"Planta Baja", time:"11:00–21:00" },
             { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", logo:"images/logos/brands/inbursa.webp", num:55, desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" },
             { name:"Inspark", cat:"Entretenimiento", img:"images/stores/inspark.webp", logo:"images/logos/brands/inspark.webp", num:41, desc:"", loc:"Primer Nivel", time:"" },
             { name:"iShop", cat:"Tecnología", img:"images/stores/ishop.webp", logo:"images/logos/brands/ishop.webp", num:67, desc:"", loc:"Planta Baja", time:"" },
@@ -1265,13 +1250,15 @@
                 web: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
                 tel: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>'
             };
+            // Se muestran SIEMPRE los iconos (Instagram / Facebook / Sitio web); si la tienda
+            // tiene la URL cargada, el icono enlaza; si no, queda solo el icono.
             let sh = '';
-            if (s.ig)  sh += `<a href="${s.ig}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">${ICON.ig}</a>`;
-            if (s.fb)  sh += `<a href="${s.fb}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">${ICON.fb}</a>`;
-            if (s.web) sh += `<a href="${s.web}" target="_blank" rel="noopener" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>`;
+            sh += s.ig  ? `<a href="${s.ig}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">${ICON.ig}</a>` : `<a class="no-link" aria-label="Instagram" title="Instagram">${ICON.ig}</a>`;
+            sh += s.fb  ? `<a href="${s.fb}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">${ICON.fb}</a>` : `<a class="no-link" aria-label="Facebook" title="Facebook">${ICON.fb}</a>`;
+            sh += s.web ? `<a href="${s.web}" target="_blank" rel="noopener" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>` : `<a class="no-link" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>`;
             if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
             soc.innerHTML = sh;
-            soc.style.display = sh ? 'flex' : 'none';
+            soc.style.display = 'flex';
             // Galería / carrusel de imágenes (administrable: s.imgs = [..]; si no hay, usa la principal)
             _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
             const gw = document.getElementById('smod-gallery-wrap');
@@ -1293,7 +1280,6 @@
                 requestAnimationFrame(() => { imgEl.style.opacity = '1'; });
             };
             pre.src = s.img;
-            document.getElementById('smod-counter').textContent = `${_modalIdx + 1} / ${_visible.length}`;
         }
 
         function openMod(idx) {

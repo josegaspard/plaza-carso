@@ -16,8 +16,8 @@ nav#nav{position:fixed;top:0;left:0;width:100%;z-index:800;padding:0 48px;height
 nav#nav.s{background:rgba(245,243,239,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--smoke);height:74px;}
 .nav-logo{font-family:var(--serif);font-size:20px;font-weight:300;letter-spacing:.1em;color:var(--ink);}
 .nav-logo em{font-style:italic;}
-/* Logo: en páginas internas se muestra siempre tenue (gris), sin animación. El efecto color→tenue solo va en el home. */
-.nav-logo img{filter:brightness(0) invert(.55);}
+/* Logo: en páginas internas se muestra siempre tenue, sin animación. El efecto color→tenue solo va en el home. Tenue suave (gris oscuro, cambio sutil respecto al negro). */
+.nav-logo img{filter:brightness(0) invert(.3);}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);padding-bottom:2px;position:relative;transition:color .25s;}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:0;background:var(--ink);transition:width .3s;}

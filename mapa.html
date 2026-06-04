@@ -116,13 +116,23 @@
         .pi-btn:hover{ background:var(--mid); }
         .pi-empty{ font-family:var(--sans); font-size:13px; font-weight:300; color:var(--grey); line-height:1.6; margin-top:6px; }
 
-        .map-hint{ position:absolute; top:20px; left:24px; background:rgba(8,7,6,.82); color:var(--warm-white); padding:9px 16px; font-family:var(--sans); font-size:12px; font-weight:300; letter-spacing:.03em; z-index:15; display:flex; align-items:center; gap:9px; }
+        .map-hint{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); background:rgba(8,7,6,.82); color:var(--warm-white); padding:9px 16px; font-family:var(--sans); font-size:12px; font-weight:300; letter-spacing:.03em; z-index:15; display:flex; align-items:center; gap:9px; white-space:nowrap; }
         .map-hint i{ opacity:.7; }
 
-        /* Floor name badge — visible label of the level currently shown */
-        .floor-badge{ position:absolute; top:20px; right:74px; z-index:21; display:flex; align-items:center; gap:9px; background:rgba(8,7,6,.9); color:var(--warm-white); padding:11px 18px; font-family:var(--sans); font-size:13px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; box-shadow:0 4px 24px rgba(0,0,0,.12); pointer-events:none; max-width:calc(100% - 120px); }
-        .floor-badge i{ opacity:.7; font-size:12px; }
-        .floor-badge span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        /* Selector de PISO — control interactivo siempre visible para cambiar de nivel */
+        .floor-switch{ position:absolute; top:18px; left:50%; transform:translateX(-50%); z-index:22; display:flex; align-items:center; gap:14px; background:rgba(8,7,6,.92); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); padding:8px 10px 8px 18px; border-radius:60px; box-shadow:0 10px 34px rgba(0,0,0,.28); max-width:calc(100% - 36px); }
+        .fs-head{ display:flex; align-items:center; gap:8px; color:rgba(255,255,255,.6); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; white-space:nowrap; }
+        .fs-head i{ font-size:13px; opacity:.85; }
+        .fs-track{ display:flex; gap:4px; background:rgba(255,255,255,.07); border-radius:50px; padding:4px; overflow-x:auto; }
+        .fs-track::-webkit-scrollbar{ height:0; }
+        .fs-btn{ font-family:var(--sans); font-size:12.5px; font-weight:500; letter-spacing:.02em; color:rgba(255,255,255,.72); background:transparent; border:none; padding:10px 18px; border-radius:40px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
+        .fs-btn:hover{ color:#fff; background:rgba(255,255,255,.08); }
+        .fs-btn.active{ color:var(--ink); background:var(--warm-white); box-shadow:0 2px 10px rgba(0,0,0,.25); font-weight:600; }
+
+        /* Aviso táctil para móvil (pellizca/arrastra) — se desvanece solo */
+        .touch-hint{ position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:18; display:none; align-items:center; gap:9px; background:rgba(8,7,6,.86); color:var(--warm-white); padding:10px 16px; border-radius:40px; font-family:var(--sans); font-size:12px; font-weight:300; letter-spacing:.02em; box-shadow:0 6px 22px rgba(0,0,0,.25); white-space:nowrap; pointer-events:none; transition:opacity .5s; }
+        .touch-hint i{ opacity:.75; }
+        .touch-hint.hide{ opacity:0; }
 
         /* tabs de piso: scroll horizontal si no caben */
         .floor-tabs{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
@@ -134,7 +144,9 @@
             .map-wrapper{ flex-direction:column; margin-top:72px; height:auto; }
             nav#nav{ height:72px; }
             body{ overflow:auto; }
-            .map-sidebar{ width:100%; border-right:none; border-bottom:1px solid var(--smoke); max-height:48vh; }
+            /* En móvil el MAPA va primero (con su selector de piso visible); la lista, debajo. */
+            .map-canvas{ order:1; }
+            .map-sidebar{ order:2; width:100%; border-right:none; border-top:1px solid var(--smoke); max-height:52vh; }
             .floor-tabs{ position:sticky; top:0; z-index:5; }
             .store-list{ max-height:none; }
             .map-canvas{ height:60vh; min-height:360px; }
@@ -144,13 +156,22 @@
             .map-info{ left:8px; right:8px; bottom:8px; top:auto; width:auto; max-height:54vh; overflow-y:auto; }
             .pi-img{ height:120px; }
             .map-hint{ display:none; }
-            .zoom-ctrl{ top:auto; bottom:78px; right:12px; }
-            .floor-badge{ top:12px; right:12px; left:12px; justify-content:center; max-width:none; padding:12px 14px; font-size:13px; letter-spacing:.12em; }
+            .map-canvas{ height:66vh; min-height:420px; }
+            .zoom-ctrl{ top:auto; bottom:14px; right:12px; }
+            .zoom-ctrl button{ width:48px; height:48px; font-size:19px; }
+            /* Selector de piso: barra a todo lo ancho con botones grandes (rejilla), todos visibles */
+            .floor-switch{ top:10px; left:10px; right:10px; transform:none; flex-direction:column; align-items:stretch; gap:9px; padding:11px 12px; border-radius:18px; max-width:none; }
+            .fs-head{ justify-content:center; font-size:10.5px; letter-spacing:.16em; }
+            .fs-track{ display:grid; grid-template-columns:1fr 1fr; gap:6px; overflow:visible; border-radius:14px; padding:5px; }
+            .fs-btn{ padding:13px 8px; font-size:13px; text-align:center; border-radius:10px; min-height:48px; display:flex; align-items:center; justify-content:center; }
+            .touch-hint{ display:flex; }
+            .map-info{ left:8px; right:8px; bottom:8px; }
         }
         @media(max-width:560px){
-            .map-canvas{ height:54vh; min-height:300px; }
+            .map-canvas{ height:62vh; min-height:380px; }
             .floor-tab{ font-size:10.5px; padding:12px 10px; letter-spacing:.1em; }
             .store-name{ font-size:15.5px; }
+            .fs-btn{ font-size:12.5px; padding:12px 6px; }
         }
     </style>
 </head>
@@ -182,7 +203,11 @@
 
         <div class="map-canvas">
             <div class="map-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Arrastra para mover · rueda para acercar · clic en un local</div>
-            <div class="floor-badge"><i class="fa-solid fa-layer-group"></i><span id="floor-badge-label">Planta Baja</span></div>
+            <div class="floor-switch" id="floor-switch" role="tablist" aria-label="Selecciona el nivel de la plaza">
+                <span class="fs-head"><i class="fa-solid fa-layer-group"></i> Piso</span>
+                <div class="fs-track" id="fs-track"></div>
+            </div>
+            <div class="touch-hint" id="touch-hint"><i class="fa-solid fa-hand-pointer"></i> Pellizca para acercar · arrastra para mover</div>
             <div class="zoom-ctrl">
                 <button onclick="zoomBy(1.3)" aria-label="Acercar"><i class="fa-solid fa-plus"></i></button>
                 <button onclick="zoomBy(1/1.3)" aria-label="Alejar"><i class="fa-solid fa-minus"></i></button>
@@ -1280,7 +1305,28 @@
     let activeCat = '';
     let selectedZone = null;
 
-    // (Las tabs de piso se quitaron: el listado muestra todos los niveles y el mapa salta solo al piso correcto al elegir una tienda.)
+    // Etiquetas cortas para los botones del selector de piso (el resto del sitio usa las largas).
+    const FLOOR_BTN = {"planta_baja":"Planta Baja","primer":"Primer Nivel","segundo":"Segundo Nivel","city_market":"City Market"};
+
+    // ---------- selector de PISO (control visible para cambiar de nivel) ----------
+    function buildFloorSwitch(){
+        const track = document.getElementById('fs-track');
+        if (!track) return;
+        track.innerHTML = FLOOR_ORDER.map(f =>
+            '<button type="button" class="fs-btn'+(f===activeFloor?' active':'')+'" role="tab" data-floor="'+f+'" aria-selected="'+(f===activeFloor)+'">'+(FLOOR_BTN[f]||FLOOR_LABELS[f])+'</button>'
+        ).join('');
+        track.querySelectorAll('.fs-btn').forEach(b => {
+            b.addEventListener('click', () => { const f=b.getAttribute('data-floor'); if(f!==activeFloor){ clearSelection(); switchFloor(f); } });
+        });
+    }
+    function syncFloorSwitch(){
+        document.querySelectorAll('#fs-track .fs-btn').forEach(b => {
+            const on = b.getAttribute('data-floor')===activeFloor;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-selected', on);
+            if (on) b.scrollIntoView({inline:'center', block:'nearest'});
+        });
+    }
     function codeSort(a,b){ const na=parseInt(a,10), nb=parseInt(b,10); const xa=isNaN(na)?9999:na, xb=isNaN(nb)?9999:nb; if(xa!==xb) return xa-xb; return (''+a).localeCompare(''+b,'es'); }
 
     // ---------- prepare every zone: category color + listeners ----------
@@ -1390,17 +1436,16 @@
     // ---------- floor switching ----------
     function switchFloor(floor){
         activeFloor = floor;
-        const badge = document.getElementById('floor-badge-label');
-        if (badge) badge.textContent = FLOOR_META[floor].label;
+        syncFloorSwitch();
         document.querySelectorAll('.floor-svg').forEach(d=>d.classList.toggle('active', d.getAttribute('data-floor')===floor));
         applyCatTint();
         resetView();
     }
 
-    // ---------- pan & zoom ----------
+    // ---------- pan & zoom (ratón, arrastre 1 dedo y PELLIZCO 2 dedos en móvil) ----------
     const stage = document.getElementById('map-stage');
     const pan = document.getElementById('map-pan');
-    let scale=1, tx=0, ty=0, dragging=false, pending=false, sx=0, sy=0, downX=0, downY=0, capId=null, justDragged=false;
+    let scale=1, tx=0, ty=0, justDragged=false;
     function apply(){ pan.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
     function resetView(){ scale=1; tx=0; ty=0; apply(); }
     function zoomAt(cx, cy, factor){
@@ -1412,20 +1457,57 @@
     }
     function zoomBy(f){ const r=stage.getBoundingClientRect(); zoomAt(r.width/2, r.height/2, f); }
     stage.addEventListener('wheel', e=>{ e.preventDefault(); const r=stage.getBoundingClientRect(); zoomAt(e.clientX-r.left, e.clientY-r.top, e.deltaY<0?1.12:1/1.12); }, {passive:false});
-    // pointerdown only ARMS a potential drag; capture happens after the pointer actually
-    // moves >5px, so a plain click still reaches the zone (no pointer-capture stealing it).
-    stage.addEventListener('pointerdown', e=>{ pending=true; dragging=false; downX=e.clientX; downY=e.clientY; sx=e.clientX-tx; sy=e.clientY-ty; capId=e.pointerId; });
-    stage.addEventListener('pointermove', e=>{
-        if(!pending && !dragging) return;
-        if(!dragging){
-            if(Math.abs(e.clientX-downX)+Math.abs(e.clientY-downY) < 5) return;
-            dragging=true; stage.classList.add('grabbing'); try{ stage.setPointerCapture(capId); }catch(_){}
+
+    const pts = new Map();            // punteros activos -> {x,y}
+    let pinch = null;                 // {dist,cx,cy} cuando hay 2 dedos
+    let drag = null;                  // {sx,sy,downX,downY,id,moved} cuando hay 1 dedo
+    function stageRect(){ return stage.getBoundingClientRect(); }
+    // pointerdown sólo ARMA un posible arrastre; la captura ocurre tras moverse >5px,
+    // así un clic simple llega al local (la captura no se lo roba).
+    stage.addEventListener('pointerdown', e=>{
+        pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+        if (pts.size === 1){
+            drag = { sx:e.clientX-tx, sy:e.clientY-ty, downX:e.clientX, downY:e.clientY, id:e.pointerId, moved:false };
+            pinch = null;
+        } else if (pts.size === 2){
+            drag = null;
+            const a=[...pts.values()], r=stageRect();
+            pinch = { dist:Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y), cx:(a[0].x+a[1].x)/2-r.left, cy:(a[0].y+a[1].y)/2-r.top };
         }
-        tx=e.clientX-sx; ty=e.clientY-sy; apply();
     });
-    function endDrag(){ pending=false; if(dragging){ dragging=false; justDragged=true; setTimeout(()=>justDragged=false,0); stage.classList.remove('grabbing'); try{ stage.releasePointerCapture(capId); }catch(_){} } }
-    stage.addEventListener('pointerup', endDrag);
-    stage.addEventListener('pointercancel', endDrag);
+    stage.addEventListener('pointermove', e=>{
+        if (!pts.has(e.pointerId)) return;
+        pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+        if (pinch && pts.size >= 2){
+            const a=[...pts.values()], r=stageRect();
+            const dist = Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y);
+            const cx=(a[0].x+a[1].x)/2-r.left, cy=(a[0].y+a[1].y)/2-r.top;
+            if (pinch.dist>0) zoomAt(cx, cy, dist/pinch.dist);
+            tx += cx-pinch.cx; ty += cy-pinch.cy; apply();   // mover con el pellizco
+            pinch.dist=dist; pinch.cx=cx; pinch.cy=cy; justDragged=true;
+            return;
+        }
+        if (drag && e.pointerId===drag.id){
+            if (!drag.moved){
+                if (Math.abs(e.clientX-drag.downX)+Math.abs(e.clientY-drag.downY) < 5) return;
+                drag.moved=true; stage.classList.add('grabbing'); try{ stage.setPointerCapture(drag.id); }catch(_){}
+            }
+            tx=e.clientX-drag.sx; ty=e.clientY-drag.sy; apply();
+        }
+    });
+    function ptUp(e){
+        pts.delete(e.pointerId);
+        if (pinch && pts.size<2){
+            pinch=null; justDragged=true; setTimeout(()=>justDragged=false,30);
+            if (pts.size===1){ const [id,p]=[...pts.entries()][0]; drag={ sx:p.x-tx, sy:p.y-ty, downX:p.x, downY:p.y, id, moved:true }; }
+        }
+        if (drag && e.pointerId===drag.id){
+            if (drag.moved){ justDragged=true; setTimeout(()=>justDragged=false,0); stage.classList.remove('grabbing'); try{ stage.releasePointerCapture(drag.id); }catch(_){} }
+            drag=null;
+        }
+    }
+    stage.addEventListener('pointerup', ptUp);
+    stage.addEventListener('pointercancel', ptUp);
 
     // ---------- misc ----------
     function toggleMob(){ const m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; const b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded', m.classList.contains('open')); }
@@ -1438,8 +1520,18 @@
         document.addEventListener('mousemove', e=>{ cur.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; if(dot) dot.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; });
     }
 
+    // aviso táctil: sólo en móvil, se desvanece tras unos segundos o al primer toque
+    (function touchHint(){
+        const h = document.getElementById('touch-hint');
+        if (!h) return;
+        const kill = () => { h.classList.add('hide'); setTimeout(()=>{ h.style.display='none'; }, 600); };
+        setTimeout(kill, 4500);
+        stage.addEventListener('pointerdown', kill, {once:true});
+    })();
+
     // deep link: ?floor=primer&local=33
     (function init(){
+        buildFloorSwitch();
         buildList();
         resetView();
         const p = new URLSearchParams(location.search);

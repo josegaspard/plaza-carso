@@ -540,6 +540,103 @@
             color: var(--warm-white);
         }
 
+        /* Carrusel de imágenes en el modal */
+        .smod-gallery-wrap { margin-top: 22px; }
+        .smod-gallery-label {
+            display: block;
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 10px;
+        }
+        .smod-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .smod-gallery::-webkit-scrollbar { height: 5px; }
+        .smod-gallery::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 4px; }
+        .smod-thumb {
+            flex: 0 0 auto;
+            width: 96px;
+            height: 72px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            scroll-snap-align: start;
+            border: 1px solid var(--smoke);
+            background: var(--warm-white);
+            position: relative;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+        .smod-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+        .smod-thumb:hover { border-color: var(--ink); transform: translateY(-2px); }
+        .smod-thumb:hover img { transform: scale(1.06); }
+        .smod-thumb::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,.12);
+            opacity: 0; transition: opacity .2s ease;
+        }
+        .smod-thumb:hover::after { opacity: 1; }
+
+        /* Lightbox de galería */
+        #g-lightbox {
+            position: fixed; inset: 0; z-index: 4000;
+            background: rgba(15,15,15,.94);
+            display: none;
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity .3s ease;
+        }
+        #g-lightbox.open { display: flex; opacity: 1; }
+        #gl-img {
+            max-width: 92vw; max-height: 84vh;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 24px 80px rgba(0,0,0,.6);
+        }
+        .gl-close {
+            position: absolute; top: 22px; right: 26px;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.35);
+            background: rgba(255,255,255,.08); color: #fff;
+            font-size: 30px; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s ease;
+        }
+        .gl-close:hover { background: #fff; color: #111; }
+        .gl-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 54px; height: 54px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.3);
+            background: rgba(255,255,255,.08); color: #fff;
+            font-size: 34px; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s ease;
+        }
+        .gl-nav:hover { background: #fff; color: #111; }
+        .gl-nav.prev { left: 18px; }
+        .gl-nav.next { right: 18px; }
+        .gl-counter {
+            position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+            font-family: var(--sans); font-size: 12px; letter-spacing: .2em;
+            color: rgba(255,255,255,.8); font-variant-numeric: tabular-nums;
+        }
+        @media (max-width: 600px) {
+            .smod-thumb { width: 84px; height: 64px; }
+            .gl-nav { width: 44px; height: 44px; font-size: 26px; }
+            .gl-nav.prev { left: 8px; } .gl-nav.next { right: 8px; }
+            .gl-close { top: 14px; right: 14px; width: 44px; height: 44px; font-size: 26px; }
+            #gl-img { max-width: 94vw; max-height: 78vh; }
+        }
+
         /* Espacios section */
         .espacios-band {
             background: var(--ink);
@@ -839,14 +936,14 @@
     <div class="filter-bar">
         <div class="filter-inner" id="fi">
             <button class="f-btn active" onclick="filt('Todos',this)">Todos</button>
-            <button class="f-btn" onclick="filt('Moda',this)">Moda</button>
-            <button class="f-btn" onclick="filt('Gastronomía',this)">Gastronomía</button>
-            <button class="f-btn" onclick="filt('Tecnología',this)">Tecnología</button>
-            <button class="f-btn" onclick="filt('Joyería',this)">Joyería</button>
-            <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
-            <button class="f-btn" onclick="filt('Salud',this)">Salud</button>
             <button class="f-btn" onclick="filt('Departamental',this)">Departamental</button>
+            <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
+            <button class="f-btn" onclick="filt('Gastronomía',this)">Gastronomía</button>
+            <button class="f-btn" onclick="filt('Joyería',this)">Joyería</button>
+            <button class="f-btn" onclick="filt('Moda',this)">Moda</button>
+            <button class="f-btn" onclick="filt('Salud',this)">Salud</button>
             <button class="f-btn" onclick="filt('Servicios',this)">Servicios</button>
+            <button class="f-btn" onclick="filt('Tecnología',this)">Tecnología</button>
             <div class="search-wrap">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="11" cy="11" r="8" />
@@ -887,9 +984,22 @@
                     <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
                     <div class="smod-meta-item" id="smod-time-row"><span>Horario</span><span id="smod-time"></span></div>
                 </div>
+                <div class="smod-gallery-wrap" id="smod-gallery-wrap" style="display:none;">
+                    <span class="smod-gallery-label">Galería</span>
+                    <div class="smod-gallery" id="smod-gallery"></div>
+                </div>
                 <div class="smod-socials" id="smod-socials" style="display:none;"></div>
             </div>
         </div>
+    </div>
+
+    <!-- LIGHTBOX GALERÍA -->
+    <div id="g-lightbox" onclick="closeGal(event)">
+        <button class="gl-close" onclick="closeGal()" aria-label="Cerrar">&times;</button>
+        <button class="gl-nav prev" onclick="galPrev(event)" aria-label="Anterior">&lsaquo;</button>
+        <img id="gl-img" src="" alt="">
+        <button class="gl-nav next" onclick="galNext(event)" aria-label="Siguiente">&rsaquo;</button>
+        <span class="gl-counter" id="gl-counter"></span>
     </div>
 
     <section class="espacios-section">
@@ -1162,6 +1272,18 @@
             if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
             soc.innerHTML = sh;
             soc.style.display = sh ? 'flex' : 'none';
+            // Galería / carrusel de imágenes (administrable: s.imgs = [..]; si no hay, usa la principal)
+            _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
+            const gw = document.getElementById('smod-gallery-wrap');
+            const gal = document.getElementById('smod-gallery');
+            if (_galImgs.length) {
+                gal.innerHTML = _galImgs.map((src, i) =>
+                    `<div class="smod-thumb" onclick="openGal(${i})"><img src="${src}" alt="${s.name} ${i + 1}" loading="lazy"></div>`
+                ).join('');
+                gw.style.display = '';
+            } else {
+                gw.style.display = 'none';
+            }
             const imgEl = document.getElementById('smod-img');
             imgEl.style.opacity = '0';
             const pre = new Image();
@@ -1188,7 +1310,40 @@
             document.getElementById('s-modal').classList.remove('open');
             document.body.style.overflow = '';
         }
+
+        // ---- Lightbox de galería ----
+        let _galImgs = [], _galIdx = 0;
+        function _showGal() {
+            if (!_galImgs.length) return;
+            _galIdx = ((_galIdx % _galImgs.length) + _galImgs.length) % _galImgs.length;
+            document.getElementById('gl-img').src = _galImgs[_galIdx];
+            const c = document.getElementById('gl-counter');
+            c.textContent = _galImgs.length > 1 ? `${_galIdx + 1} / ${_galImgs.length}` : '';
+            document.querySelectorAll('.gl-nav').forEach(n => n.style.display = _galImgs.length > 1 ? 'flex' : 'none');
+        }
+        function openGal(i) {
+            _galIdx = i || 0;
+            _showGal();
+            document.getElementById('g-lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function galNext(e) { if (e) e.stopPropagation(); _galIdx++; _showGal(); }
+        function galPrev(e) { if (e) e.stopPropagation(); _galIdx--; _showGal(); }
+        function closeGal(e) {
+            if (e && e.target.id === 'gl-img') return;
+            document.getElementById('g-lightbox').classList.remove('open');
+            // si el modal de tienda sigue abierto, mantener overflow oculto
+            if (!document.getElementById('s-modal').classList.contains('open')) document.body.style.overflow = '';
+        }
+
         document.addEventListener('keydown', e => {
+            const gl = document.getElementById('g-lightbox');
+            if (gl && gl.classList.contains('open')) {
+                if (e.key === 'Escape') closeGal();
+                if (e.key === 'ArrowRight') galNext();
+                if (e.key === 'ArrowLeft') galPrev();
+                return;
+            }
             const modal = document.getElementById('s-modal');
             if (!modal || !modal.classList.contains('open')) return;
             if (e.key === 'Escape') closeMod();

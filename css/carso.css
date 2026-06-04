@@ -16,6 +16,10 @@ nav#nav{position:fixed;top:0;left:0;width:100%;z-index:800;padding:0 48px;height
 nav#nav.s{background:rgba(245,243,239,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--smoke);height:74px;}
 .nav-logo{font-family:var(--serif);font-size:20px;font-weight:300;letter-spacing:.1em;color:var(--ink);}
 .nav-logo em{font-style:italic;}
+/* Logo: arranca a color full y se transforma a tenue (gris) */
+@keyframes logoToTenue{from{filter:brightness(1) invert(0);}to{filter:brightness(0) invert(.55);}}
+.nav-logo img{filter:brightness(0) invert(.55);animation:logoToTenue 1.4s ease .5s backwards;transition:filter .5s ease;}
+.nav-logo:hover img{filter:brightness(1) invert(0);}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);padding-bottom:2px;position:relative;transition:color .25s;}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:0;background:var(--ink);transition:width .3s;}

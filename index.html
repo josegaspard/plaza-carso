@@ -195,6 +195,18 @@
             font-style: italic;
         }
 
+        /* Logo: full color por defecto, se transforma a tenue (gris) al colocarse en el nav */
+        .nav-logo img {
+            filter: brightness(1) invert(0);
+            transition: filter 1.2s ease;
+        }
+        .nav-logo img.tenue {
+            filter: brightness(0) invert(.55);
+        }
+        .nav-logo:hover img {
+            filter: brightness(1) invert(0);
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -1738,7 +1750,7 @@
     <!-- NAV -->
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
-                style="height:64px; width:auto; filter:brightness(0) invert(0.55);"></a>
+                style="height:64px; width:auto;"></a>
         <div class="nav-links">
             <a href="index.html" class="act">Inicio</a>
             <a href="directorio.html">Directorio</a>
@@ -2022,6 +2034,8 @@
                             onComplete: () => {
                                 document.querySelector('.nav-logo').style.opacity = '1';
                                 loader.classList.add('gone');
+                                // El logo llega a color full y se transforma a tenue
+                                setTimeout(() => { if (navImg) navImg.classList.add('tenue'); }, 450);
                             }
                         });
 
@@ -2039,6 +2053,10 @@
 
                 // Initialize main page entry safely synced
                 setTimeout(runHeroAnim, 600);
+
+                // Logo a tenue (móvil / sin vuelo de intro)
+                const navImgFallback = document.querySelector('.nav-logo img');
+                setTimeout(() => { if (navImgFallback) navImgFallback.classList.add('tenue'); }, 1100);
             }
         })();
 

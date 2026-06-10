@@ -861,6 +861,13 @@
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 max-width: 100%;
+                /* center + overflow recorta el inicio (botones del pager ocultos bajo la foto) */
+                justify-content: flex-start;
+            }
+
+            .smod-pager {
+                /* el botón cerrar en móvil queda sobre la foto, no sobre el cuerpo */
+                padding-right: 0;
             }
 
             .smod-close {

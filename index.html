@@ -457,6 +457,13 @@
             font-weight: 400;
         }
 
+        /* "Mucho por descubrir," ligeramente más chica solo en PC/tablet */
+        @media(min-width:769px) {
+            #hl2 {
+                font-size: clamp(38px, 6.1vw, 86px);
+            }
+        }
+
         /* Divider */
         .h-divider {
             width: 0;

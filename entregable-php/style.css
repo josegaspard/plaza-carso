@@ -1,0 +1,56 @@
+﻿#menuHorizontal{
+	background-color: #842121;
+}
+#menuHorizontal a {
+	color: #fff;
+	font-weight: normal;
+}
+#menuHorizontal a:hover {
+	color: #fff;
+	font-weight: bold;
+}
+footer{
+	font-weight: bolder;
+	border: none !important;
+	background-image: none;
+	color: white !important;
+	background: #842121;
+	background: -webkit-linear-gradient(#842121, #c30707);
+	background: -o-linear-gradient(#842121, #c30707);
+	background: -moz-linear-gradient(#842121, #c30707);
+	background: linear-gradient(#842121, #c30707);
+}
+/*
+.txtSubTituloMapa li a{
+	color: white !important;
+}
+.txtSubTituloMapaXS a{
+	color: white !important;
+}
+*/
+@media only screen and (max-width: 859px) {
+	#menuHorizontal{
+		background: none;
+	}
+}
+.txtfooter, .fa-fw, a{
+	color: white !important;
+}
+#tipoMensaje, .inputForm, .form-control, .btn, .form-control[readonly]{
+	background: #842121;
+	color: white;
+}
+#Mensaje::-webkit-input-placeholder, input[type="text"]::-webkit-input-placeholder{
+	color: #e0dede;
+}
+.form-control[readonly]{
+	text-align: center;
+}
+#divMapa a{
+	color: #404040 !important;
+}
+/*
+#divMapa .txtSubTituloMapa a{
+	color: #ffffff !important;
+}
+*/

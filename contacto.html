@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Contacto | Plaza Carso</title>
+    <meta name="description"
+        content="Contáctanos en Plaza Carso, Polanco. Tel. 55 1103 7300 · contacto@plazacarso.com.mx" />
+    <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/contacto.html" />
+    <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contacto | Plaza Carso" />
+    <meta property="og:description" content="Contáctanos en Plaza Carso, Polanco. Tel. 55 1103 7300 · contacto@plazacarso.com.mx" />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-contacto.jpg" />
+    <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/contacto.html" />
+    <meta property="og:site_name" content="Plaza Carso" />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contacto | Plaza Carso" />
+    <meta name="twitter:description" content="Contáctanos en Plaza Carso, Polanco. Tel. 55 1103 7300 · contacto@plazacarso.com.mx" />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-contacto.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="author" content="Plaza Carso" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080706" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/carso.css?v=20260603g">
+    <style>
+        .contact-section {
+            padding: 100px 52px;
+            background: var(--smoke);
+        }
+
+        .contact-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        /* Info */
+        .contact-info {}
+
+        .contact-info .section-label {
+            margin-bottom: 24px;
+        }
+
+        .contact-h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 300;
+            color: var(--ink);
+            line-height: .95;
+            margin-bottom: 28px;
+        }
+
+        .contact-desc {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.85;
+            margin-bottom: 52px;
+        }
+
+        .detail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+
+        .detail-ico {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--silver);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .detail-ico svg {
+            width: 14px;
+            height: 14px;
+            color: var(--mid);
+        }
+
+        .detail-label {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .detail-val {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .detail-val a {
+            color: var(--ink);
+            transition: color .2s;
+        }
+
+        .detail-val a:hover {
+            color: var(--grey);
+        }
+
+        .map-box {
+            margin-top: 48px;
+            border: 1px solid var(--silver);
+            overflow: hidden;
+        }
+
+        .map-box iframe {
+            display: block;
+            width: 100%;
+            height: 220px;
+            border: none;
+            filter: grayscale(25%);
+        }
+
+        /* Form */
+        .form-card {
+            background: var(--warm-white);
+            padding: 56px 52px;
+        }
+
+        .form-card-head {
+            margin-bottom: 44px;
+        }
+
+        .form-card-head h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(32px, 3.5vw, 46px);
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .form-card-head p {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .fg {
+            margin-bottom: 28px;
+        }
+
+        .fg label {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .fg input,
+        .fg select,
+        .fg textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--silver);
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--ink);
+            padding: 10px 0;
+            outline: none;
+            transition: border-color .3s;
+        }
+
+        .fg input:focus,
+        .fg select:focus,
+        .fg textarea:focus {
+            border-bottom-color: var(--ink);
+        }
+
+        .fg input::placeholder,
+        .fg textarea::placeholder {
+            color: var(--silver);
+        }
+
+        .fg select {
+            appearance: none;
+            cursor: none;
+            color: var(--mid);
+        }
+
+        .fg select option {
+            color: var(--ink);
+        }
+
+        .fg textarea {
+            resize: none;
+            min-height: 90px;
+        }
+
+        .privacy-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .privacy-row input {
+            margin-top: 3px;
+            accent-color: var(--ink);
+            flex-shrink: 0;
+            cursor: none;
+        }
+
+        .privacy-row label {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.6;
+        }
+
+        .privacy-row a {
+            color: var(--mid);
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            background: var(--ink);
+            color: var(--warm-white);
+            border: none;
+            padding: 15px 36px;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background .25s;
+        }
+
+        .btn-submit:hover {
+            background: var(--mid);
+        }
+
+        .success-box {
+            display: none;
+            margin-top: 20px;
+            background: var(--smoke);
+            border-left: 2px solid var(--grey);
+            padding: 16px 20px;
+            font-family: var(--sans);
+            font-size: 13px;
+            color: var(--mid);
+        }
+
+        /* Avisos section */
+        .avisos-section {
+            padding: 80px 52px;
+            background: var(--warm-white);
+        }
+
+        .avisos-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .avisos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            margin-top: 48px;
+        }
+
+        .aviso-card {
+            background: var(--smoke);
+            padding: 40px;
+            border-left: 2px solid var(--silver);
+        }
+
+        .aviso-ico {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--silver);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .aviso-ico svg {
+            width: 13px;
+            height: 13px;
+            color: var(--mid);
+        }
+
+        .aviso-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 300;
+            color: var(--ink);
+            margin-bottom: 12px;
+        }
+
+        .aviso-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.85;
+        }
+
+        /* Espacios */
+        .espacios-section {
+            background: var(--ink);
+            padding: 80px 52px;
+        }
+
+        .espacios-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .espac-text h3 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(30px, 3.5vw, 46px);
+            font-weight: 300;
+            color: var(--warm-white);
+        }
+
+        .espac-text p {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 10px;
+            line-height: 1.8;
+            max-width: 400px;
+        }
+
+        .espac-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .espac-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: .1em;
+            color: var(--silver);
+            transition: color .2s;
+        }
+
+        .espac-link:hover {
+            color: var(--warm-white);
+        }
+
+        .espac-link-ico {
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .espac-link-ico svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        @media(max-width:1024px) {
+            .contact-inner {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+        }
+
+        @media(max-width:768px) {
+            /* Fix cursor:none breaking mobile taps */
+            *, *::before, *::after { cursor: auto !important; }
+            a, button, input, select, textarea { cursor: pointer !important; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+
+            .contact-section,
+            .avisos-section,
+            .espacios-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .contact-section {
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            .contact-inner {
+                gap: 40px;
+            }
+
+            .form-card {
+                padding: 28px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            /* Prevent iOS zoom on input focus */
+            .fg input,
+            .fg select,
+            .fg textarea {
+                font-size: 16px;
+            }
+
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
+                min-height: 48px;
+            }
+
+            .privacy-row input {
+                min-width: 20px;
+                min-height: 20px;
+            }
+
+            .avisos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .aviso-card {
+                padding: 28px 20px;
+            }
+
+            .detail-val {
+                font-size: 16px;
+            }
+
+            .map-box iframe {
+                height: 200px;
+            }
+
+            /* Espacios mobile */
+            .espacios-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Mobile nav */
+            .nav-ham {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mob-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            #mob-nav a {
+                padding: 8px 0;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <nav id="nav">
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:64px; width:auto;"></a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="directorio.html">Directorio</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="eventosypromociones.html">Eventos y Promociones</a>
+            <a href="contacto.html" class="nav-cta-link act">Contacto</a>
+        </div>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
+        <div onclick="toggleMob()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;-webkit-tap-highlight-color:transparent;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </div>
+        <a href="index.html">Inicio</a>
+        <a href="directorio.html">Directorio</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="eventosypromociones.html">Eventos y Promociones</a>
+        <a href="contacto.html">Contacto</a>
+        <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:14px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
+    </div>
+
+    <main id="main-content">
+    <section class="page-hero" style="min-height:360px;">
+        <div class="page-hero-img"
+            style="background-image:url('images/home/contacto-hero.jpg');background-position:center 30%;"></div>
+        <div class="page-hero-content">
+            <span class="page-kicker">Contacto</span>
+            <h1 class="page-h1">Hablemos.</h1>
+            <p class="page-sub">Dudas, comentarios, ideas. Lo que sea, lo leemos.</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <p class="section-label">Información</p>
+                <h2 class="contact-h2">Hablemos.</h2>
+                <p class="contact-desc">Gracias por tu visita. Cuéntanos tu experiencia. Estamos a tus órdenes.</p>
+                <div class="detail-list">
+                    <div class="detail-item">
+                        <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg></div>
+                        <div><span class="detail-label">Dirección</span>
+                            <div class="detail-val">Lago Zúrich 245, Col. Ampliación Granada<br>11529, Miguel Hidalgo, Ciudad de México</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z" />
+                            </svg></div>
+                        <div><span class="detail-label">Teléfono</span>
+                            <div class="detail-val"><a href="tel:5511037300">55 1103 7300</a></div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg></div>
+                        <div><span class="detail-label">Correo</span>
+                            <div class="detail-val"><a
+                                    href="mailto:contacto@plazacarso.com.mx">contacto@plazacarso.com.mx</a></div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg></div>
+                        <div><span class="detail-label">Horario</span>
+                            <div class="detail-val">Lunes – Domingo: 11:00 – 21:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-box">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Plaza%20Carso%2C%20Lago%20Z%C3%BArich%20245%2C%20Ampliaci%C3%B3n%20Granada%2C%2011529%2C%20Miguel%20Hidalgo%2C%20CDMX&z=16&output=embed"
+                        loading="lazy" allowfullscreen title="Ubicación de Plaza Carso en Google Maps"></iframe>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <div class="form-card-head">
+                    <h2>Escríbenos.</h2>
+                </div>
+                <!-- INTEGRATION: action="enviarCorreo.php" method="post" -->
+                <form id="cForm" action="enviarCorreo.php" method="post">
+                    <!-- Campos ocultos requeridos por enviarCorreo.php -->
+                    <input type="hidden" name="EmailPlaza" value="contacto@plazacarso.com.mx">
+                    <input type="hidden" name="NombrePlaza" value="Plaza Carso">
+                    <div class="form-row">
+                        <div class="fg"><label for="NombreContacto">Nombre</label><input type="text" id="NombreContacto"
+                                name="NombreContacto" placeholder="Tu nombre completo" required></div>
+                        <div class="fg"><label for="EmailContacto">Email</label><input type="email" id="EmailContacto"
+                                name="EmailContacto" placeholder="correo@ejemplo.com" required></div>
+                    </div>
+                    <div class="fg"><label for="TelefonoContacto">Teléfono</label><input type="tel"
+                            id="TelefonoContacto" name="TelefonoContacto" placeholder="10 dígitos" maxlength="10"
+                            required></div>
+                    <!-- tipoMensaje: 1=Quejas y Sugerencias, 2=Espacios Disponibles -->
+                    <div class="fg"><label for="tipoMensaje">Tipo de mensaje</label>
+                        <select id="tipoMensaje" name="tipoMensaje" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="1">Quejas y Sugerencias</option>
+                            <option value="2">Espacios Disponibles</option>
+                        </select>
+                    </div>
+                    <div class="fg"><label for="Mensaje">Mensaje</label><textarea id="Mensaje" name="Mensaje"
+                            placeholder="Escribe tu mensaje aquí..." required></textarea></div>
+                    <div class="privacy-row">
+                        <input type="checkbox" id="chkAviso" name="AvisoPrivacidad" value="true" required>
+                        <label for="chkAviso">He leído y acepto el <a href="AvisodePrivacidad.php" target="_blank">Aviso
+                                de Privacidad</a> de Plaza Carso.</label>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btnSub">
+                        Enviar mensaje
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                    <div class="success-box" id="sBox">Mensaje enviado. Te contactaremos pronto.</div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="espacios-section">
+        <div class="espacios-inner">
+            <div class="espac-text">
+                <h3>¿Tu marca<br>en Plaza Carso?</h3>
+                <p>Contáctanos, Informes de locales:<br>
+                    <a href="tel:5511037300" style="color:var(--warm-white);">55 1103 7300</a> &nbsp;·&nbsp; <a href="mailto:contacto@plazacarso.com.mx" style="color:var(--warm-white);">contacto@plazacarso.com.mx</a></p>
+            </div>
+        </div>
+    </section>
+    </main>
+
+        <footer>
+        <div class="footer-bg-text" aria-hidden="true">CARSO</div>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand-name">Plaza <span>Carso</span></div>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="directorio.html">Directorio</a></li>
+                    <li><a href="mapa.html">Mapa</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Visítanos</h4>
+                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul>
+                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
+                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
+                    <li><a href="contacto.html">Contáctanos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/plazacarsooficial" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a href="https://x.com/carsoplaza" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script>
+        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
+            document.querySelectorAll('a,button,input,select,textarea').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
+        }
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
+        function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
+        document.getElementById('cForm').addEventListener('submit', function (e) {
+            if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.')) {
+                e.preventDefault();
+                const btn = document.getElementById('btnSub');
+                btn.innerHTML = 'Enviando... <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>';
+                setTimeout(() => { btn.innerHTML = 'Enviar mensaje <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>'; document.getElementById('sBox').style.display = 'block'; document.getElementById('cForm').reset(); }, 1400);
+            }
+        });
+    </script>
+
+    <script>
+        // Footer Cursor Auto-Inversion
+        document.querySelectorAll('footer').forEach(f => {
+            f.addEventListener('mouseenter', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = '#fff'; 
+                if(dot) dot.style.background = '#fff'; 
+            });
+            f.addEventListener('mouseleave', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = ''; 
+                if(dot) dot.style.background = ''; 
+            });
+        });
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contacto - Plaza Carso",
+        "description": "Contactanos en Plaza Carso, Polanco. Tel. 55 1103 7300",
+        "url": "https://josegaspard.github.io/plaza-carso/contacto.html",
+        "mainEntity": {
+            "@type": "ShoppingCenter",
+            "name": "Plaza Carso",
+            "telephone": "+525511037300",
+            "email": "contacto@plazacarso.com.mx",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Lago Zurich 245",
+                "addressLocality": "Miguel Hidalgo, Ciudad de México",
+                "addressRegion": "CDMX",
+                "postalCode": "11529",
+                "addressCountry": "MX"
+            }
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Plaza Carso", "item": "https://josegaspard.github.io/plaza-carso/"},
+            {"@type": "ListItem", "position": 2, "name": "Contacto", "item": "https://josegaspard.github.io/plaza-carso/contacto.html"}
+        ]
+    }
+    </script>
+</body>
+
+</html>

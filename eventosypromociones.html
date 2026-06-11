@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Eventos y Promociones | Plaza Carso</title>
+    <meta name="description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
+    <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/eventosypromociones.html" />
+    <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Eventos y Promociones | Plaza Carso" />
+    <meta property="og:description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-eventos.jpg" />
+    <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/eventosypromociones.html" />
+    <meta property="og:site_name" content="Plaza Carso" />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Eventos y Promociones | Plaza Carso" />
+    <meta name="twitter:description" content="Eventos, promociones y novedades de Plaza Carso, Polanco." />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/hero-eventos.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="author" content="Plaza Carso" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080706" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/carso.css?v=20260603g">
+    <style>
+        /* Tab bar */
+        .tab-bar {
+            position: sticky;
+            top: 72px;
+            z-index: 50;
+            background: rgba(246, 244, 240, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--smoke);
+        }
+
+        .tab-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 52px;
+            display: flex;
+            gap: 0;
+        }
+
+        .t-btn {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--grey);
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 18px 20px;
+            border-bottom: 1.5px solid transparent;
+            transition: color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .t-btn:hover {
+            color: var(--mid);
+        }
+
+        .t-btn.active {
+            color: var(--ink);
+            border-bottom-color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* Editorial grid */
+        .nov-section {
+            padding: 80px 52px 100px;
+            background: var(--smoke);
+        }
+
+        .nov-section-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: min-content;
+            gap: 3px;
+        }
+
+        /* Card sizes */
+        .e-card {
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+            background: var(--silver);
+        }
+
+        .e-card.large {
+            grid-column: span 7;
+            grid-row: span 2;
+        }
+
+        .e-card.medium {
+            grid-column: span 5;
+        }
+
+        .e-card.small {
+            grid-column: span 4;
+        }
+
+        .e-card img {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: transform .7s ease, filter .5s;
+        }
+
+        .e-card:hover img {
+            transform: scale(1.06);
+            filter: grayscale(0%);
+        }
+
+        .e-card.large img {
+            min-height: 540px;
+        }
+
+        .e-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 9, 9, .78) 0%, rgba(10, 9, 9, .1) 55%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .e-card-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 24px;
+        }
+
+        .e-tag {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--silver);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .e-tag::before {
+            content: '';
+            display: block;
+            width: 14px;
+            height: 1px;
+            background: var(--silver);
+        }
+
+        .e-title {
+            font-family: var(--serif);
+            font-weight: 300;
+            color: var(--warm-white);
+            line-height: 1.2;
+        }
+
+        .e-card.large .e-title {
+            font-size: clamp(22px, 2.5vw, 34px);
+        }
+
+        .e-card.medium .e-title,
+        .e-card.small .e-title {
+            font-size: 18px;
+        }
+
+        /* Social section */
+        .social-section {
+            background: var(--ink);
+            padding: 80px 52px;
+        }
+
+        .social-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .social-text h2 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 300;
+            color: var(--warm-white);
+        }
+
+        .social-text p {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        .social-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            padding: 12px 22px;
+            cursor: none;
+            transition: all .2s;
+        }
+
+        .btn-fb {
+            background: #1877F2;
+            color: #fff;
+        }
+
+        .btn-fb:hover {
+            background: #1460c8;
+        }
+
+        .btn-tw {
+            background: var(--warm-white);
+            color: var(--ink);
+        }
+
+        .btn-tw:hover {
+            background: var(--smoke);
+        }
+
+        /* Pub modal */
+        #pub-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            background: rgba(10, 9, 9, .9);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #pub-modal.open {
+            display: flex;
+        }
+
+        #pub-modal-box {
+            background: var(--warm-white);
+            max-width: 760px;
+            width: 100%;
+            max-height: 88vh;
+            overflow: hidden;
+            position: relative;
+            transform: scale(.96) translateY(20px);
+            opacity: 0;
+            transition: transform .4s, opacity .4s;
+        }
+
+        #pub-modal.open #pub-modal-box {
+            transform: none;
+            opacity: 1;
+        }
+
+        #pub-modal-img {
+            width: 100%;
+            max-height: 55vh;
+            object-fit: cover;
+            display: block;
+        }
+
+        .pub-modal-body {
+            padding: 36px 40px;
+        }
+
+        .pub-modal-tag {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .pub-modal-title {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(28px, 3vw, 42px);
+            font-weight: 300;
+            color: var(--ink);
+            margin-bottom: 14px;
+        }
+
+        .pub-modal-desc {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.85;
+        }
+
+        .pub-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(10, 9, 9, .5);
+            border: none;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #fff;
+            transition: background .2s;
+            z-index: 10;
+        }
+
+        .pub-close:hover {
+            background: var(--ink);
+        }
+
+        /* Lightbox — imagen COMPLETA del evento */
+        #img-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(8, 7, 6, .92);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        #img-lightbox.open {
+            display: flex;
+        }
+
+        .lb-figure {
+            margin: 0;
+            max-width: 92vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        #lb-img {
+            max-width: 92vw;
+            max-height: 76vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            background: #111;
+            box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8);
+        }
+
+        .lb-cap {
+            background: var(--warm-white);
+            width: 100%;
+            padding: 18px 24px;
+            text-align: center;
+        }
+
+        .lb-tag {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .lb-title {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 300;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .lb-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.7;
+            display: block;
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            z-index: 1001;
+        }
+
+        .lb-close:hover {
+            background: rgba(255, 255, 255, .28);
+        }
+
+        @media(max-width:1024px) {
+            .e-card.large {
+                grid-column: span 12;
+            }
+
+            .e-card.medium {
+                grid-column: span 6;
+            }
+
+            .e-card.small {
+                grid-column: span 6;
+            }
+        }
+
+        @media(max-width:768px) {
+            /* Fix cursor:none breaking mobile taps */
+            *, *::before, *::after { cursor: auto !important; }
+            a, button, input, select, textarea { cursor: pointer !important; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+
+            .nov-section,
+            .social-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .tab-bar {
+                top: 60px; /* Match mobile nav height */
+            }
+
+            .tab-inner {
+                padding: 0 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .t-btn {
+                min-height: 44px;
+                padding: 14px 14px;
+            }
+
+            .e-card.large,
+            .e-card.medium,
+            .e-card.small {
+                grid-column: span 12;
+                grid-row: auto;
+            }
+
+            .e-card img,
+            .e-card.large img {
+                min-height: 220px;
+                max-height: 320px;
+            }
+
+            .e-card-body {
+                padding: 20px 16px;
+            }
+
+            /* Social section mobile */
+            .social-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .social-btns {
+                width: 100%;
+            }
+
+            .btn-social {
+                flex: 1;
+                justify-content: center;
+                min-height: 48px;
+            }
+
+            /* Modal mobile */
+            .pub-modal-body {
+                padding: 24px 20px;
+            }
+
+            .pub-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            /* Mobile nav */
+            .nav-ham {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mob-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            #mob-nav a {
+                padding: 8px 0;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <nav id="nav">
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:64px; width:auto;"></a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="directorio.html">Directorio</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="eventosypromociones.html" class="act">Eventos y Promociones</a>
+            <a href="contacto.html" class="nav-cta-link">Contacto</a>
+        </div>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
+        <div onclick="toggleMob()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;-webkit-tap-highlight-color:transparent;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </div>
+        <a href="index.html">Inicio</a>
+        <a href="directorio.html">Directorio</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="eventosypromociones.html">Eventos y Promociones</a>
+        <a href="contacto.html">Contacto</a>
+        <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:14px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
+    </div>
+
+    <main id="main-content">
+    <section class="page-hero" style="min-height:440px;">
+        <div class="page-hero-img"
+            style="background-image:url('images/home/eventos-hero.jpg?v=2');background-position:center 35%;"></div>
+        <div class="page-hero-content">
+            <span class="page-kicker">En Plaza Carso</span>
+            <h1 class="page-h1">Eventos y<br>promociones.</h1>
+            <p style="font-family:var(--sans);font-size:clamp(15px,1.6vw,19px);font-weight:300;color:rgba(247,245,242,.85);margin-top:18px;letter-spacing:.02em;">Descubre lo nuevo en Plaza Carso</p>
+        </div>
+    </section>
+
+    <div class="tab-bar">
+        <div class="tab-inner">
+            <button type="button" class="t-btn active" onclick="switchTab('eventos',this)">Eventos</button>
+            <button type="button" class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
+        </div>
+    </div>
+
+    <section class="nov-section">
+        <div class="nov-section-inner">
+            <!-- INTEGRATION: <?php echo publicaciones($CentroComercial); ?> genera .e-card con class="publicidad" -->
+            <div class="editorial-grid" id="editGrid">
+                <a class="e-card large" data-tab="eventos"
+                    onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','images/home/evento-41.jpg',event)">
+                    <img src="images/home/evento-41.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Temporada</span>
+                        <div class="e-title">Primavera en el Roof Garden</div>
+                    </div>
+                </a>
+                <a class="e-card medium" data-tab="eventos"
+                    onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','images/home/evento-42.jpg',event)">
+                    <img src="images/home/evento-42.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Cultura</span>
+                        <div class="e-title">Arte y cultura, todo el año</div>
+                    </div>
+                </a>
+                <a class="e-card medium" data-tab="promociones"
+                    onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','images/home/evento-43.jpg',event)">
+                    <img src="images/home/evento-43.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Temporada</span>
+                        <div class="e-title">Rebajas 2026</div>
+                    </div>
+                </a>
+                <a class="e-card small" data-tab="eventos"
+                    onclick="openPub('Fashion Show Primavera','Moda','Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.','images/home/evento-44.jpg',event)">
+                    <img src="images/home/evento-44.jpg" alt="Desfile de moda Fashion Show en Plaza Carso Polanco" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Moda</span>
+                        <div class="e-title">Fashion Show · Primavera</div>
+                    </div>
+                </a>
+                <a class="e-card small" data-tab="promociones"
+                    onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','images/home/evento-45.jpg',event)">
+                    <img src="images/home/evento-45.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Gastronomía</span>
+                        <div class="e-title">Gourmet Weekend</div>
+                    </div>
+                </a>
+                <a class="e-card small" data-tab="eventos"
+                    onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','images/home/evento-46.jpg',event)">
+                    <img src="images/home/evento-46.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy">
+                    <div class="e-card-overlay"></div>
+                    <div class="e-card-body"><span class="e-tag">Nuevas Aperturas</span>
+                        <div class="e-title">Bienvenidas al Directorio</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="espacios-section">
+        <div class="espacios-inner">
+            <div class="espac-text">
+                <h3>¿Tu marca<br>en Plaza Carso?</h3>
+                <p>Contáctanos, Informes de locales:<br>
+                    <a href="tel:5511037300" style="color:var(--warm-white);">55 1103 7300</a> &nbsp;·&nbsp; <a href="mailto:contacto@plazacarso.com.mx" style="color:var(--warm-white);">contacto@plazacarso.com.mx</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX: imagen completa del evento/promoción -->
+    <div id="img-lightbox" onclick="closePub(event)">
+        <button type="button" class="lb-close" onclick="closePub()" aria-label="Cerrar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+        <figure class="lb-figure" onclick="event.stopPropagation()">
+            <img id="lb-img" src="" alt="">
+            <figcaption class="lb-cap">
+                <span class="lb-tag" id="lb-tag"></span>
+                <span class="lb-title" id="lb-title"></span>
+                <span class="lb-desc" id="lb-desc"></span>
+            </figcaption>
+        </figure>
+    </div>
+    </main>
+
+        <footer>
+        <div class="footer-bg-text" aria-hidden="true">CARSO</div>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand-name">Plaza <span>Carso</span></div>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="directorio.html">Directorio</a></li>
+                    <li><a href="mapa.html">Mapa</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Visítanos</h4>
+                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul>
+                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
+                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
+                    <li><a href="contacto.html">Contáctanos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/plazacarsooficial" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a href="https://x.com/carsoplaza" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script>
+        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
+            document.querySelectorAll('a,button,.e-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
+        }
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
+        function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active');
+            document.querySelectorAll('.e-card').forEach(c => { c.style.display = (c.dataset.tab === tab) ? '' : 'none'; });
+        }
+        // Filtro inicial: mostrar "Eventos" por defecto
+        switchTab('eventos', null);
+
+        // Lightbox: abre la imagen COMPLETA del evento/promoción
+        function openPub(title, tag, desc, img, e) {
+            if (e) e.preventDefault();
+            const lb = document.getElementById('img-lightbox');
+            const im = document.getElementById('lb-img');
+            im.src = img; im.alt = title;
+            document.getElementById('lb-title').textContent = title || '';
+            document.getElementById('lb-tag').textContent = tag || '';
+            document.getElementById('lb-desc').textContent = desc || '';
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePub(e) {
+            if (e && e.target && e.target.closest('.lb-figure')) return;
+            document.getElementById('img-lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
+    </script>
+
+    <script>
+        // Footer Cursor Auto-Inversion
+        document.querySelectorAll('footer').forEach(f => {
+            f.addEventListener('mouseenter', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = '#fff'; 
+                if(dot) dot.style.background = '#fff'; 
+            });
+            f.addEventListener('mouseleave', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = ''; 
+                if(dot) dot.style.background = ''; 
+            });
+        });
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Eventos y Promociones - Plaza Carso",
+        "description": "Eventos, promociones y novedades de Plaza Carso, Polanco.",
+        "url": "https://josegaspard.github.io/plaza-carso/eventosypromociones.html",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Plaza Carso",
+            "url": "https://josegaspard.github.io/plaza-carso/"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Plaza Carso", "item": "https://josegaspard.github.io/plaza-carso/"},
+            {"@type": "ListItem", "position": 2, "name": "Eventos y Promociones", "item": "https://josegaspard.github.io/plaza-carso/eventosypromociones.html"}
+        ]
+    }
+    </script>
+</body>
+
+</html>

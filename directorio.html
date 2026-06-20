@@ -1006,16 +1006,20 @@
     <div id="s-modal" onclick="closeMod(event)">
         <div id="s-modal-box" onclick="event.stopPropagation()">
             <div class="smod-img">
-                <img id="smod-img" src="" alt="">
+                <img id="smod-img" src="" alt="" onclick="openGal(_mainIdx)">
+                <button type="button" class="smod-nav prev" id="smod-nav-prev" onclick="mainPrev(event)" aria-label="Foto anterior">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button type="button" class="smod-nav next" id="smod-nav-next" onclick="mainNext(event)" aria-label="Foto siguiente">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <span class="smod-counter" id="smod-counter"></span>
+                <span class="smod-hint">Ampliar</span>
             </div>
             <div class="smod-body">
                 <button class="smod-close" onclick="closeMod()" aria-label="Cerrar">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
                 </button>
-                <div class="smod-pager">
-                    <button type="button" class="smod-pager-btn" onclick="prevStore()"><span aria-hidden="true">←</span> Anterior</button>
-                    <button type="button" class="smod-pager-btn" onclick="nextStore()">Siguiente <span aria-hidden="true">→</span></button>
-                </div>
                 <span id="smod-cat"></span>
                 <h2 id="smod-name"></h2>
                 <p id="smod-desc"></p>
@@ -1023,10 +1027,6 @@
                     <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
                     <div class="smod-meta-item" id="smod-time-row"><span>Horario</span><span id="smod-time"></span></div>
                     <div class="smod-meta-item" id="smod-tel-row"><span>Teléfono</span><span><a id="smod-tel" href="tel:5511037300">55 1103 7300</a></span></div>
-                </div>
-                <div class="smod-gallery-wrap" id="smod-gallery-wrap" style="display:none;">
-                    <span class="smod-gallery-label">Galería</span>
-                    <div class="smod-gallery" id="smod-gallery"></div>
                 </div>
                 <div class="smod-socials" id="smod-socials" style="display:none;"></div>
             </div>
@@ -1305,28 +1305,34 @@
             if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
             soc.innerHTML = sh;
             soc.style.display = 'flex';
-            // Galería / carrusel de imágenes (administrable: s.imgs = [..]; si no hay, usa la principal)
+            // Carrusel de la imagen izquierda (administrable: s.imgs = [..]; si no hay, usa la principal)
             _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
-            const gw = document.getElementById('smod-gallery-wrap');
-            const gal = document.getElementById('smod-gallery');
-            if (_galImgs.length) {
-                gal.innerHTML = _galImgs.map((src, i) =>
-                    `<div class="smod-thumb" onclick="openGal(${i})"><img src="${src}" alt="${s.name} ${i + 1}" loading="lazy"></div>`
-                ).join('');
-                gw.style.display = '';
-            } else {
-                gw.style.display = 'none';
-            }
+            _mainIdx = 0;
+            _curName = s.name;
+            _renderMain();
+        }
+
+        // Renderiza la foto activa en la imagen izquierda + flechas + contador
+        function _renderMain() {
             const imgEl = document.getElementById('smod-img');
+            const cnt = document.getElementById('smod-counter');
+            const hasMany = _galImgs.length > 1;
+            document.getElementById('smod-nav-prev').style.display = hasMany ? 'flex' : 'none';
+            document.getElementById('smod-nav-next').style.display = hasMany ? 'flex' : 'none';
+            cnt.style.display = hasMany ? '' : 'none';
+            cnt.textContent = hasMany ? `${_mainIdx + 1} / ${_galImgs.length}` : '';
+            const src = _galImgs[_mainIdx] || '';
+            imgEl.alt = _curName + (hasMany ? ` — foto ${_mainIdx + 1}` : '');
             imgEl.style.opacity = '0';
             const pre = new Image();
             pre.onload = pre.onerror = () => {
-                imgEl.src = s.img;
-                imgEl.alt = s.name;
+                imgEl.src = src;
                 requestAnimationFrame(() => { imgEl.style.opacity = '1'; });
             };
-            pre.src = s.img;
+            pre.src = src;
         }
+        function mainNext(e) { if (e) e.stopPropagation(); if (_galImgs.length < 2) return; _mainIdx = (_mainIdx + 1) % _galImgs.length; _renderMain(); }
+        function mainPrev(e) { if (e) e.stopPropagation(); if (_galImgs.length < 2) return; _mainIdx = (_mainIdx - 1 + _galImgs.length) % _galImgs.length; _renderMain(); }
 
         function openMod(idx) {
             if (!_visible.length) return;
@@ -1335,8 +1341,6 @@
             document.getElementById('s-modal').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
-        function nextStore() { if (!_visible.length) return; _modalIdx = (_modalIdx + 1) % _visible.length; _applyStore(_visible[_modalIdx]); }
-        function prevStore() { if (!_visible.length) return; _modalIdx = (_modalIdx - 1 + _visible.length) % _visible.length; _applyStore(_visible[_modalIdx]); }
         function closeMod(e) {
             if (e && e.target.closest('#s-modal-box')) return;
             document.getElementById('s-modal').classList.remove('open');
@@ -1344,7 +1348,7 @@
         }
 
         // ---- Lightbox de galería ----
-        let _galImgs = [], _galIdx = 0;
+        let _galImgs = [], _galIdx = 0, _mainIdx = 0, _curName = '';
         function _showGal() {
             if (!_galImgs.length) return;
             _galIdx = ((_galIdx % _galImgs.length) + _galImgs.length) % _galImgs.length;
@@ -1379,8 +1383,8 @@
             const modal = document.getElementById('s-modal');
             if (!modal || !modal.classList.contains('open')) return;
             if (e.key === 'Escape') closeMod();
-            if (e.key === 'ArrowRight') nextStore();
-            if (e.key === 'ArrowLeft') prevStore();
+            if (e.key === 'ArrowRight') mainNext();
+            if (e.key === 'ArrowLeft') mainPrev();
         });
 
         // Initial render

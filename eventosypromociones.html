@@ -81,6 +81,51 @@
             font-weight: 500;
         }
 
+        /* Indicador "en vivo": efecto visual cuando hay eventos y promociones */
+        .t-btn::after {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-left: 9px;
+            vertical-align: middle;
+            border-radius: 50%;
+            background: var(--silver);
+            animation: carso-live 2.4s ease-out infinite;
+        }
+
+        .t-btn.active::after {
+            background: var(--ink);
+            animation-name: carso-live-dark;
+        }
+
+        @keyframes carso-live {
+            0% { box-shadow: 0 0 0 0 rgba(194, 187, 178, .6); }
+            70% { box-shadow: 0 0 0 7px rgba(194, 187, 178, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(194, 187, 178, 0); }
+        }
+
+        @keyframes carso-live-dark {
+            0% { box-shadow: 0 0 0 0 rgba(10, 9, 9, .45); }
+            70% { box-shadow: 0 0 0 7px rgba(10, 9, 9, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 9, 9, 0); }
+        }
+
+        /* Entrada escalonada de las tarjetas al cargar o cambiar de pestaña */
+        @keyframes carso-card-in {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .e-card.is-in {
+            animation: carso-card-in .6s cubic-bezier(.22, .61, .36, 1) both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .t-btn::after { animation: none; }
+            .e-card.is-in { animation: none; }
+        }
+
         /* Editorial grid */
         .nov-section {
             padding: 80px 52px 100px;
@@ -601,9 +646,7 @@
         <div class="page-hero-img"
             style="background-image:url('images/home/eventos-hero.jpg?v=2');background-position:center 35%;"></div>
         <div class="page-hero-content">
-            <span class="page-kicker">En Plaza Carso</span>
             <h1 class="page-h1">Eventos y<br>promociones</h1>
-            <p style="font-family:var(--sans);font-size:clamp(15px,1.6vw,19px);font-weight:300;color:rgba(247,245,242,.85);margin-top:18px;letter-spacing:.02em;">Descubre lo nuevo en Plaza Carso</p>
         </div>
     </section>
 
@@ -754,7 +797,13 @@
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         function switchTab(tab, btn) {
             document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active');
-            document.querySelectorAll('.e-card').forEach(c => { c.style.display = (c.dataset.tab === tab) ? '' : 'none'; });
+            var i = 0;
+            document.querySelectorAll('.e-card').forEach(c => {
+                var show = (c.dataset.tab === tab);
+                c.style.display = show ? '' : 'none';
+                c.classList.remove('is-in');
+                if (show) { void c.offsetWidth; c.style.animationDelay = (i * 70) + 'ms'; c.classList.add('is-in'); i++; }
+            });
         }
         // Filtro inicial: mostrar "Eventos" por defecto
         switchTab('eventos', null);

@@ -506,46 +506,6 @@
             transform: scale(1.08);
         }
 
-        /* Paginación del modal — "Anterior / Siguiente" arriba del título */
-        .smod-pager {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 22px;
-            padding-right: 60px;
-        }
-
-        .smod-pager-btn {
-            font-family: var(--sans);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            color: var(--ink);
-            background: none;
-            border: 1px solid var(--silver);
-            padding: 9px 16px;
-            cursor: none;
-            transition: background .2s, color .2s, border-color .2s;
-            white-space: nowrap;
-        }
-
-        .smod-pager-btn:hover {
-            background: var(--ink);
-            color: var(--warm-white);
-            border-color: var(--ink);
-        }
-
-        .smod-pager-count {
-            font-family: var(--sans);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: .22em;
-            color: var(--grey);
-            font-variant-numeric: tabular-nums;
-        }
-
         .smod-socials {
             display: flex;
             gap: 14px;
@@ -571,53 +531,6 @@
             background: var(--ink);
             color: var(--warm-white);
         }
-
-        /* Carrusel de imágenes en el modal */
-        .smod-gallery-wrap { margin-top: 22px; }
-        .smod-gallery-label {
-            display: block;
-            font-family: var(--sans);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: .24em;
-            text-transform: uppercase;
-            color: var(--grey);
-            margin-bottom: 10px;
-        }
-        .smod-gallery {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-        }
-        .smod-gallery::-webkit-scrollbar { height: 5px; }
-        .smod-gallery::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 4px; }
-        .smod-thumb {
-            flex: 0 0 auto;
-            width: 140px;
-            height: 105px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            scroll-snap-align: start;
-            border: 1px solid var(--smoke);
-            background: var(--warm-white);
-            position: relative;
-            transition: border-color .2s ease, transform .2s ease;
-        }
-        .smod-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
-        .smod-thumb:hover { border-color: var(--ink); transform: translateY(-2px); }
-        .smod-thumb:hover img { transform: scale(1.06); }
-        .smod-thumb::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: rgba(0,0,0,.12);
-            opacity: 0; transition: opacity .2s ease;
-        }
-        .smod-thumb:hover::after { opacity: 1; }
 
         /* Lightbox de galería */
         #g-lightbox {
@@ -662,7 +575,6 @@
             color: rgba(255,255,255,.8); font-variant-numeric: tabular-nums;
         }
         @media (max-width: 600px) {
-            .smod-thumb { width: 120px; height: 90px; }
             .gl-nav { width: 44px; height: 44px; font-size: 26px; }
             .gl-nav.prev { left: 8px; } .gl-nav.next { right: 8px; }
             .gl-close { top: 14px; right: 14px; width: 44px; height: 44px; font-size: 26px; }
@@ -861,13 +773,7 @@
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 max-width: 100%;
-                /* center + overflow recorta el inicio (botones del pager ocultos bajo la foto) */
                 justify-content: flex-start;
-            }
-
-            .smod-pager {
-                /* el botón cerrar en móvil queda sobre la foto, no sobre el cuerpo */
-                padding-right: 0;
             }
 
             .smod-close {

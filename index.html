@@ -766,6 +766,20 @@
             direction: ltr;
         }
 
+        /* Panel solo-foto (sin textos) */
+        .panel.full {
+            grid-template-columns: 1fr;
+            min-height: auto;
+        }
+
+        .panel.full .p-img img {
+            width: 100%;
+            height: 70vh;
+            min-height: 420px;
+            filter: grayscale(0%);
+            transform: scale(1);
+        }
+
         .p-img {
             overflow: hidden;
             position: relative;
@@ -1794,11 +1808,6 @@
             </h1>
 
             <div class="h-divider" id="hDiv"></div>
-
-            <div class="h-btns" id="hBtns">
-                <a href="directorio.html" class="btn-p">Explorar Directorio</a>
-                <a href="mapa.html" class="btn-g">Ver Mapa</a>
-            </div>
         </div>
 
         <!-- Info Strip -->
@@ -1823,51 +1832,9 @@
 
     </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-            <span class="mi">Moda</span><span class="md mi">·</span>
-            <span class="mi">Gastronomía</span><span class="md mi">·</span>
-            <span class="mi">Roof Garden</span><span class="md mi">·</span>
-            <span class="mi">Joyería</span><span class="md mi">·</span>
-            <span class="mi">Entretenimiento</span><span class="md mi">·</span>
-            <span class="mi">Polanco CDMX</span><span class="md mi">·</span>
-            <span class="mi">Museo Soumaya</span><span class="md mi">·</span>
-            <span class="mi">Cultura</span><span class="md mi">·</span>
-            <span class="mi">Moda</span><span class="md mi">·</span>
-            <span class="mi">Gastronomía</span><span class="md mi">·</span>
-            <span class="mi">Roof Garden</span><span class="md mi">·</span>
-            <span class="mi">Joyería</span><span class="md mi">·</span>
-            <span class="mi">Entretenimiento</span><span class="md mi">·</span>
-            <span class="mi">Polanco CDMX</span><span class="md mi">·</span>
-            <span class="mi">Museo Soumaya</span><span class="md mi">·</span>
-            <span class="mi">Cultura</span><span class="md mi">·</span>
-        </div>
-    </div>
+    <!-- (Marquee de categorías removido a petición del cliente — jun 2026) -->
 
-    <!-- STATEMENT -->
-    <section class="stmt">
-        <span class="stmt-tag rv">Nuestra Esencia</span>
-        <p class="stmt-q rv rv-d1">Un punto de encuentro para disfrutar la ciudad <em>de distintas maneras.</em></p>
-        <div class="stats rv rv-d2">
-            <div class="sc">
-                <div class="sn" data-count="120">120</div>
-                <div class="sl">Tiendas</div>
-            </div>
-            <div class="sc">
-                <div class="sn">2</div>
-                <div class="sl">Niveles</div>
-            </div>
-            <div class="sc">
-                <div class="sn">Roof</div>
-                <div class="sl">Garden</div>
-            </div>
-            <div class="sc">
-                <div class="sn">1</div>
-                <div class="sl">Plaza Carso</div>
-            </div>
-        </div>
-    </section>
+    <!-- (Sección "Nuestra Esencia" + cifras removida a petición del cliente — jun 2026; se entra directo a las fotos) -->
 
     <!-- PANELS -->
     <section class="panels">
@@ -1877,19 +1844,13 @@
             <div class="p-body">
                 <span class="p-num">01</span>
                 <span class="p-tag">Moda & Boutiques</span>
-                <h2 class="p-h2">Una selección de experiencias por explorar.</h2>
-                <a href="directorio.html" class="arr">Explorar Directorio <span>→</span></a>
+                <h2 class="p-h2">Una selección de experiencias especialmente para ti.</h2>
+                <a href="directorio.html" class="arr">Directorio <span>→</span></a>
             </div>
         </div>
-        <div class="panel rev rv">
+        <!-- Panel 02: solo foto (textos removidos a petición del cliente — jun 2026) -->
+        <div class="panel full rv">
             <div class="p-img"><img src="images/home/panel-vista.jpg" alt="Vista del Roof Garden de Plaza Carso con el Museo Soumaya de fondo" loading="lazy"></div>
-            <div class="p-body">
-                <span class="p-num">02</span>
-                <span class="p-tag">Roof Garden · Soumaya</span>
-                <h2 class="p-h2">La vista que Polanco reconoce.</h2>
-                <p class="p-desc">Una terraza para disfrutar de la vista más icónica de Polanco.</p>
-                <a href="eventosypromociones.html" class="arr">Ver Eventos y Promociones <span>→</span></a>
-            </div>
         </div>
     </section>
 
@@ -1901,7 +1862,7 @@
         <div class="roof-ov"></div>
         <div class="roof-c rv">
             <div class="roof-tag">Roof Garden</div>
-            <h2 class="roof-h2">Un punto de<br>encuentro entre<br>sabores, cultura y<br>buenos momentos.</h2>
+            <h2 class="roof-h2">Un punto de<br>encuentro entre<br>sabores, cultura y<br>sólo buenos momentos.</h2>
             <a href="eventosypromociones.html" class="btn-g"
                 style="border-color:rgba(245,243,239,.35);color:var(--warm);">Ver Eventos y Promociones</a>
         </div>
@@ -1909,16 +1870,7 @@
 
     <!-- (Novedades & Eventos removido a petición del cliente abr 2026) -->
 
-    <!-- NEWSLETTER -->
-    <section class="nl">
-        <span class="nl-tag rv">Carso Insider</span>
-        <h2 class="nl-h2 rv rv-d1">Mantente al día.</h2>
-        <p class="nl-sub rv rv-d2">Nuevas aperturas, novedades y lo que pasa en Plaza Carso. Primero, aquí.</p>
-        <form class="nl-form rv rv-d3" onsubmit="return false;">
-            <input type="email" placeholder="Tu correo electrónico" aria-label="Correo electrónico">
-            <button type="submit">Suscribirse</button>
-        </form>
-    </section>
+    <!-- (Newsletter "Carso Insider" removido a petición del cliente — jun 2026) -->
 
     </main>
 
@@ -1931,16 +1883,6 @@
                 <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
             </div>
             <div class="footer-col">
-                <h4>Navegación</h4>
-                <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="directorio.html">Directorio</a></li>
-                    <li><a href="mapa.html">Mapa</a></li>
-                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
                 <h4>Visítanos</h4>
                 <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
             </div>
@@ -1950,6 +1892,16 @@
                     <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
                     <li><a href="#">Roof Garden: hasta 23:00</a></li>
                     <li><a href="contacto.html">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="directorio.html">Directorio</a></li>
+                    <li><a href="mapa.html">Mapa</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </div>
         </div>
@@ -2073,8 +2025,7 @@
 
             tl.to(['#hl1', '#hl2', '#hl3'], { y: '0%', opacity: 1, duration: 1.6, stagger: .2 }, .3)
                 .set('.h-line', { overflow: 'visible' }, '>')
-                .to('#hDiv', { width: '100%', maxWidth: '240px', duration: 1.2, ease: 'power2.inOut' }, .8)
-                .to('#hBtns', { y: 0, opacity: 1, duration: .8 }, 1.2);
+                .to('#hDiv', { width: '100%', maxWidth: '240px', duration: 1.2, ease: 'power2.inOut' }, .8);
 
             /* Ken Burns on right panel image — subtle slow zoom out */
             if (!prefersReduced) gsap.to('#hImg', { scale: 1, duration: 10, ease: 'power1.out', delay: .2 });

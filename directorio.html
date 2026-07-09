@@ -1115,7 +1115,6 @@
                 grid.innerHTML = _visible.map((s, i) => `
                     <div class="s-card" data-cat="${s.cat}" onclick="openMod(${i})">
                         <div class="s-tile">
-                            ${s.num ? `<span class="s-tile-num">${String(s.num).padStart(2, '0')}</span>` : ''}
                             ${s.soon ? `<span class="s-tile-soon">Próximamente</span>` : ''}
                             ${s.logo ? `<img class="s-tile-logo" src="${s.logo}" alt="${s.name}" loading="lazy" width="480" height="480">` : `<span class="s-tile-name">${s.name}</span>`}
                         </div>

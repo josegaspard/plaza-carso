@@ -176,7 +176,6 @@
     </style>
 </head>
 <body>
-    <div id="cursor"></div><div id="cursor-dot"></div>
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso" style="height:64px;width:auto;"></a>
         <div class="nav-links">
@@ -1514,11 +1513,6 @@
     window.addEventListener('scroll', ()=>{ const n=document.getElementById('nav'); if(n) n.classList.toggle('s', window.scrollY>50); }, {passive:true});
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') clearSelection(); });
 
-    // custom cursor (desktop)
-    const cur=document.getElementById('cursor'), dot=document.getElementById('cursor-dot');
-    if (cur && window.matchMedia('(pointer:fine)').matches){
-        document.addEventListener('mousemove', e=>{ cur.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; if(dot) dot.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; });
-    }
 
     // aviso táctil: sólo en móvil, se desvanece tras unos segundos o al primer toque
     (function touchHint(){

@@ -64,7 +64,7 @@
             color: var(--grey);
             background: none;
             border: none;
-            cursor: none;
+            cursor: pointer;
             padding: 18px 20px;
             border-bottom: 1.5px solid transparent;
             transition: color .2s, border-color .2s;
@@ -148,7 +148,7 @@
         .e-card {
             position: relative;
             overflow: hidden;
-            cursor: none;
+            cursor: pointer;
             background: var(--silver);
         }
 
@@ -284,7 +284,7 @@
             letter-spacing: .18em;
             text-transform: uppercase;
             padding: 12px 22px;
-            cursor: none;
+            cursor: pointer;
             transition: all .2s;
         }
 
@@ -387,7 +387,7 @@
             height: 36px;
             background: rgba(10, 9, 9, .5);
             border: none;
-            cursor: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -615,8 +615,6 @@
 
 <body>
     <a href="#main-content" class="skip-link">Ir al contenido principal</a>
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
                 style="height:64px; width:auto;"></a>
@@ -650,13 +648,6 @@
         </div>
     </section>
 
-    <div class="tab-bar">
-        <div class="tab-inner">
-            <button type="button" class="t-btn active" onclick="switchTab('eventos',this)">Eventos</button>
-            <button type="button" class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
-        </div>
-    </div>
-
     <section class="nov-section">
         <div class="nov-section-inner">
             <!-- INTEGRATION: <?php echo publicaciones($CentroComercial); ?> genera .e-card con class="publicidad" -->
@@ -665,48 +656,42 @@
                     onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','images/home/evento-41.jpg',event)">
                     <img src="images/home/evento-41.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Temporada</span>
-                        <div class="e-title">Primavera en el Roof Garden</div>
+                    <div class="e-card-body"><div class="e-title">Primavera en el Roof Garden</div>
                     </div>
                 </a>
                 <a class="e-card medium" data-tab="eventos"
                     onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','images/home/evento-42.jpg',event)">
                     <img src="images/home/evento-42.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Cultura</span>
-                        <div class="e-title">Arte y cultura, todo el año</div>
+                    <div class="e-card-body"><div class="e-title">Arte y cultura, todo el año</div>
                     </div>
                 </a>
                 <a class="e-card medium" data-tab="promociones"
                     onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','images/home/evento-43.jpg',event)">
                     <img src="images/home/evento-43.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Temporada</span>
-                        <div class="e-title">Rebajas 2026</div>
+                    <div class="e-card-body"><div class="e-title">Rebajas 2026</div>
                     </div>
                 </a>
                 <a class="e-card small" data-tab="eventos"
                     onclick="openPub('Fashion Show Primavera','Moda','Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.','images/home/evento-44.jpg',event)">
                     <img src="images/home/evento-44.jpg" alt="Desfile de moda Fashion Show en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Moda</span>
-                        <div class="e-title">Fashion Show · Primavera</div>
+                    <div class="e-card-body"><div class="e-title">Fashion Show · Primavera</div>
                     </div>
                 </a>
                 <a class="e-card small" data-tab="promociones"
                     onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','images/home/evento-45.jpg',event)">
                     <img src="images/home/evento-45.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Gastronomía</span>
-                        <div class="e-title">Gourmet Weekend</div>
+                    <div class="e-card-body"><div class="e-title">Gourmet Weekend</div>
                     </div>
                 </a>
                 <a class="e-card small" data-tab="eventos"
                     onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','images/home/evento-46.jpg',event)">
                     <img src="images/home/evento-46.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
-                    <div class="e-card-body"><span class="e-tag">Nuevas Aperturas</span>
-                        <div class="e-title">Bienvenidas al Directorio</div>
+                    <div class="e-card-body"><div class="e-title">Bienvenidas al Directorio</div>
                     </div>
                 </a>
             </div>
@@ -731,7 +716,6 @@
         <figure class="lb-figure" onclick="event.stopPropagation()">
             <img id="lb-img" src="" alt="">
             <figcaption class="lb-cap">
-                <span class="lb-tag" id="lb-tag"></span>
                 <span class="lb-title" id="lb-title"></span>
                 <span class="lb-desc" id="lb-desc"></span>
             </figcaption>
@@ -744,19 +728,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Visítanos</h4>
-                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
-            </div>
-            <div class="footer-col">
-                <h4>Horario</h4>
-                <ul>
-                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
-                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
-                    <li><a href="contacto.html">Contáctanos</a></li>
-                </ul>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.<br>Lun–Dom: 11:00–21:00<br><a href="tel:5511037300">55 1103 7300</a></p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -788,25 +760,10 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
-        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
-        if (cur && window.matchMedia('(pointer:fine)').matches) {
-            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
-            document.querySelectorAll('a,button,.e-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
-        }
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
-        function switchTab(tab, btn) {
-            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active');
-            var i = 0;
-            document.querySelectorAll('.e-card').forEach(c => {
-                var show = (c.dataset.tab === tab);
-                c.style.display = show ? '' : 'none';
-                c.classList.remove('is-in');
-                if (show) { void c.offsetWidth; c.style.animationDelay = (i * 70) + 'ms'; c.classList.add('is-in'); i++; }
-            });
-        }
-        // Filtro inicial: mostrar "Eventos" por defecto
-        switchTab('eventos', null);
+        // (Categorías Eventos/Promociones removidas a petición del cliente — jul 2026: todas las publicaciones se muestran juntas)
+        document.querySelectorAll('.e-card').forEach((c, i) => { c.style.animationDelay = (i * 70) + 'ms'; c.classList.add('is-in'); });
 
         // Lightbox: abre la imagen COMPLETA del evento/promoción
         function openPub(title, tag, desc, img, e) {
@@ -815,7 +772,6 @@
             const im = document.getElementById('lb-img');
             im.src = img; im.alt = title;
             document.getElementById('lb-title').textContent = title || '';
-            document.getElementById('lb-tag').textContent = tag || '';
             document.getElementById('lb-desc').textContent = desc || '';
             lb.classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -828,23 +784,6 @@
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
     </script>
 
-    <script>
-        // Footer Cursor Auto-Inversion
-        document.querySelectorAll('footer').forEach(f => {
-            f.addEventListener('mouseenter', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = '#fff'; 
-                if(dot) dot.style.background = '#fff'; 
-            });
-            f.addEventListener('mouseleave', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = ''; 
-                if(dot) dot.style.background = ''; 
-            });
-        });
-    </script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",

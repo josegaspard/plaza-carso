@@ -71,7 +71,7 @@
             color: var(--grey);
             background: none;
             border: none;
-            cursor: none;
+            cursor: pointer;
             padding: 18px 18px;
             border-bottom: 1.5px solid transparent;
             transition: color .2s, border-color .2s;
@@ -149,7 +149,7 @@
 
         /* Store tile — estilo Plaza Universidad: nombre en serif, hover invierte a fondo oscuro */
         .s-card {
-            cursor: none;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -321,7 +321,7 @@
             overflow: hidden;
             background: var(--smoke);
             height: 100%;
-            cursor: none;
+            cursor: pointer;
         }
 
         .smod-img img {
@@ -344,7 +344,7 @@
             -webkit-backdrop-filter: blur(6px);
             backdrop-filter: blur(6px);
             border: none;
-            cursor: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -491,7 +491,7 @@
             border-radius: 50%;
             background: var(--ink);
             border: none;
-            cursor: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -628,7 +628,7 @@
             padding: 14px 30px;
             flex-shrink: 0;
             transition: background .2s;
-            cursor: none;
+            cursor: pointer;
         }
 
         .btn-wh:hover {
@@ -843,8 +843,6 @@
 
 <body>
     <a href="#main-content" class="skip-link">Ir al contenido principal</a>
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
                 style="height:64px; width:auto;"></a>
@@ -873,7 +871,6 @@
     <section class="page-hero" style="min-height:360px;">
         <div class="page-hero-img" style="background-image:url('images/home/directorio-hero.jpg');"></div>
         <div class="page-hero-content">
-            <span class="page-kicker">Plaza Carso · Polanco</span>
             <h1 class="page-h1">Directorio.</h1>
         </div>
     </section>
@@ -902,7 +899,7 @@
 
     <section class="dir-section">
         <div class="dir-inner">
-            <p class="dir-count" id="dir-count">Todas las marcas. En un solo lugar.</p>
+            <p class="dir-count" id="dir-count"></p>
             <div id="store-grid"></div>
             <div id="no-results" style="display:none;text-align:center;padding:80px 20px;font-family:var(--serif);font-style:italic;font-size:28px;color:var(--grey);">Sin resultados</div>
         </div>
@@ -964,19 +961,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Visítanos</h4>
-                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
-            </div>
-            <div class="footer-col">
-                <h4>Horario</h4>
-                <ul>
-                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
-                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
-                    <li><a href="contacto.html">Contáctanos</a></li>
-                </ul>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.<br>Lun–Dom: 11:00–21:00<br><a href="tel:5511037300">55 1103 7300</a></p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -1008,11 +993,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
-        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
-        if (cur && window.matchMedia('(pointer:fine)').matches) {
-            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
-            document.querySelectorAll('a,button,.s-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
-        }
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
         function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
         // ── DIRECTORIO DATA — datos oficiales del cartel de Plaza Carso ──────────
@@ -1139,28 +1119,15 @@
                             ${s.soon ? `<span class="s-tile-soon">Próximamente</span>` : ''}
                             ${s.logo ? `<img class="s-tile-logo" src="${s.logo}" alt="${s.name}" loading="lazy" width="480" height="480">` : `<span class="s-tile-name">${s.name}</span>`}
                         </div>
-                        ${s.logo ? `<h3 class="s-card-caption">${s.name}</h3>` : ''}
-                        <div class="s-meta">
-                            <span>${s.cat}</span>
-                            <span class="s-meta-sep">&middot;</span>
-                            <span>Ver detalle</span>
-                        </div>
                     </div>
                 `).join('');
-                // re-bind custom cursor hover on freshly-rendered cards
-                if (window.matchMedia('(pointer:fine)').matches) {
-                    document.querySelectorAll('#store-grid .s-card').forEach(el => {
-                        el.addEventListener('mouseenter', () => cur && cur.classList.add('hover'));
-                        el.addEventListener('mouseleave', () => cur && cur.classList.remove('hover'));
-                    });
-                }
             }
             const n = _visible.length;
             const ct = document.getElementById('dir-count');
             if (_activeSearch) {
                 ct.textContent = `${n} resultado${n !== 1 ? 's' : ''} para "${_activeSearch}"`;
             } else if (_activeCat === 'Todos') {
-                ct.textContent = 'Todas las marcas. En un solo lugar.';
+                ct.textContent = '';
             } else {
                 ct.textContent = `${n} tienda${n !== 1 ? 's' : ''} en ${_activeCat}`;
             }
@@ -1305,23 +1272,6 @@
         })();
     </script>
 
-    <script>
-        // Footer Cursor Auto-Inversion
-        document.querySelectorAll('footer').forEach(f => {
-            f.addEventListener('mouseenter', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = '#fff'; 
-                if(dot) dot.style.background = '#fff'; 
-            });
-            f.addEventListener('mouseleave', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = ''; 
-                if(dot) dot.style.background = ''; 
-            });
-        });
-    </script>
 
     <script type="application/ld+json">
     {

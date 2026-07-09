@@ -127,37 +127,7 @@
             background: var(--ink);
         }
 
-        /* ─── CURSOR ─────────────────────────────────── */
-        #cur {
-            position: fixed;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(8, 7, 6, .5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9000;
-            transform: translate(-50%, -50%) scale(1);
-            will-change: transform;
-            transition: width .3s var(--ease-out), height .3s var(--ease-out), border-color .3s, background .3s;
-        }
-
-        #cur.h {
-            width: 56px;
-            height: 56px;
-            background: rgba(8, 7, 6, .07);
-            border-color: var(--ink);
-        }
-
-        #cur.c {
-            width: 18px;
-            height: 18px;
-        }
-
-        @media(pointer:coarse) {
-            #cur {
-                display: none;
-            }
-        }
+        /* (Cursor personalizado removido a petición del cliente — jul 2026) */
 
         /* ─── NAV ─────────────────────────────────────── */
         #nav {
@@ -774,8 +744,8 @@
 
         .panel.full .p-img img {
             width: 100%;
-            height: 70vh;
-            min-height: 420px;
+            height: 100vh;
+            min-height: 560px;
             filter: grayscale(0%);
             transform: scale(1);
         }
@@ -1261,7 +1231,7 @@
 
         .footer-top {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 44px;
             padding-bottom: 44px;
             border-bottom: 1px solid rgba(255, 255, 255, .06);
@@ -1759,9 +1729,6 @@
         <div class="loader-bar" id="lb"></div>
     </div>
 
-    <!-- CURSOR -->
-    <div id="cur" aria-hidden="true"></div>
-
     <!-- NAV -->
     <nav id="nav">
         <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
@@ -1804,8 +1771,10 @@
             <h1 class="h-headline" id="h-main-title">
                 <span class="h-line"><span class="h-line-inner strong" id="hl1">Plaza Carso.</span></span>
                 <span class="h-line"><span class="h-line-inner" id="hl2">Mucho por descubrir,</span></span>
-                <span class="h-line"><span class="h-line-inner" id="hl3">en un solo lugar.</span></span>
+                <span class="h-line"><span class="h-line-inner" id="hl3">un solo lugar.</span></span>
             </h1>
+
+            <p class="h-sub" id="hSub">Arte, entretenimiento, compras, gastronomía y algo más</p>
 
             <div class="h-divider" id="hDiv"></div>
         </div>
@@ -1842,7 +1811,6 @@
             <div class="p-img"><img src="images/home/panel-marcas.jpg" alt="Boutique de moda en Plaza Carso Polanco" loading="lazy">
             </div>
             <div class="p-body">
-                <span class="p-num">01</span>
                 <span class="p-tag">Moda & Boutiques</span>
                 <h2 class="p-h2">Una selección de experiencias especialmente para ti.</h2>
                 <a href="directorio.html" class="arr">Directorio <span>→</span></a>
@@ -1862,9 +1830,7 @@
         <div class="roof-ov"></div>
         <div class="roof-c rv">
             <div class="roof-tag">Roof Garden</div>
-            <h2 class="roof-h2">Un punto de<br>encuentro entre<br>sabores, cultura y<br>sólo buenos momentos.</h2>
-            <a href="eventosypromociones.html" class="btn-g"
-                style="border-color:rgba(245,243,239,.35);color:var(--warm);">Eventos y Promociones</a>
+            <h2 class="roof-h2">Un punto de<br>encuentro entre<br>sabores, cultura<br>y buenos momentos.</h2>
         </div>
     </section>
 
@@ -1880,19 +1846,7 @@
         <div class="footer-top">
             <div>
                 <div class="footer-brand-name">Plaza <span>Carso</span></div>
-                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Visítanos</h4>
-                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
-            </div>
-            <div class="footer-col">
-                <h4>Horario</h4>
-                <ul>
-                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
-                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
-                    <li><a href="contacto.html">Contáctanos</a></li>
-                </ul>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.<br>Lun–Dom: 11:00–21:00<br><a href="tel:5511037300">55 1103 7300</a></p>
             </div>
             <div class="footer-col">
                 <h4>Navegación</h4>
@@ -2025,27 +1979,11 @@
 
             tl.to(['#hl1', '#hl2', '#hl3'], { y: '0%', opacity: 1, duration: 1.6, stagger: .2 }, .3)
                 .set('.h-line', { overflow: 'visible' }, '>')
+                .to('#hSub', { y: 0, opacity: 1, duration: 1.2 }, .9)
                 .to('#hDiv', { width: '100%', maxWidth: '240px', duration: 1.2, ease: 'power2.inOut' }, .8);
 
             /* Ken Burns on right panel image — subtle slow zoom out */
             if (!prefersReduced) gsap.to('#hImg', { scale: 1, duration: 10, ease: 'power1.out', delay: .2 });
-        }
-
-        /* ── CURSOR ── */
-        const cur = document.getElementById('cur');
-        if (cur && window.matchMedia('(pointer:fine)').matches) {
-            let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-            (function loop() {
-                gsap.set(cur, { x: mx, y: my });
-                requestAnimationFrame(loop);
-            })();
-            document.querySelectorAll('a,button,.nc,.ss,.panel').forEach(el => {
-                el.addEventListener('mouseenter', () => cur.classList.add('h'));
-                el.addEventListener('mouseleave', () => cur.classList.remove('h'));
-            });
-            document.addEventListener('mousedown', () => cur.classList.add('c'));
-            document.addEventListener('mouseup', () => cur.classList.remove('c'));
         }
 
         /* ── NAV SCROLL ── */
@@ -2152,23 +2090,6 @@
     }
     </script>
 
-    <script>
-        // Footer Cursor Auto-Inversion
-        document.querySelectorAll('footer').forEach(f => {
-            f.addEventListener('mouseenter', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = '#fff'; 
-                if(dot) dot.style.background = '#fff'; 
-            });
-            f.addEventListener('mouseleave', () => { 
-                const cur = document.getElementById('cursor') || document.getElementById('cur');
-                const dot = document.getElementById('cursor-dot');
-                if(cur) cur.style.borderColor = ''; 
-                if(dot) dot.style.background = ''; 
-            });
-        });
-    </script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",

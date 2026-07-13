@@ -839,13 +839,37 @@
             }
         }
     
-        /* Barra de filtros con taxonomía completa (categorías + subcategorías) */
-        .filter-bar { position: static; }
-        .filter-inner { flex-wrap: wrap; row-gap: 6px; align-items: center; }
-        .f-grp { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 14px; padding: 2px 0; }
-        .f-btn.f-parent { font-weight: 600; letter-spacing: .18em; }
-        .f-btn.f-sub { font-size: 11px; text-transform: none; letter-spacing: .08em; }
-        @media(max-width:760px){ .f-grp{ gap:4px 10px } .f-btn.f-sub{ font-size:10px } }
+        /* Barra de filtros: categorías con subcategorías anidadas (desplegable) */
+        /* overflow visible para que el desplegable no quede recortado por el scroll */
+        .filter-inner { overflow: visible; flex-wrap: wrap; }
+        .f-cat { position: relative; flex-shrink: 0; display: inline-flex; align-items: center; }
+        .f-cat.has-sub > .f-parent::after {
+            content: '\25BE'; display: inline-block; margin-left: 7px; font-size: 9px;
+            opacity: .5; letter-spacing: 0; vertical-align: middle; transition: opacity .2s;
+        }
+        .f-cat.has-sub:hover > .f-parent::after,
+        .f-cat.has-sub.open > .f-parent::after { opacity: .9; }
+        .f-drop {
+            position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #faf8f4; min-width: 214px; padding: 8px 0; border-radius: 4px;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, .22);
+            opacity: 0; visibility: hidden; transition: opacity .22s, transform .22s, visibility .22s;
+            z-index: 1200; display: flex; flex-direction: column; align-items: stretch;
+        }
+        .f-cat.has-sub:hover .f-drop,
+        .f-cat.has-sub:focus-within .f-drop,
+        .f-cat.has-sub.open .f-drop {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(2px);
+        }
+        .f-drop .f-btn.f-sub {
+            width: 100%; text-align: left; padding: 8px 26px;
+            font-size: 12px; letter-spacing: .06em; text-transform: none;
+            color: #5a5a5a; border-bottom: none; white-space: nowrap;
+        }
+        .f-drop .f-btn.f-sub:hover { background: rgba(0, 0, 0, .05); color: var(--ink); }
+        .f-drop .f-btn.f-sub.active { color: var(--ink); font-weight: 600; border-bottom: none; background: rgba(0, 0, 0, .04); }
+        @media(max-width:760px){ .f-drop{ min-width: 184px } .f-drop .f-btn.f-sub{ padding: 8px 22px } }
 
     </style>
 </head>
@@ -887,12 +911,44 @@
     <div class="filter-bar">
         <div class="filter-inner" id="fi">
             <button id="btnTodos" class="f-btn" onclick="filt('Home',this)" style="display:none">Home</button>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Entretenimiento',this)">Entretenimiento</button></div>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Fitness',this)">Fitness</button></div>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Gastronomía',this)">Gastronomía</button><button class="f-btn f-sub" onclick="filt('Cafeterías',this)">Cafeterías</button><button class="f-btn f-sub" onclick="filt('Fast food',this)">Fast food</button><button class="f-btn f-sub" onclick="filt('Restaurantes',this)">Restaurantes</button><button class="f-btn f-sub" onclick="filt('Snacks',this)">Snacks</button><button class="f-btn f-sub" onclick="filt('Vinos y licores',this)">Vinos y licores</button></div>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Retail / Tiendas',this)">Retail / Tiendas</button><button class="f-btn f-sub" onclick="filt('Beauty & wellness',this)">Beauty &amp; wellness</button><button class="f-btn f-sub" onclick="filt('Citymarket',this)">Citymarket</button><button class="f-btn f-sub" onclick="filt('Departamentales',this)">Departamentales</button><button class="f-btn f-sub" onclick="filt('Joyería',this)">Joyería</button><button class="f-btn f-sub" onclick="filt('Moda y estilo',this)">Moda y estilo</button></div>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Servicios',this)">Servicios</button><button class="f-btn f-sub" onclick="filt('Bancos',this)">Bancos</button><button class="f-btn f-sub" onclick="filt('Escuelas',this)">Escuelas</button><button class="f-btn f-sub" onclick="filt('Inmobiliarias y agencias',this)">Inmobiliarias y agencias</button></div>
-            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Telefonía y Tecnología',this)">Telefonía y Tecnología</button><button class="f-btn f-sub" onclick="filt('Automotriz',this)">Automotriz</button><button class="f-btn f-sub" onclick="filt('Tecnología',this)">Tecnología</button><button class="f-btn f-sub" onclick="filt('Telefonía',this)">Telefonía</button></div>
+            <div class="f-cat"><button class="f-btn f-parent" onclick="filt('Entretenimiento',this)">Entretenimiento</button></div>
+            <div class="f-cat"><button class="f-btn f-parent" onclick="filt('Fitness',this)">Fitness</button></div>
+            <div class="f-cat has-sub">
+                <button class="f-btn f-parent" onclick="filt('Gastronomía',this);toggleDrop(this)">Gastronomía</button>
+                <div class="f-drop">
+                    <button class="f-btn f-sub" onclick="filt('Cafeterías',this)">Cafeterías</button>
+                    <button class="f-btn f-sub" onclick="filt('Fast food',this)">Fast food</button>
+                    <button class="f-btn f-sub" onclick="filt('Restaurantes',this)">Restaurantes</button>
+                    <button class="f-btn f-sub" onclick="filt('Snacks',this)">Snacks</button>
+                    <button class="f-btn f-sub" onclick="filt('Vinos y licores',this)">Vinos y licores</button>
+                </div>
+            </div>
+            <div class="f-cat has-sub">
+                <button class="f-btn f-parent" onclick="filt('Retail / Tiendas',this);toggleDrop(this)">Retail / Tiendas</button>
+                <div class="f-drop">
+                    <button class="f-btn f-sub" onclick="filt('Beauty & wellness',this)">Beauty &amp; wellness</button>
+                    <button class="f-btn f-sub" onclick="filt('Citymarket',this)">Citymarket</button>
+                    <button class="f-btn f-sub" onclick="filt('Departamentales',this)">Departamentales</button>
+                    <button class="f-btn f-sub" onclick="filt('Joyería',this)">Joyería</button>
+                    <button class="f-btn f-sub" onclick="filt('Moda y estilo',this)">Moda y estilo</button>
+                </div>
+            </div>
+            <div class="f-cat has-sub">
+                <button class="f-btn f-parent" onclick="filt('Servicios',this);toggleDrop(this)">Servicios</button>
+                <div class="f-drop">
+                    <button class="f-btn f-sub" onclick="filt('Bancos',this)">Bancos</button>
+                    <button class="f-btn f-sub" onclick="filt('Escuelas',this)">Escuelas</button>
+                    <button class="f-btn f-sub" onclick="filt('Inmobiliarias y agencias',this)">Inmobiliarias y agencias</button>
+                </div>
+            </div>
+            <div class="f-cat has-sub">
+                <button class="f-btn f-parent" onclick="filt('Telefonía y Tecnología',this);toggleDrop(this)">Telefonía y Tecnología</button>
+                <div class="f-drop">
+                    <button class="f-btn f-sub" onclick="filt('Automotriz',this)">Automotriz</button>
+                    <button class="f-btn f-sub" onclick="filt('Tecnología',this)">Tecnología</button>
+                    <button class="f-btn f-sub" onclick="filt('Telefonía',this)">Telefonía</button>
+                </div>
+            </div>
             <div class="search-wrap">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="11" cy="11" r="8" />
@@ -1077,8 +1133,22 @@
                 _activeCat = cat;
                 todosBtn.style.display = '';
             }
+            document.querySelectorAll('.f-cat.open').forEach(c => c.classList.remove('open'));
             _renderGrid();
         }
+
+        // Abre/cierra el desplegable de subcategorías (para pantallas táctiles;
+        // en escritorio el desplegable aparece al pasar el cursor).
+        function toggleDrop(btn) {
+            const cat = btn.closest('.f-cat');
+            if (!cat || !cat.classList.contains('has-sub')) return;
+            const open = cat.classList.contains('open');
+            document.querySelectorAll('.f-cat.open').forEach(c => c.classList.remove('open'));
+            if (!open) cat.classList.add('open');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.f-cat')) document.querySelectorAll('.f-cat.open').forEach(c => c.classList.remove('open'));
+        });
 
         function doSearch(q) {
             _activeSearch = q || '';

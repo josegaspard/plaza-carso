@@ -838,24 +838,16 @@
                 grid-template-columns: 1fr;
             }
         }
+    
+        /* Barra de filtros con taxonomía completa (categorías + subcategorías) */
+        .filter-bar { position: static; }
+        .filter-inner { flex-wrap: wrap; row-gap: 6px; align-items: center; }
+        .f-grp { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 14px; padding: 2px 0; }
+        .f-btn.f-parent { font-weight: 600; letter-spacing: .18em; }
+        .f-btn.f-sub { font-size: 11px; text-transform: none; letter-spacing: .08em; }
+        @media(max-width:760px){ .f-grp{ gap:4px 10px } .f-btn.f-sub{ font-size:10px } }
+
     </style>
-<style>
-    /* ── Submenú Directorio (inyectado) ── */
-    .nav-dd{position:relative;display:inline-flex;align-items:center}
-    .nav-dd .dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);
-        background:#faf8f4;min-width:230px;padding:10px 0;border-radius:4px;
-        box-shadow:0 18px 50px rgba(0,0,0,.22);opacity:0;visibility:hidden;transition:.25s;z-index:1200;
-        max-height:70vh;overflow-y:auto}
-    .nav-dd:hover .dd-menu,.nav-dd:focus-within .dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(2px)}
-    .nav-dd .dd-menu a{display:block;padding:7px 22px;font-family:var(--sans);font-size:12.5px;letter-spacing:.04em;
-        text-transform:none;color:#2b2b2b;white-space:nowrap;transition:.15s}
-    .nav-dd .dd-menu a.dd-p{font-weight:700;margin-top:6px;color:#111;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
-    .nav-dd .dd-menu a.dd-p:first-child{margin-top:0}
-    .nav-dd .dd-menu a.dd-s{padding-left:36px;color:#5a5a5a;font-size:12px}
-    .nav-dd .dd-menu a:hover{background:rgba(0,0,0,.05);color:#000}
-    #mob-nav .mob-sub-p{font-weight:600;font-size:15px;margin-top:6px}
-    #mob-nav .mob-sub-s{padding-left:22px;opacity:.72;font-size:14px}
-</style>
 </head>
 
 <body>
@@ -865,7 +857,7 @@
                 style="height:64px; width:auto;"></a>
         <div class="nav-links">
             <a href="index.html">Inicio</a>
-            <div class="nav-dd"><a href="directorio.html" class="dd-top act">Directorio</a><div class="dd-menu"><a href="directorio.html?cat=Entretenimiento">Entretenimiento</a><a href="directorio.html?cat=Fitness">Fitness</a><a href="directorio.html?cat=Gastronom%C3%ADa" class="dd-p">Gastronomía</a><a href="directorio.html?cat=Cafeter%C3%ADas" class="dd-s">Cafeterías</a><a href="directorio.html?cat=Fast%20food" class="dd-s">Fast food</a><a href="directorio.html?cat=Restaurantes" class="dd-s">Restaurantes</a><a href="directorio.html?cat=Snacks" class="dd-s">Snacks</a><a href="directorio.html?cat=Vinos%20y%20licores" class="dd-s">Vinos y licores</a><a href="directorio.html?cat=Retail%20/%20Tiendas" class="dd-p">Retail / Tiendas</a><a href="directorio.html?cat=Beauty%20%26%20wellness" class="dd-s">Beauty & wellness</a><a href="directorio.html?cat=Citymarket" class="dd-s">Citymarket</a><a href="directorio.html?cat=Departamentales" class="dd-s">Departamentales</a><a href="directorio.html?cat=Joyer%C3%ADa" class="dd-s">Joyería</a><a href="directorio.html?cat=Moda%20y%20estilo" class="dd-s">Moda y estilo</a><a href="directorio.html?cat=Servicios" class="dd-p">Servicios</a><a href="directorio.html?cat=Bancos" class="dd-s">Bancos</a><a href="directorio.html?cat=Escuelas" class="dd-s">Escuelas</a><a href="directorio.html?cat=Inmobiliarias%20y%20agencias" class="dd-s">Inmobiliarias y agencias</a><a href="directorio.html?cat=Telefon%C3%ADa%20y%20Tecnolog%C3%ADa" class="dd-p">Telefonía y Tecnología</a><a href="directorio.html?cat=Automotriz" class="dd-s">Automotriz</a><a href="directorio.html?cat=Tecnolog%C3%ADa" class="dd-s">Tecnología</a><a href="directorio.html?cat=Telefon%C3%ADa" class="dd-s">Telefonía</a></div></div>
+            <a href="directorio.html" class="act">Directorio</a>
             <a href="mapa.html">Mapa</a>
             <a href="eventosypromociones.html">Eventos y Promociones</a>
             <a href="contacto.html" class="nav-cta-link">Contacto</a>
@@ -878,28 +870,6 @@
         </div>
         <a href="index.html">Inicio</a>
         <a href="directorio.html" style="font-weight:600">Directorio</a>
-        <a href="directorio.html?cat=Entretenimiento" class="mob-sub-p">Entretenimiento</a>
-        <a href="directorio.html?cat=Fitness" class="mob-sub-p">Fitness</a>
-        <a href="directorio.html?cat=Gastronom%C3%ADa" class="mob-sub-p">Gastronomía</a>
-        <a href="directorio.html?cat=Cafeter%C3%ADas" class="mob-sub-s">Cafeterías</a>
-        <a href="directorio.html?cat=Fast%20food" class="mob-sub-s">Fast food</a>
-        <a href="directorio.html?cat=Restaurantes" class="mob-sub-s">Restaurantes</a>
-        <a href="directorio.html?cat=Snacks" class="mob-sub-s">Snacks</a>
-        <a href="directorio.html?cat=Vinos%20y%20licores" class="mob-sub-s">Vinos y licores</a>
-        <a href="directorio.html?cat=Retail%20/%20Tiendas" class="mob-sub-p">Retail / Tiendas</a>
-        <a href="directorio.html?cat=Beauty%20%26%20wellness" class="mob-sub-s">Beauty & wellness</a>
-        <a href="directorio.html?cat=Citymarket" class="mob-sub-s">Citymarket</a>
-        <a href="directorio.html?cat=Departamentales" class="mob-sub-s">Departamentales</a>
-        <a href="directorio.html?cat=Joyer%C3%ADa" class="mob-sub-s">Joyería</a>
-        <a href="directorio.html?cat=Moda%20y%20estilo" class="mob-sub-s">Moda y estilo</a>
-        <a href="directorio.html?cat=Servicios" class="mob-sub-p">Servicios</a>
-        <a href="directorio.html?cat=Bancos" class="mob-sub-s">Bancos</a>
-        <a href="directorio.html?cat=Escuelas" class="mob-sub-s">Escuelas</a>
-        <a href="directorio.html?cat=Inmobiliarias%20y%20agencias" class="mob-sub-s">Inmobiliarias y agencias</a>
-        <a href="directorio.html?cat=Telefon%C3%ADa%20y%20Tecnolog%C3%ADa" class="mob-sub-p">Telefonía y Tecnología</a>
-        <a href="directorio.html?cat=Automotriz" class="mob-sub-s">Automotriz</a>
-        <a href="directorio.html?cat=Tecnolog%C3%ADa" class="mob-sub-s">Tecnología</a>
-        <a href="directorio.html?cat=Telefon%C3%ADa" class="mob-sub-s">Telefonía</a>
         <a href="mapa.html">Mapa</a>
         <a href="eventosypromociones.html">Eventos y Promociones</a>
         <a href="contacto.html">Contacto</a>
@@ -917,12 +887,12 @@
     <div class="filter-bar">
         <div class="filter-inner" id="fi">
             <button id="btnTodos" class="f-btn" onclick="filt('Home',this)" style="display:none">Home</button>
-            <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
-            <button class="f-btn" onclick="filt('Fitness',this)">Fitness</button>
-            <button class="f-btn" onclick="filt('Gastronomía',this)">Gastronomía</button>
-            <button class="f-btn" onclick="filt('Retail / Tiendas',this)">Retail / Tiendas</button>
-            <button class="f-btn" onclick="filt('Servicios',this)">Servicios</button>
-            <button class="f-btn" onclick="filt('Telefonía y Tecnología',this)">Telefonía y Tecnología</button>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Entretenimiento',this)">Entretenimiento</button></div>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Fitness',this)">Fitness</button></div>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Gastronomía',this)">Gastronomía</button><button class="f-btn f-sub" onclick="filt('Cafeterías',this)">Cafeterías</button><button class="f-btn f-sub" onclick="filt('Fast food',this)">Fast food</button><button class="f-btn f-sub" onclick="filt('Restaurantes',this)">Restaurantes</button><button class="f-btn f-sub" onclick="filt('Snacks',this)">Snacks</button><button class="f-btn f-sub" onclick="filt('Vinos y licores',this)">Vinos y licores</button></div>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Retail / Tiendas',this)">Retail / Tiendas</button><button class="f-btn f-sub" onclick="filt('Beauty & wellness',this)">Beauty &amp; wellness</button><button class="f-btn f-sub" onclick="filt('Citymarket',this)">Citymarket</button><button class="f-btn f-sub" onclick="filt('Departamentales',this)">Departamentales</button><button class="f-btn f-sub" onclick="filt('Joyería',this)">Joyería</button><button class="f-btn f-sub" onclick="filt('Moda y estilo',this)">Moda y estilo</button></div>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Servicios',this)">Servicios</button><button class="f-btn f-sub" onclick="filt('Bancos',this)">Bancos</button><button class="f-btn f-sub" onclick="filt('Escuelas',this)">Escuelas</button><button class="f-btn f-sub" onclick="filt('Inmobiliarias y agencias',this)">Inmobiliarias y agencias</button></div>
+            <div class="f-grp"><button class="f-btn f-parent" onclick="filt('Telefonía y Tecnología',this)">Telefonía y Tecnología</button><button class="f-btn f-sub" onclick="filt('Automotriz',this)">Automotriz</button><button class="f-btn f-sub" onclick="filt('Tecnología',this)">Tecnología</button><button class="f-btn f-sub" onclick="filt('Telefonía',this)">Telefonía</button></div>
             <div class="search-wrap">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="11" cy="11" r="8" />

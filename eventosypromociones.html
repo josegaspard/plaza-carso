@@ -139,8 +139,7 @@
 
         .editorial-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            grid-auto-rows: min-content;
+            grid-template-columns: repeat(3, 1fr);
             gap: 3px;
         }
 
@@ -152,24 +151,11 @@
             background: var(--silver);
         }
 
-        .e-card.large {
-            grid-column: span 7;
-            grid-row: span 2;
-        }
-
-        .e-card.medium {
-            grid-column: span 5;
-        }
-
-        .e-card.small {
-            grid-column: span 4;
-        }
-
         .e-card img {
             width: 100%;
-            height: 100%;
-            min-height: 280px;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
+            display: block;
             filter: grayscale(20%);
             transition: transform .7s ease, filter .5s;
         }
@@ -177,10 +163,6 @@
         .e-card:hover img {
             transform: scale(1.06);
             filter: grayscale(0%);
-        }
-
-        .e-card.large img {
-            min-height: 540px;
         }
 
         .e-card-overlay {
@@ -226,13 +208,8 @@
             line-height: 1.2;
         }
 
-        .e-card.large .e-title {
-            font-size: clamp(22px, 2.5vw, 34px);
-        }
-
-        .e-card.medium .e-title,
-        .e-card.small .e-title {
-            font-size: 18px;
+        .e-title {
+            font-size: clamp(19px, 1.5vw, 24px);
         }
 
         /* Social section */
@@ -500,16 +477,8 @@
         }
 
         @media(max-width:1024px) {
-            .e-card.large {
-                grid-column: span 12;
-            }
-
-            .e-card.medium {
-                grid-column: span 6;
-            }
-
-            .e-card.small {
-                grid-column: span 6;
+            .editorial-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -539,17 +508,12 @@
                 padding: 14px 14px;
             }
 
-            .e-card.large,
-            .e-card.medium,
-            .e-card.small {
-                grid-column: span 12;
-                grid-row: auto;
+            .editorial-grid {
+                grid-template-columns: 1fr;
             }
 
-            .e-card img,
-            .e-card.large img {
-                min-height: 220px;
-                max-height: 320px;
+            .e-card img {
+                aspect-ratio: 16 / 10;
             }
 
             .e-card-body {
@@ -652,42 +616,42 @@
         <div class="nov-section-inner">
             <!-- INTEGRATION: <?php echo publicaciones($CentroComercial); ?> genera .e-card con class="publicidad" -->
             <div class="editorial-grid" id="editGrid">
-                <a class="e-card large" data-tab="eventos"
+                <a class="e-card" data-tab="eventos"
                     onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','images/home/evento-41.jpg',event)">
                     <img src="images/home/evento-41.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><div class="e-title">Primavera en el Roof Garden</div>
                     </div>
                 </a>
-                <a class="e-card medium" data-tab="eventos"
+                <a class="e-card" data-tab="eventos"
                     onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','images/home/evento-42.jpg',event)">
                     <img src="images/home/evento-42.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><div class="e-title">Arte y cultura, todo el año</div>
                     </div>
                 </a>
-                <a class="e-card medium" data-tab="promociones"
+                <a class="e-card" data-tab="promociones"
                     onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','images/home/evento-43.jpg',event)">
                     <img src="images/home/evento-43.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><div class="e-title">Rebajas 2026</div>
                     </div>
                 </a>
-                <a class="e-card small" data-tab="eventos"
+                <a class="e-card" data-tab="eventos"
                     onclick="openPub('Fashion Show Primavera','Moda','Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.','images/home/evento-44.jpg',event)">
                     <img src="images/home/evento-44.jpg" alt="Desfile de moda Fashion Show en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><div class="e-title">Fashion Show · Primavera</div>
                     </div>
                 </a>
-                <a class="e-card small" data-tab="promociones"
+                <a class="e-card" data-tab="promociones"
                     onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','images/home/evento-45.jpg',event)">
                     <img src="images/home/evento-45.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy">
                     <div class="e-card-overlay"></div>
                     <div class="e-card-body"><div class="e-title">Gourmet Weekend</div>
                     </div>
                 </a>
-                <a class="e-card small" data-tab="eventos"
+                <a class="e-card" data-tab="eventos"
                     onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','images/home/evento-46.jpg',event)">
                     <img src="images/home/evento-46.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy">
                     <div class="e-card-overlay"></div>

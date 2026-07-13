@@ -877,7 +877,7 @@
 
     <div class="filter-bar">
         <div class="filter-inner" id="fi">
-            <button class="f-btn active" onclick="filt('Todos',this)">Todos</button>
+            <button id="btnTodos" class="f-btn" onclick="filt('Todos',this)" style="display:none">Todos</button>
             <button class="f-btn" onclick="filt('Automotriz',this)">Automotriz</button>
             <button class="f-btn" onclick="filt('Departamental',this)">Departamental</button>
             <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
@@ -1134,8 +1134,17 @@
 
         function filt(cat, btn) {
             document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            _activeCat = cat;
+            const todosBtn = document.getElementById('btnTodos');
+            if (cat === 'Todos') {
+                // Reset al estado inicial: se muestran todas las tiendas y "Todos" vuelve a ocultarse
+                _activeCat = 'Todos';
+                todosBtn.style.display = 'none';
+            } else {
+                // Al filtrar por una categoría, recién ahí aparece "Todos" como opción para volver
+                if (btn) btn.classList.add('active');
+                _activeCat = cat;
+                todosBtn.style.display = '';
+            }
             _renderGrid();
         }
 

@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Directorio | Plaza Carso</title>
+    <meta name="description"
+        content="Directorio completo de tiendas Plaza Carso, Polanco. Filtra por categoría y encuentra tu tienda favorita." />
+    <link rel="canonical" href="https://josegaspard.github.io/plaza-carso/directorio.html" />
+    <link rel="icon" type="image/png" href="images/logos/logo-carso.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Directorio | Plaza Carso" />
+    <meta property="og:description" content="Directorio completo de tiendas Plaza Carso, Polanco. Filtra por categoría y encuentra tu tienda favorita." />
+    <meta property="og:image" content="https://josegaspard.github.io/plaza-carso/images/home/directorio-hero.jpg" />
+    <meta property="og:url" content="https://josegaspard.github.io/plaza-carso/directorio.html" />
+    <meta property="og:site_name" content="Plaza Carso" />
+    <meta property="og:locale" content="es_MX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Directorio | Plaza Carso" />
+    <meta name="twitter:description" content="Directorio completo de tiendas Plaza Carso, Polanco. Filtra por categoría y encuentra tu tienda favorita." />
+    <meta name="twitter:image" content="https://josegaspard.github.io/plaza-carso/images/home/directorio-hero.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="author" content="Plaza Carso" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080706" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/carso.css?v=20260603g">
+    <style>
+        .filter-bar {
+            position: sticky;
+            top: 72px;
+            z-index: 50;
+            background: rgba(246, 244, 240, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--smoke);
+            padding: 0 52px;
+        }
+
+        .filter-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 100%;
+        }
+
+        .filter-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .f-btn {
+            flex-shrink: 0;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--grey);
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 18px 18px;
+            border-bottom: 1.5px solid transparent;
+            transition: color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .f-btn:hover {
+            color: var(--mid);
+        }
+
+        .f-btn.active {
+            color: var(--ink);
+            border-bottom-color: var(--ink);
+            font-weight: 500;
+        }
+
+        .search-wrap {
+            margin-left: auto;
+            flex-shrink: 0;
+            border-left: 1px solid var(--smoke);
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-wrap input {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--ink);
+            width: 160px;
+            padding: 8px 0;
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--silver);
+        }
+
+        .search-wrap svg {
+            color: var(--grey);
+        }
+
+        /* Grid */
+        .dir-section {
+            padding: 72px 0 100px;
+            background: var(--warm-white);
+        }
+
+        .dir-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 52px;
+        }
+
+        .dir-count {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 40px;
+        }
+
+        #store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            column-gap: 32px;
+            row-gap: 52px;
+        }
+
+        /* Store tile — estilo Plaza Universidad: nombre en serif, hover invierte a fondo oscuro */
+        .s-card {
+            cursor: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .s-tile {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            border: 1px solid var(--silver);
+            background: var(--warm-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: background-color .45s ease, border-color .45s ease, box-shadow .45s ease;
+        }
+
+        .s-card:hover .s-tile {
+            background: var(--ink);
+            border-color: var(--ink);
+            box-shadow: 0 22px 48px -26px rgba(10, 9, 9, .45);
+        }
+
+        .s-tile-num {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .18em;
+            color: var(--silver);
+            transition: color .45s ease;
+        }
+
+        .s-card:hover .s-tile-num {
+            color: var(--warm-white);
+        }
+
+        .s-tile-name {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(18px, 1.6vw, 26px);
+            line-height: 1.08;
+            color: var(--ink);
+            letter-spacing: .01em;
+            transition: color .45s ease;
+        }
+
+        .s-card:hover .s-tile-name {
+            color: var(--warm-white);
+        }
+
+        /* Brand logo inside tile — black by default, turns white on hover */
+        .s-tile-logo {
+            width: 72%;
+            height: 64%;
+            object-fit: contain;
+            object-position: center;
+            transition: filter .45s ease, transform .45s ease;
+            will-change: filter, transform;
+        }
+
+        .s-card:hover .s-tile-logo {
+            /* black PNG/WebP → pure white on the dark tile */
+            filter: brightness(0) invert(1);
+            transform: scale(1.04);
+        }
+
+        /* Brand name caption below the tile (shown when a logo is in the tile) */
+        .s-card-caption {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(14px, 1.05vw, 18px);
+            line-height: 1.15;
+            color: var(--ink);
+            letter-spacing: .01em;
+            margin: 0 0 6px;
+            transition: color .25s;
+        }
+
+        .s-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--grey);
+            transition: color .25s;
+        }
+
+        .s-card:hover .s-meta {
+            color: var(--ink);
+        }
+
+        .s-meta-sep {
+            opacity: .35;
+        }
+
+        /* Store Modal */
+        #s-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            background: rgba(10, 9, 9, .92);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        #s-modal.open {
+            display: flex;
+        }
+
+        #s-modal-box {
+            background: var(--warm-white);
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform .45s ease, opacity .45s ease;
+        }
+
+        #s-modal.open #s-modal-box {
+            transform: none;
+            opacity: 1;
+        }
+
+        .smod-img {
+            position: relative;
+            overflow: hidden;
+            background: var(--smoke);
+            height: 100%;
+            cursor: none;
+        }
+
+        .smod-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+            background: var(--smoke);
+            transition: opacity .4s ease;
+        }
+
+        .smod-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(246, 244, 240, .92);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            border: none;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink);
+            opacity: 0;
+            transition: opacity .25s, background .2s;
+            z-index: 3;
+        }
+
+        .smod-img:hover .smod-nav {
+            opacity: 1;
+        }
+
+        .smod-nav:hover {
+            background: var(--ink);
+            color: var(--warm-white);
+        }
+
+        .smod-nav.prev { left: 14px; }
+        .smod-nav.next { right: 14px; }
+
+        .smod-counter {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 9, 9, .55);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: var(--warm-white);
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: 7px 14px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .smod-hint {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: rgba(246, 244, 240, .92);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            opacity: 0;
+            transition: opacity .25s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .smod-img:hover .smod-hint {
+            opacity: 1;
+        }
+
+        .smod-body {
+            padding: 64px 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            max-width: 640px;
+        }
+
+        #smod-cat {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        #smod-name {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        #smod-desc {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.85;
+            margin-bottom: 32px;
+        }
+
+        .smod-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--smoke);
+            padding-top: 28px;
+            margin-bottom: 28px;
+        }
+
+        .smod-meta-item span:first-child {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .smod-meta-item span:last-child {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--ink);
+        }
+
+        .smod-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--ink);
+            border: none;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warm-white);
+            box-shadow: 0 8px 22px -8px rgba(10, 9, 9, .55);
+            transition: background .2s, transform .2s;
+            z-index: 20;
+        }
+
+        .smod-close:hover {
+            background: var(--mid);
+            transform: scale(1.08);
+        }
+
+        /* Paginación del modal — "Anterior / Siguiente" arriba del título */
+        .smod-pager {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-right: 60px;
+        }
+
+        .smod-pager-btn {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: none;
+            border: 1px solid var(--silver);
+            padding: 9px 16px;
+            cursor: none;
+            transition: background .2s, color .2s, border-color .2s;
+            white-space: nowrap;
+        }
+
+        .smod-pager-btn:hover {
+            background: var(--ink);
+            color: var(--warm-white);
+            border-color: var(--ink);
+        }
+
+        .smod-pager-count {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .22em;
+            color: var(--grey);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .smod-socials {
+            display: flex;
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .smod-socials a.no-link { cursor: default; }
+
+        .smod-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--smoke);
+            color: var(--mid);
+            transition: all .25s ease;
+        }
+
+        .smod-socials a:hover {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: var(--warm-white);
+        }
+
+        /* Botón de llamada — CTA prominente para marcar desde el modal */
+        .smod-call {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            align-self: flex-start;
+            margin: 4px 0 6px;
+            padding: 13px 26px 13px 16px;
+            background: var(--ink);
+            color: var(--warm-white);
+            text-decoration: none;
+            border-radius: 50px;
+            cursor: none;
+            transition: background .22s, transform .22s, box-shadow .22s;
+            box-shadow: 0 12px 30px -14px rgba(10, 9, 9, .65);
+        }
+        .smod-call:hover {
+            background: var(--mid);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px -14px rgba(10, 9, 9, .7);
+        }
+        .smod-call .sc-ic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(246, 244, 240, .12);
+            flex-shrink: 0;
+        }
+        .smod-call .sc-txt { display: flex; flex-direction: column; line-height: 1.2; }
+        .smod-call .sc-label {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(246, 244, 240, .62);
+        }
+        .smod-call .sc-num {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 300;
+        }
+
+        /* Carrusel de imágenes en el modal */
+        .smod-gallery-wrap { margin-top: 22px; }
+        .smod-gallery-label {
+            display: block;
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 10px;
+        }
+        .smod-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .smod-gallery::-webkit-scrollbar { height: 5px; }
+        .smod-gallery::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 4px; }
+        .smod-thumb {
+            flex: 0 0 auto;
+            width: 140px;
+            height: 105px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            scroll-snap-align: start;
+            border: 1px solid var(--smoke);
+            background: var(--warm-white);
+            position: relative;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+        .smod-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+        .smod-thumb:hover { border-color: var(--ink); transform: translateY(-2px); }
+        .smod-thumb:hover img { transform: scale(1.06); }
+        .smod-thumb::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,.12);
+            opacity: 0; transition: opacity .2s ease;
+        }
+        .smod-thumb:hover::after { opacity: 1; }
+
+        /* Lightbox de galería */
+        #g-lightbox {
+            position: fixed; inset: 0; z-index: 4000;
+            background: rgba(15,15,15,.94);
+            display: none;
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity .3s ease;
+        }
+        #g-lightbox.open { display: flex; opacity: 1; }
+        #gl-img {
+            max-width: 92vw; max-height: 84vh;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 24px 80px rgba(0,0,0,.6);
+        }
+        .gl-close {
+            position: absolute; top: 22px; right: 26px;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.35);
+            background: rgba(255,255,255,.08); color: #fff;
+            font-size: 30px; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s ease;
+        }
+        .gl-close:hover { background: #fff; color: #111; }
+        .gl-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 54px; height: 54px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.3);
+            background: rgba(255,255,255,.08); color: #fff;
+            font-size: 34px; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s ease;
+        }
+        .gl-nav:hover { background: #fff; color: #111; }
+        .gl-nav.prev { left: 18px; }
+        .gl-nav.next { right: 18px; }
+        .gl-counter {
+            position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+            font-family: var(--sans); font-size: 12px; letter-spacing: .2em;
+            color: rgba(255,255,255,.8); font-variant-numeric: tabular-nums;
+        }
+        @media (max-width: 600px) {
+            .smod-thumb { width: 120px; height: 90px; }
+            .gl-nav { width: 44px; height: 44px; font-size: 26px; }
+            .gl-nav.prev { left: 8px; } .gl-nav.next { right: 8px; }
+            .gl-close { top: 14px; right: 14px; width: 44px; height: 44px; font-size: 26px; }
+            #gl-img { max-width: 94vw; max-height: 78vh; }
+        }
+
+        /* Espacios section */
+        .espacios-band {
+            background: var(--ink);
+            padding: 64px 52px;
+            margin: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .espac-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .espac-inner h3 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(28px, 3vw, 42px);
+            font-weight: 300;
+            color: var(--warm-white);
+        }
+
+        .espac-inner p {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 8px;
+            max-width: 400px;
+            line-height: 1.7;
+        }
+
+        .btn-wh { display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:15px 30px 13px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: var(--warm-white);
+            padding: 14px 30px;
+            flex-shrink: 0;
+            transition: background .2s;
+            cursor: none;
+        }
+
+        .btn-wh:hover {
+            background: var(--smoke);
+        }
+
+        /* Espacios section — igual que contacto.html */
+        .espacios-section {
+            background: var(--ink);
+            padding: 80px 52px;
+        }
+        .espacios-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .espac-text h3 {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(30px, 3.5vw, 46px);
+            font-weight: 300;
+            color: var(--warm-white);
+        }
+        .espac-text p {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--grey);
+            margin-top: 10px;
+            line-height: 1.8;
+            max-width: 400px;
+        }
+        .espac-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        .espac-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: .1em;
+            color: var(--silver);
+            transition: color .2s;
+        }
+        .espac-link:hover { color: var(--warm-white); }
+        .espac-link-ico {
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255,255,255,.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        @media(max-width:768px) {
+            /* Fix cursor:none breaking mobile taps */
+            *, *::before, *::after { cursor: auto !important; }
+            a, button, input, select, textarea { cursor: pointer !important; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+
+            .filter-bar {
+                padding: 0 0 0 12px;
+                top: 60px; /* Match mobile nav height */
+            }
+
+            .f-btn {
+                padding: 14px 14px;
+                min-height: 44px;
+            }
+
+            .search-wrap {
+                padding: 8px 12px 8px 12px;
+                border-left: none;
+                border-top: 1px solid var(--smoke);
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .search-wrap input {
+                width: 100%;
+                font-size: 16px; /* Prevent iOS zoom */
+            }
+
+            .dir-inner {
+                padding: 0 16px;
+            }
+
+            #store-grid {
+                grid-template-columns: 1fr 1fr;
+                column-gap: 14px;
+                row-gap: 32px;
+            }
+
+            .s-tile {
+                padding: 0 12px;
+                margin-bottom: 12px;
+            }
+
+            .s-tile-name {
+                font-size: clamp(15px, 4.4vw, 20px);
+            }
+
+            .s-meta {
+                font-size: 10px;
+                letter-spacing: .14em;
+                gap: 8px;
+            }
+
+            #s-modal {
+                padding: 0;
+            }
+
+            #s-modal-box {
+                grid-template-columns: 1fr;
+                grid-template-rows: 52vh 1fr;
+                height: 100%;
+                max-height: 100%;
+            }
+
+            .smod-img {
+                height: 100%;
+                min-height: 0;
+            }
+
+            .smod-nav {
+                opacity: 1 !important;
+                width: 40px;
+                height: 40px;
+            }
+
+            .smod-body {
+                padding: 28px 22px 32px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                max-width: 100%;
+            }
+
+            .smod-call { align-self: stretch; padding: 14px 22px 14px 16px; }
+            .smod-call .sc-num { font-size: 21px; }
+
+            .smod-close {
+                min-width: 44px;
+                min-height: 44px;
+                z-index: 10;
+            }
+
+            #smod-name {
+                font-size: clamp(28px, 7vw, 36px);
+            }
+
+            .espacios-band {
+                padding: 48px 20px;
+            }
+
+            .espac-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .espacios-section {
+                padding: 48px 20px;
+            }
+
+            .espacios-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Mobile nav */
+            .nav-ham {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mob-close {
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            #mob-nav a {
+                padding: 8px 0;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media(max-width:374px) {
+            #store-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <nav id="nav">
+        <a href="index.html" class="nav-logo"><img src="images/logos/logo-carso-big.png" alt="Plaza Carso"
+                style="height:64px; width:auto;"></a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="directorio.html" class="act">Directorio</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="eventosypromociones.html">Eventos y Promociones</a>
+            <a href="contacto.html" class="nav-cta-link">Contacto</a>
+        </div>
+        <button class="nav-ham" onclick="toggleMob()" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div id="mob-nav" role="dialog" aria-modal="true" aria-label="Navegación">
+        <div onclick="toggleMob()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;-webkit-tap-highlight-color:transparent;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </div>
+        <a href="index.html">Inicio</a>
+        <a href="directorio.html">Directorio</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="eventosypromociones.html">Eventos y Promociones</a>
+        <a href="contacto.html">Contacto</a>
+        <div onclick="toggleMob()" style="margin-top:32px;padding:12px 32px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;color:rgba(255,255,255,0.6);font-family:var(--sans);font-size:14px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;">Cerrar</div>
+    </div>
+
+    <main id="main-content">
+    <section class="page-hero" style="min-height:360px;">
+        <div class="page-hero-img" style="background-image:url('images/home/directorio-hero.jpg');"></div>
+        <div class="page-hero-content">
+            <span class="page-kicker">Plaza Carso · Polanco</span>
+            <h1 class="page-h1">Directorio.</h1>
+        </div>
+    </section>
+
+    <div class="filter-bar">
+        <div class="filter-inner" id="fi">
+            <button class="f-btn active" onclick="filt('Todos',this)">Todos</button>
+            <button class="f-btn" onclick="filt('Departamental',this)">Departamental</button>
+            <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
+            <button class="f-btn" onclick="filt('Gastronomía',this)">Gastronomía</button>
+            <button class="f-btn" onclick="filt('Joyería',this)">Joyería</button>
+            <button class="f-btn" onclick="filt('Moda',this)">Moda</button>
+            <button class="f-btn" onclick="filt('Salud',this)">Salud</button>
+            <button class="f-btn" onclick="filt('Servicios',this)">Servicios</button>
+            <button class="f-btn" onclick="filt('Tecnología',this)">Tecnología</button>
+            <div class="search-wrap">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input id="search-in" type="text" placeholder="Buscar..." oninput="doSearch(this.value)">
+            </div>
+        </div>
+    </div>
+
+    <section class="dir-section">
+        <div class="dir-inner">
+            <p class="dir-count" id="dir-count">Todas las marcas. En un solo lugar.</p>
+            <div id="store-grid"></div>
+            <div id="no-results" style="display:none;text-align:center;padding:80px 20px;font-family:var(--serif);font-style:italic;font-size:28px;color:var(--grey);">Sin resultados</div>
+        </div>
+    </section>
+
+    <!-- STORE MODAL -->
+    <div id="s-modal" onclick="closeMod(event)">
+        <div id="s-modal-box" onclick="event.stopPropagation()">
+            <div class="smod-img">
+                <img id="smod-img" src="" alt="">
+            </div>
+            <div class="smod-body">
+                <button class="smod-close" onclick="closeMod()" aria-label="Cerrar">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                </button>
+                <div class="smod-pager">
+                    <button type="button" class="smod-pager-btn" onclick="prevStore()"><span aria-hidden="true">←</span> Anterior</button>
+                    <button type="button" class="smod-pager-btn" onclick="nextStore()">Siguiente <span aria-hidden="true">→</span></button>
+                </div>
+                <span id="smod-cat"></span>
+                <h2 id="smod-name"></h2>
+                <p id="smod-desc"></p>
+                <div class="smod-meta">
+                    <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
+                    <div class="smod-meta-item" id="smod-time-row"><span>Horario</span><span id="smod-time"></span></div>
+                </div>
+                <a id="smod-call" class="smod-call" href="tel:5511037300" aria-label="Llamar">
+                    <span class="sc-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg></span>
+                    <span class="sc-txt"><span class="sc-label" id="sc-label">Informes · Plaza Carso</span><span class="sc-num" id="sc-num">55 1103 7300</span></span>
+                </a>
+                <div class="smod-gallery-wrap" id="smod-gallery-wrap" style="display:none;">
+                    <span class="smod-gallery-label">Galería</span>
+                    <div class="smod-gallery" id="smod-gallery"></div>
+                </div>
+                <div class="smod-socials" id="smod-socials" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX GALERÍA -->
+    <div id="g-lightbox" onclick="closeGal(event)">
+        <button class="gl-close" onclick="closeGal()" aria-label="Cerrar">&times;</button>
+        <button class="gl-nav prev" onclick="galPrev(event)" aria-label="Anterior">&lsaquo;</button>
+        <img id="gl-img" src="" alt="">
+        <button class="gl-nav next" onclick="galNext(event)" aria-label="Siguiente">&rsaquo;</button>
+        <span class="gl-counter" id="gl-counter"></span>
+    </div>
+
+    <section class="espacios-section">
+        <div class="espacios-inner">
+            <div class="espac-text">
+                <h3>¿Tu marca<br>en Plaza Carso?</h3>
+                <p>Contáctanos, Informes de locales:<br>
+                    <a href="tel:5511037300" style="color:var(--warm-white);">55 1103 7300</a> &nbsp;·&nbsp; <a href="mailto:contacto@plazacarso.com.mx" style="color:var(--warm-white);">contacto@plazacarso.com.mx</a></p>
+            </div>
+        </div>
+    </section>
+    </main>
+
+        <footer>
+        <div class="footer-bg-text" aria-hidden="true">CARSO</div>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand-name">Plaza <span>Carso</span></div>
+                <p class="footer-brand-desc">Lago Zúrich 245, Col. Ampliación Granada, 11529, Miguel Hidalgo, Ciudad de México.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="directorio.html">Directorio</a></li>
+                    <li><a href="mapa.html">Mapa</a></li>
+                    <li><a href="eventosypromociones.html">Eventos y Promociones</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Visítanos</h4>
+                <address>Lago Zúrich 245<br>Col. Ampliación Granada, 11529<br>Miguel Hidalgo, Ciudad de México<br><a href="tel:5511037300">55 1103 7300</a></address>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <ul>
+                    <li><a href="#">Lun–Dom: 11:00–21:00</a></li>
+                    <li><a href="#">Roof Garden: hasta 23:00</a></li>
+                    <li><a href="contacto.html">Contáctanos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/plazacarsooficial" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+                <a href="https://x.com/carsoplaza" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script>
+        const cur = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        if (cur && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => { gsap.to(cur, { x: e.clientX, y: e.clientY, duration: .25, ease: 'power2.out' }); gsap.to(dot, { x: e.clientX, y: e.clientY, duration: .08 }); });
+            document.querySelectorAll('a,button,.s-card').forEach(el => { el.addEventListener('mouseenter', () => cur.classList.add('hover')); el.addEventListener('mouseleave', () => cur.classList.remove('hover')); });
+        }
+        window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
+        function toggleMob() { var m=document.getElementById('mob-nav'); m.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; var b=document.querySelector('.nav-ham'); if(b) b.setAttribute('aria-expanded',m.classList.contains('open')); }
+        // ── DIRECTORIO DATA — datos oficiales del cartel de Plaza Carso ──────────
+        // num = número en el cartel físico (PB=53–83, C1=40–52, C2=1–39, C3=2–5, Planta Carso II=84–93)
+        //
+        // CAMPOS ADMINISTRABLES POR TIENDA (todos opcionales — agrega los que tengas):
+        //   time : horario, ej.  time:"11:00–21:00"
+        //   ig   : Instagram,    ej.  ig:"https://www.instagram.com/marca"
+        //   fb   : Facebook,     ej.  fb:"https://www.facebook.com/marca"
+        //   web  : sitio web,    ej.  web:"https://www.marca.com"
+        //   tel  : teléfono,     ej.  tel:"5512345678"
+        // El modal muestra automáticamente sólo los datos que existan.
+        const STORES = [
+            { name:"54D", cat:"Salud", img:"images/stores/54d.webp", logo:"images/logos/brands/54d.webp", num:90, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Academia Europea", cat:"Servicios", img:"images/stores/academia-europea.webp", logo:"images/logos/brands/academia-europea.webp", num:88, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Acuario Interactivo", cat:"Entretenimiento", img:"images/stores/acuario-interactivo.webp", logo:"images/logos/brands/acuario-interactivo.webp", num:40, desc:"Aquadoc Interactivo: experiencia inmersiva con vida marina y túnel acuático para toda la familia.", loc:"Primer Nivel", time:"11:00–20:00" },
+            { name:"Alma de Luna", cat:"Joyería", img:"images/stores/alma-de-luna.webp", logo:"images/logos/brands/alma-de-luna.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Applebee's", cat:"Gastronomía", img:"images/stores/applebees.webp", logo:"images/logos/brands/applebees.webp", num:6, desc:"Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", loc:"Roof Garden", time:"12:00–23:00" },
+            { name:"Asadero Beef", cat:"Gastronomía", img:"images/stores/asadero.webp", logo:"images/logos/brands/asadero.webp", num:35, desc:"", loc:"Primer y Segundo Nivel", time:"" },
+            { name:"Asaderos Grill", cat:"Gastronomía", img:"images/stores/asaderos-grill.webp", logo:"images/logos/brands/asaderos-grill.webp", num:19, desc:"Cortes de carne a la parrilla con tradición norteña.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Barber Street", cat:"Salud", img:"images/stores/barber-street.webp", logo:"images/logos/brands/barber-street.webp", num:78, desc:"", loc:"Planta Baja", time:"" },
+            { name:"BCBG Maxazria", cat:"Moda", img:"images/stores/bcbgmaxazria.webp", logo:"images/logos/brands/bcbgmaxazria.webp", num:67, desc:"Diseño contemporáneo californiano con un toque de glamour. Vestidos y siluetas para ocasiones especiales.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"BestDay", cat:"Servicios", img:"images/stores/bestday.webp", logo:"images/logos/brands/bestday.webp", num:66, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Biscotto", cat:"Gastronomía", img:"images/stores/biscotto.webp", logo:"images/logos/brands/biscotto.webp", num:83, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Burger King", cat:"Gastronomía", img:"images/stores/burger-king.webp", logo:"images/logos/brands/burger-king.webp", num:20, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"BYD", cat:"Automotriz", img:"images/stores/byd.webp", logo:"images/logos/brands/byd.webp", num:95, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Caballo Bayo", cat:"Gastronomía", img:"images/stores/caballo-bayo.webp", logo:"images/logos/brands/caballo-bayo.webp", num:4, desc:"", loc:"Roof Garden", time:"" },
+            { name:"Carolo", cat:"Gastronomía", img:"images/stores/carolo.webp", logo:"images/logos/brands/carolo.webp", num:5, desc:"Restaurante italiano de inspiración contemporánea. Pastas, pizzas al horno y carta de vinos.", loc:"Roof Garden", time:"13:00–23:00" },
+            { name:"Chilim Balam", cat:"Gastronomía", img:"images/stores/chilim-balam.webp", logo:"images/logos/brands/chilim-balam.webp", num:36, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Cinépolis", cat:"Entretenimiento", img:"images/stores/cinepolis.webp", logo:"images/logos/brands/cinepolis.webp", num:52, desc:"Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", loc:"Primer Nivel", time:"11:00–23:00" },
+            { name:"City Café", cat:"Gastronomía", img:"images/stores/city-cafe.webp", logo:"images/logos/brands/city-cafe.webp", num:9, desc:"Comida saludable, jugos prensados, desayunos y café de especialidad.", loc:"Segundo Nivel", time:"07:30–22:00" },
+            { name:"City Market", cat:"Departamental", img:"images/stores/city-market.webp", logo:"images/logos/brands/city-market.webp", num:96, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Coffee Tree", cat:"Gastronomía", img:"images/stores/coffee-tree.webp", logo:"images/logos/brands/coffee-tree.webp", num:12, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Cosecha Sana", cat:"Gastronomía", img:"images/stores/cosecha-sana.webp", logo:"images/logos/brands/cosecha-sana.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"DAX", cat:"Salud", img:"images/stores/dax.webp", logo:"images/logos/brands/dax.webp", num:60, desc:"Perfumería, cosméticos y dermocosmética. Marcas internacionales y servicio de asesoría.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Daylight Salads", cat:"Gastronomía", img:"images/stores/daylight-salads.webp", logo:"images/logos/brands/daylight-salads.webp", num:28, desc:"", loc:"Primer y Segundo Nivel", time:"" },
+            { name:"De Costa a Costa", cat:"Gastronomía", img:"images/stores/de-costa-a-costa.webp", logo:"images/logos/brands/de-costa-a-costa.webp", num:null, desc:"Mariscos frescos y cocina marinera con recetas de los litorales mexicanos.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Dentalia", cat:"Salud", img:"images/stores/dentalia.webp", logo:"images/logos/brands/dentalia.webp", num:89, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Domino's Pizza", cat:"Gastronomía", img:"images/stores/dominos.webp", logo:"images/logos/brands/dominos.webp", num:22, desc:"La pizza favorita del mundo, lista en minutos. Para comer aquí o llevar.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Dynasty", cat:"Gastronomía", img:"images/stores/dinasty.webp", logo:"images/logos/brands/dynasty.webp", num:30, desc:"Legendary Chinese Food. Cocina cantonesa lista para llevar en el food court.", loc:"Primer y Segundo Nivel", time:"11:00–22:00" },
+            { name:"Enrique Bricker", cat:"Joyería", img:"images/stores/enrique-bricker.webp", logo:"images/logos/brands/enrique-bricker.webp", num:93, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"FlyOver México", cat:"Entretenimiento", img:"images/stores/fly-over-mexico.webp", logo:"images/logos/brands/fly-over-mexico.webp", num:53, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Ford", cat:"Automotriz", img:"images/stores/ford.webp", logo:"images/logos/brands/ford.webp", num:94, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Garmin", cat:"Tecnología", img:"images/stores/garmin.webp", logo:"images/logos/brands/garmin.webp", num:57, desc:"Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"GoKart Manía", cat:"Entretenimiento", img:"images/stores/gokart-mania.webp", logo:"images/logos/brands/gokart-mania.webp", num:91, desc:"", loc:"Planta Carso II", time:"" },
+            { name:"Gong Cha", cat:"Gastronomía", img:"images/stores/gong-cha.webp", logo:"images/logos/brands/gong-cha.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Helados Dolphy", cat:"Gastronomía", img:"images/stores/dolphy.webp", logo:"images/logos/brands/dolphy.webp", num:16, desc:"Heladería clásica. Helados artesanales, malteadas y postres helados para toda la familia.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Helados Santa Clara", cat:"Gastronomía", img:"images/stores/santa-clara.webp", logo:"images/logos/brands/santa-clara.webp", num:26, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Hello Kitty Café", cat:"Gastronomía", img:"images/stores/hello-kitty-cafe.webp", logo:"images/logos/brands/hello-kitty-cafe.webp", num:42, desc:"Café temático del universo Sanrio. Postres, malteadas y desayunos en un set de Instagram.", loc:"Primer Nivel", time:"11:00–21:00" },
+            { name:"Inbursa", cat:"Servicios", img:"images/stores/inbursa.webp", logo:"images/logos/brands/inbursa.webp", num:54, desc:"Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", loc:"Planta Baja", time:"09:00–17:00" },
+            { name:"Inspark", cat:"Entretenimiento", img:"images/stores/inspark.webp", logo:"images/logos/brands/inspark.webp", num:41, desc:"", loc:"Primer Nivel", time:"" },
+            { name:"iShop", cat:"Tecnología", img:"images/stores/ishop.webp", logo:"images/logos/brands/ishop.webp", num:69, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Ivonne", cat:"Joyería", img:"images/stores/ivonne.webp", logo:"images/logos/brands/ivonne.webp", num:68, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Izlah", cat:"Moda", img:"images/stores/izlah.webp", logo:"images/logos/brands/izlah.webp", num:84, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Jimmy Joe Chicken & Grill", cat:"Gastronomía", img:"images/stores/jimmy-joe.webp", logo:"images/logos/brands/jimmy-joe.webp", num:29, desc:"Pollo a la parrilla y antojitos al carbón con opciones healthy.", loc:"Primer y Segundo Nivel", time:"11:00–22:00" },
+            { name:"Julio", cat:"Moda", img:"images/stores/julio.webp", logo:"images/logos/brands/julio.webp", num:45, desc:"", loc:"Planta Baja", time:"" },
+            { name:"La Crêpe Parisienne", cat:"Gastronomía", img:"images/stores/la-crepe-parisinnee.webp", logo:"images/logos/brands/la-crepe-parisienne.webp", num:37, desc:"Crêpes dulces y salados al estilo francés. Una pausa parisina en Polanco.", loc:"Primer y Segundo Nivel", time:"08:00–22:00" },
+            { name:"La Europea", cat:"Gastronomía", img:"images/stores/la-europea.webp", logo:"images/logos/brands/la-europea.webp", num:80, desc:"", loc:"Planta Baja", time:"" },
+            { name:"La Imperial", cat:"Gastronomía", img:"images/stores/la-imperial.webp", logo:"images/logos/brands/la-imperial.webp", num:17, desc:"Cocina mexicana contemporánea en un comedor de inspiración clásica.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"La Raclette", cat:"Gastronomía", img:"images/stores/la-raclette.webp", logo:"images/logos/brands/la-raclette.webp", num:3, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Las Flautas", cat:"Gastronomía", img:"images/stores/las-flautas.webp", logo:"images/logos/brands/las-flautas.webp", num:34, desc:"", loc:"Primer y Segundo Nivel", time:"" },
+            { name:"Le Macaron", cat:"Gastronomía", img:"images/stores/le-macaron.webp", logo:"images/logos/brands/le-macaron.webp", num:14, desc:"", loc:"Planta Alta + Planta Baja", time:"" },
+            { name:"Loma Linda 1924", cat:"Gastronomía", img:"images/stores/loma-linda.webp", logo:"images/logos/brands/loma-linda.webp", num:2, desc:"Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", loc:"Roof Garden", time:"13:00–24:00" },
+            { name:"Lomas Studio", cat:"Servicios", img:"images/stores/mas-studio.webp", logo:"images/logos/brands/lomas-studio.webp", num:86, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Masters", cat:"Moda", img:"images/stores/masters.webp", logo:"images/logos/brands/masters.webp", num:47, desc:"", loc:"Primer Nivel", time:"" },
+            { name:"Miniso", cat:"Departamental", img:"images/stores/miniso.webp", logo:"images/logos/brands/miniso.webp", num:76, desc:"Marca lifestyle japonesa con productos de diseño minimalista: hogar, belleza, electrónicos, papelería y accesorios.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Mixup", cat:"Entretenimiento", img:"images/stores/mixup.webp", logo:"images/logos/brands/mixup.webp", num:55, desc:"Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Moor Spa & Nails", cat:"Salud", img:"images/stores/moor-spa-nails.webp", logo:"images/logos/brands/moor-spa.webp", num:77, desc:"Spa boutique con servicios de manicura, pedicura, masajes y tratamientos faciales. Una pausa de bienestar en Polanco.", loc:"Planta Baja", time:"10:00–21:00" },
+            { name:"Nardo Joyería", cat:"Joyería", img:"images/stores/nardo.webp", logo:"images/logos/brands/nardo.webp", num:50, desc:"", loc:"Primer Nivel", time:"" },
+            { name:"Nutrisa", cat:"Gastronomía", img:"images/stores/nutrisa.webp", logo:"images/logos/brands/nutrisa.webp", num:27, desc:"Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", loc:"Primer y Segundo Nivel", time:"11:00–22:00" },
+            { name:"O'Kai Poke Bowls", cat:"Gastronomía", img:"images/stores/okai-poke-bowls.webp", logo:"images/logos/brands/okai-poke.webp", num:24, desc:"Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"P.F. Chang's", cat:"Gastronomía", img:"images/stores/pf-changs.webp", logo:"images/logos/brands/pf-changs.webp", num:7, desc:"Cocina asiática contemporánea. Wok tradicional con presentación moderna.", loc:"Segundo Nivel", time:"13:00–23:00" },
+            { name:"Pandora", cat:"Joyería", img:"images/stores/pandora.webp", logo:"images/logos/brands/pandora.webp", num:64, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Pineda Covalín", cat:"Moda", img:"images/stores/pineda-covalin.webp", logo:"images/logos/brands/pineda-covalin.webp", num:74, desc:"Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte mexicano.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Pizza Maestra", cat:"Gastronomía", img:"images/stores/pizza-maestra.webp", logo:"images/logos/brands/pizza-maestra.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Poxtli", cat:"Gastronomía", img:"images/stores/poxtli.webp", logo:"images/logos/brands/poxtli.webp", num:39, desc:"Cocina mexicana de raíces con presentación contemporánea, en la terraza Poxtli.", loc:"Primer y Segundo Nivel", time:"13:00–23:00" },
+            { name:"Pío Grill", cat:"Gastronomía", img:"images/stores/pio-grill.webp", logo:"images/logos/brands/pio-grill.webp", num:null, desc:"Pollo a la parrilla con receta de la casa, guarniciones frescas y antojos urbanos.", loc:"Segundo Nivel", time:"12:00–22:00" },
+            { name:"Samsung", cat:"Tecnología", img:"images/stores/samsung.webp", logo:"images/logos/brands/samsung.webp", num:58, desc:"Galaxy Experience Store. Smartphones, tabletas, wearables y el ecosistema Galaxy AI con demostraciones en vivo.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Sanborns", cat:"Departamental", img:"images/stores/sanborns.webp", logo:"images/logos/brands/sanborns.webp", num:72, desc:"Café, restaurante, librería, perfumería y tienda departamental icónica de México.", loc:"Planta Baja", time:"08:00–22:00" },
+            { name:"Scappino", cat:"Moda", img:"images/stores/scappino.webp", logo:"images/logos/brands/scappino.webp", num:46, desc:"Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", loc:"Primer Nivel", time:"11:00–21:00" },
+            { name:"Showroom", cat:"Entretenimiento", img:"images/stores/showroom-carso.webp", logo:"images/logos/brands/showroom-carso.webp", num:85, desc:"", loc:"Planta Baja", time:"" },
+            { name:"Sonora Taco Fish", cat:"Gastronomía", img:"images/stores/sonora-taco-fish.webp", logo:"images/logos/brands/sonora-taco-fish.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Sport City", cat:"Salud", img:"images/stores/sport-city.webp", logo:"images/logos/brands/sport-city.webp", num:8, desc:"Fitness Club premium con equipo de última generación, clases grupales y áreas funcionales.", loc:"Segundo Nivel", time:"05:30–22:30" },
+            { name:"Spyral", cat:"Gastronomía", img:"images/stores/spyral.webp", logo:"images/logos/brands/spyral.webp", num:13, desc:"Helados suaves, conos, malteadas y postres helados al estilo americano.", loc:"Segundo Nivel", time:"11:00–22:00" },
+            { name:"Starbucks Coffee", cat:"Gastronomía", img:"images/stores/starbucks.webp", logo:"images/logos/brands/starbucks.webp", num:15, desc:"Café de especialidad, bebidas frías y un lugar para encontrarse.", loc:"Segundo Nivel", time:"06:30–22:00" },
+            { name:"Steren Shop", cat:"Tecnología", img:"images/stores/steren.webp", logo:"images/logos/brands/steren.webp", num:56, desc:"Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"Subway", cat:"Gastronomía", img:"images/stores/subway.webp", logo:"images/logos/brands/subway.webp", num:31, desc:"", loc:"Primer y Segundo Nivel", time:"" },
+            { name:"Sushi Itto", cat:"Gastronomía", img:"images/stores/sushiitto-ya.webp", logo:"images/logos/brands/sushi-itto.webp", num:38, desc:"Sushi fusión con rolls clásicos y creaciones de la casa. Hora Japi 2x1.", loc:"Primer y Segundo Nivel", time:"12:00–22:00" },
+            { name:"Svenson", cat:"Salud", img:"images/stores/svenson.webp", logo:"images/logos/brands/svenson.webp", num:75, desc:"Clínica capilar líder en tratamientos contra la caída del cabello, diagnóstico tricológico y micropigmentación.", loc:"Planta Baja", time:"10:00–20:00" },
+            { name:"Telcel", cat:"Tecnología", img:"images/stores/telcel.webp", logo:"images/logos/brands/telcel.webp", num:62, desc:"Conectividad 5G y tecnología móvil de vanguardia. Planes, equipos y servicios.", loc:"Planta Baja", time:"11:00–21:00" },
+            { name:"The Coffee", cat:"Gastronomía", img:"images/stores/the-coffee.webp", logo:"images/logos/brands/the-coffee.webp", num:null, desc:"", loc:"Segundo Nivel", time:"" },
+            { name:"Vapiano", cat:"Gastronomía", img:"images/stores/vapiano.webp", logo:"images/logos/brands/vapiano.webp", num:1, desc:"Pasta y pizza italianas frescas, preparadas frente a ti al momento.", loc:"Segundo Nivel", time:"12:00–23:00" },
+            { name:"Wings Army", cat:"Gastronomía", img:"images/stores/wings-army.webp", logo:"images/logos/brands/wings-army.webp", num:25, desc:"", loc:"Segundo Nivel", time:"" }
+        
+        ];
+
+        let _activeCat = 'Todos';
+        let _activeSearch = '';
+        let _visible = []; // filtered subset (objects from STORES)
+        let _modalIdx = 0;
+
+        function _matches(s) {
+            const catOk = _activeCat === 'Todos' || s.cat === _activeCat;
+            const q = _activeSearch.trim().toLowerCase();
+            const qOk = !q || s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q);
+            return catOk && qOk;
+        }
+
+        function _renderGrid() {
+            _visible = STORES.filter(_matches).sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+            const grid = document.getElementById('store-grid');
+            const empty = document.getElementById('no-results');
+            if (_visible.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+            } else {
+                empty.style.display = 'none';
+                grid.innerHTML = _visible.map((s, i) => `
+                    <div class="s-card" data-cat="${s.cat}" onclick="openMod(${i})">
+                        <div class="s-tile">
+                            ${s.num ? `<span class="s-tile-num">${String(s.num).padStart(2, '0')}</span>` : ''}
+                            ${s.logo ? `<img class="s-tile-logo" src="${s.logo}" alt="${s.name}" loading="lazy" width="480" height="480">` : `<span class="s-tile-name">${s.name}</span>`}
+                        </div>
+                        ${s.logo ? `<h3 class="s-card-caption">${s.name}</h3>` : ''}
+                        <div class="s-meta">
+                            <span>${s.cat}</span>
+                            <span class="s-meta-sep">&middot;</span>
+                            <span>Ver detalle</span>
+                        </div>
+                    </div>
+                `).join('');
+                // re-bind custom cursor hover on freshly-rendered cards
+                if (window.matchMedia('(pointer:fine)').matches) {
+                    document.querySelectorAll('#store-grid .s-card').forEach(el => {
+                        el.addEventListener('mouseenter', () => cur && cur.classList.add('hover'));
+                        el.addEventListener('mouseleave', () => cur && cur.classList.remove('hover'));
+                    });
+                }
+            }
+            const n = _visible.length;
+            const ct = document.getElementById('dir-count');
+            if (_activeSearch) {
+                ct.textContent = `${n} resultado${n !== 1 ? 's' : ''} para "${_activeSearch}"`;
+            } else if (_activeCat === 'Todos') {
+                ct.textContent = 'Todas las marcas. En un solo lugar.';
+            } else {
+                ct.textContent = `${n} tienda${n !== 1 ? 's' : ''} en ${_activeCat}`;
+            }
+        }
+
+        function filt(cat, btn) {
+            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            _activeCat = cat;
+            _renderGrid();
+        }
+
+        function doSearch(q) {
+            _activeSearch = q || '';
+            _renderGrid();
+        }
+
+        function _applyStore(s) {
+            document.getElementById('smod-name').textContent = s.name;
+            document.getElementById('smod-cat').textContent = s.cat;
+            const descEl = document.getElementById('smod-desc');
+            if (s.desc) { descEl.textContent = s.desc; descEl.style.display = ''; }
+            else { descEl.style.display = 'none'; }
+            const locRow = document.getElementById('smod-loc-row');
+            if (s.loc) { document.getElementById('smod-loc').textContent = s.loc; locRow.style.display = ''; }
+            else { locRow.style.display = 'none'; }
+            const timeRow = document.getElementById('smod-time-row');
+            if (s.time) { document.getElementById('smod-time').textContent = s.time; timeRow.style.display = ''; }
+            else { timeRow.style.display = 'none'; }
+            // Botón de llamada: usa el teléfono propio de la tienda si existe; si no, el de Plaza Carso.
+            const callEl = document.getElementById('smod-call');
+            const PLAZA_TEL = '5511037300', PLAZA_TEL_FMT = '55 1103 7300';
+            callEl.href = 'tel:' + (s.tel || PLAZA_TEL);
+            document.getElementById('sc-label').textContent = s.tel ? ('Llamar · ' + s.name) : 'Informes · Plaza Carso';
+            document.getElementById('sc-num').textContent = s.tel ? s.tel : PLAZA_TEL_FMT;
+            // Redes y contacto administrables (insta / faceb / web / telf)
+            const soc = document.getElementById('smod-socials');
+            const ICON = {
+                ig: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+                fb: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+                web: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+                tel: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>'
+            };
+            // Se muestran SIEMPRE los iconos (Instagram / Facebook / Sitio web); si la tienda
+            // tiene la URL cargada, el icono enlaza; si no, queda solo el icono.
+            let sh = '';
+            sh += s.ig  ? `<a href="${s.ig}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">${ICON.ig}</a>` : `<a class="no-link" aria-label="Instagram" title="Instagram">${ICON.ig}</a>`;
+            sh += s.fb  ? `<a href="${s.fb}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">${ICON.fb}</a>` : `<a class="no-link" aria-label="Facebook" title="Facebook">${ICON.fb}</a>`;
+            sh += s.web ? `<a href="${s.web}" target="_blank" rel="noopener" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>` : `<a class="no-link" aria-label="Sitio web" title="Sitio web">${ICON.web}</a>`;
+            if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
+            soc.innerHTML = sh;
+            soc.style.display = 'flex';
+            // Galería / carrusel de imágenes (administrable: s.imgs = [..]; si no hay, usa la principal)
+            _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
+            const gw = document.getElementById('smod-gallery-wrap');
+            const gal = document.getElementById('smod-gallery');
+            if (_galImgs.length) {
+                gal.innerHTML = _galImgs.map((src, i) =>
+                    `<div class="smod-thumb" onclick="openGal(${i})"><img src="${src}" alt="${s.name} ${i + 1}" loading="lazy"></div>`
+                ).join('');
+                gw.style.display = '';
+            } else {
+                gw.style.display = 'none';
+            }
+            const imgEl = document.getElementById('smod-img');
+            imgEl.style.opacity = '0';
+            const pre = new Image();
+            pre.onload = pre.onerror = () => {
+                imgEl.src = s.img;
+                imgEl.alt = s.name;
+                requestAnimationFrame(() => { imgEl.style.opacity = '1'; });
+            };
+            pre.src = s.img;
+        }
+
+        function openMod(idx) {
+            if (!_visible.length) return;
+            _modalIdx = ((idx % _visible.length) + _visible.length) % _visible.length;
+            _applyStore(_visible[_modalIdx]);
+            document.getElementById('s-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function nextStore() { if (!_visible.length) return; _modalIdx = (_modalIdx + 1) % _visible.length; _applyStore(_visible[_modalIdx]); }
+        function prevStore() { if (!_visible.length) return; _modalIdx = (_modalIdx - 1 + _visible.length) % _visible.length; _applyStore(_visible[_modalIdx]); }
+        function closeMod(e) {
+            if (e && e.target.closest('#s-modal-box')) return;
+            document.getElementById('s-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ---- Lightbox de galería ----
+        let _galImgs = [], _galIdx = 0;
+        function _showGal() {
+            if (!_galImgs.length) return;
+            _galIdx = ((_galIdx % _galImgs.length) + _galImgs.length) % _galImgs.length;
+            document.getElementById('gl-img').src = _galImgs[_galIdx];
+            const c = document.getElementById('gl-counter');
+            c.textContent = _galImgs.length > 1 ? `${_galIdx + 1} / ${_galImgs.length}` : '';
+            document.querySelectorAll('.gl-nav').forEach(n => n.style.display = _galImgs.length > 1 ? 'flex' : 'none');
+        }
+        function openGal(i) {
+            _galIdx = i || 0;
+            _showGal();
+            document.getElementById('g-lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function galNext(e) { if (e) e.stopPropagation(); _galIdx++; _showGal(); }
+        function galPrev(e) { if (e) e.stopPropagation(); _galIdx--; _showGal(); }
+        function closeGal(e) {
+            if (e && e.target.id === 'gl-img') return;
+            document.getElementById('g-lightbox').classList.remove('open');
+            // si el modal de tienda sigue abierto, mantener overflow oculto
+            if (!document.getElementById('s-modal').classList.contains('open')) document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            const gl = document.getElementById('g-lightbox');
+            if (gl && gl.classList.contains('open')) {
+                if (e.key === 'Escape') closeGal();
+                if (e.key === 'ArrowRight') galNext();
+                if (e.key === 'ArrowLeft') galPrev();
+                return;
+            }
+            const modal = document.getElementById('s-modal');
+            if (!modal || !modal.classList.contains('open')) return;
+            if (e.key === 'Escape') closeMod();
+            if (e.key === 'ArrowRight') nextStore();
+            if (e.key === 'ArrowLeft') prevStore();
+        });
+
+        // Initial render
+        _renderGrid();
+
+        // Deep link from the interactive map: directorio.html?store=Nombre
+        (function () {
+            const s = new URLSearchParams(location.search).get('store');
+            if (!s) return;
+            const i = _visible.findIndex(x => x.name === s);
+            if (i >= 0) openMod(i);
+        })();
+    </script>
+
+    <script>
+        // Footer Cursor Auto-Inversion
+        document.querySelectorAll('footer').forEach(f => {
+            f.addEventListener('mouseenter', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = '#fff'; 
+                if(dot) dot.style.background = '#fff'; 
+            });
+            f.addEventListener('mouseleave', () => { 
+                const cur = document.getElementById('cursor') || document.getElementById('cur');
+                const dot = document.getElementById('cursor-dot');
+                if(cur) cur.style.borderColor = ''; 
+                if(dot) dot.style.background = ''; 
+            });
+        });
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Directorio de Tiendas - Plaza Carso",
+        "description": "Directorio completo de tiendas y boutiques en Plaza Carso, Polanco.",
+        "url": "https://josegaspard.github.io/plaza-carso/directorio.html",
+        "numberOfItems": 120,
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Armani Exchange", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 2, "name": "Calvin Klein", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 3, "name": "Swarovski", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 4, "name": "Tommy Hilfiger", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 5, "name": "Zara", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 6, "name": "Liverpool", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 7, "name": "Cinepolis", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 8, "name": "GNC", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 9, "name": "Sanborns", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"},
+            {"@type": "ListItem", "position": 10, "name": "Telcel", "url": "https://josegaspard.github.io/plaza-carso/directorio.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Plaza Carso", "item": "https://josegaspard.github.io/plaza-carso/"},
+            {"@type": "ListItem", "position": 2, "name": "Directorio", "item": "https://josegaspard.github.io/plaza-carso/directorio.html"}
+        ]
+    }
+    </script>
+</body>
+
+</html>

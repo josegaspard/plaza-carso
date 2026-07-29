@@ -1358,6 +1358,22 @@
         }
         info.classList.add('show');
     }
+    // La tienda existe en el directorio pero el plano SVG aún no tiene su zona dibujada
+    // (locales nuevos / ampliación aún no vectorizada) — se avisa en vez de fallar en silencio.
+    function showUnmappedStore(name){
+        document.querySelectorAll('.store-zone.is-active').forEach(z=>z.classList.remove('is-active'));
+        selectedZone = null;
+        const st = STORES_BY_NAME[name];
+        const imgEl = document.getElementById('pi-img');
+        document.getElementById('pi-local').textContent = '';
+        document.getElementById('pi-cat').textContent = '';
+        document.getElementById('pi-name').textContent = (st && st.name) || name;
+        if (st && st.img){ imgEl.src = st.img; imgEl.alt = st.name; imgEl.style.display = 'block'; }
+        else { imgEl.removeAttribute('src'); imgEl.style.display = 'none'; }
+        document.getElementById('pi-meta').innerHTML = '<span class="pi-empty">Esta tienda todavía no tiene su ubicación marcada en el plano interactivo.</span>';
+        document.getElementById('pi-action').innerHTML = '<a class="pi-btn" href="directorio.html?store='+encodeURIComponent((st && st.name) || name)+'">Ver en directorio <i class="fa-solid fa-arrow-right"></i></a>';
+        info.classList.add('show');
+    }
     function clearSelection(){
         document.querySelectorAll('.store-zone.is-active').forEach(z=>z.classList.remove('is-active'));
         info.classList.remove('show'); selectedZone=null;
@@ -1490,7 +1506,7 @@
                 el.addEventListener('click', function () {
                     const name = el.getAttribute('data-name');
                     const z = findZoneForStore(name);
-                    if (z) selectZone(z.floor, z.local);
+                    if (z) selectZone(z.floor, z.local); else showUnmappedStore(name);
                     box.classList.remove('show');
                     const input = document.getElementById('mm-search-input');
                     input.value = '';
@@ -1526,6 +1542,7 @@
         } else if (storeName){
             const z = findZoneForStore(storeName);
             if (z){ switchFloor(z.floor); setTimeout(()=>selectZone(z.floor, +z.local), 60); }
+            else { setTimeout(()=>showUnmappedStore(storeName), 60); }
         }
     })();
     </script>

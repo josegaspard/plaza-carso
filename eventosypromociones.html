@@ -190,8 +190,11 @@
 
         @media(max-width:640px) {
             .e-nav {
-                display: none;
+                width: 38px;
+                height: 38px;
             }
+            .e-nav.e-prev { left: 6px; }
+            .e-nav.e-next { right: 6px; }
         }
 
         /* Card sizes */
@@ -548,6 +551,39 @@
             background: rgba(255, 255, 255, .28);
         }
 
+        /* Flechas prev/next dentro del lightbox — cambian de evento sin cerrarlo (igual que el
+           modal de tienda del directorio, que navega entre locales sin cerrarse) */
+        .lb-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            z-index: 1001;
+        }
+
+        .lb-nav:hover {
+            background: rgba(255, 255, 255, .28);
+        }
+
+        .lb-nav.lb-prev { left: 18px; }
+        .lb-nav.lb-next { right: 18px; }
+
+        @media(max-width:640px) {
+            .lb-nav { width: 40px; height: 40px; }
+            .lb-nav.lb-prev { left: 8px; }
+            .lb-nav.lb-next { right: 8px; }
+        }
+
         @media(max-width:768px) {
             /* Fix cursor:none breaking mobile taps */
             *, *::before, *::after { cursor: auto !important; }
@@ -696,6 +732,12 @@
         <button type="button" class="lb-close" onclick="closePub()" aria-label="Cerrar">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
         </button>
+        <button type="button" class="lb-nav lb-prev" onclick="pubPrev(event)" aria-label="Evento anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="lb-nav lb-next" onclick="pubNext(event)" aria-label="Evento siguiente">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
         <figure class="lb-figure" onclick="event.stopPropagation()">
             <div class="lb-img-wrap"><img id="lb-img" src="" alt=""></div>
             <figcaption class="lb-cap">
@@ -750,39 +792,58 @@
         // (Categorías Eventos/Promociones removidas a petición del cliente — jul 2026: todas las publicaciones se muestran juntas)
         document.querySelectorAll('.e-card').forEach((c, i) => { c.style.animationDelay = (i * 70) + 'ms'; c.classList.add('is-in'); });
 
-        // Carrusel infinito de eventos y promociones: no depende de cuántas tarjetas haya
+        // Carrusel infinito de eventos y promociones: un evento a la vez, flechitas para cambiar
+        // (no depende de cuántas tarjetas haya — pedido del cliente: "solo un evento con flechitas")
         new Swiper('#eSwiper', {
             loop: true,
-            slidesPerView: 1.08,
-            spaceBetween: 3,
+            slidesPerView: 1,
+            spaceBetween: 0,
             autoplay: { delay: 4500, disableOnInteraction: false },
             pagination: { el: '.e-swiper .swiper-pagination', clickable: true },
-            navigation: { nextEl: '#eNext', prevEl: '#ePrev' },
-            breakpoints: {
-                640: { slidesPerView: 1.6 },
-                900: { slidesPerView: 2.3 },
-                1200: { slidesPerView: 3 }
-            }
+            navigation: { nextEl: '#eNext', prevEl: '#ePrev' }
         });
 
-        // Lightbox: abre la imagen COMPLETA del evento/promoción
+        // Lightbox: abre la imagen COMPLETA del evento/promoción, con flechas prev/next
+        // que cambian de evento SIN cerrar el lightbox (igual que el modal de tienda del directorio)
+        const EVENTS = [
+            { title: 'Primavera en el Roof Garden', tag: 'Temporada', desc: 'El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.', img: 'publicaciones/pub14.jpg' },
+            { title: 'Arte y cultura, todo el año', tag: 'Cultura', desc: 'Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.', img: 'publicaciones/pub15.jpg' },
+            { title: 'Rebajas 2026', tag: 'Temporada', desc: 'Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.', img: 'publicaciones/pub16.jpg' },
+            { title: 'Fashion Show Primavera', tag: 'Moda', desc: 'Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.', img: 'publicaciones/pub17.jpg' },
+            { title: 'Gourmet Weekend', tag: 'Gastronomía', desc: 'Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.', img: 'publicaciones/pub18.jpg' },
+            { title: 'Nuevas Aperturas', tag: 'Novedad', desc: 'Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.', img: 'publicaciones/pub19.jpg' }
+        ];
+        let _pubIdx = 0;
+        function _renderPub() {
+            const ev = EVENTS[_pubIdx];
+            const im = document.getElementById('lb-img');
+            im.src = ev.img; im.alt = ev.title;
+            document.getElementById('lb-tag').textContent = ev.tag || '';
+            document.getElementById('lb-title').textContent = ev.title || '';
+            document.getElementById('lb-desc').textContent = ev.desc || '';
+        }
         function openPub(title, tag, desc, img, e) {
             if (e) e.preventDefault();
+            const i = EVENTS.findIndex(ev => ev.title === title);
+            _pubIdx = i >= 0 ? i : 0;
+            _renderPub();
             const lb = document.getElementById('img-lightbox');
-            const im = document.getElementById('lb-img');
-            im.src = img; im.alt = title;
-            document.getElementById('lb-tag').textContent = tag || '';
-            document.getElementById('lb-title').textContent = title || '';
-            document.getElementById('lb-desc').textContent = desc || '';
             lb.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
+        function pubNext(e) { if (e) e.stopPropagation(); _pubIdx = (_pubIdx + 1) % EVENTS.length; _renderPub(); }
+        function pubPrev(e) { if (e) e.stopPropagation(); _pubIdx = (_pubIdx - 1 + EVENTS.length) % EVENTS.length; _renderPub(); }
         function closePub(e) {
             if (e && e.target && e.target.closest('.lb-figure')) return;
             document.getElementById('img-lightbox').classList.remove('open');
             document.body.style.overflow = '';
         }
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePub(); });
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('img-lightbox').classList.contains('open')) return;
+            if (e.key === 'Escape') closePub();
+            else if (e.key === 'ArrowRight') pubNext();
+            else if (e.key === 'ArrowLeft') pubPrev();
+        });
     </script>
 
     <script type="application/ld+json">

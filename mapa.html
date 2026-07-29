@@ -64,43 +64,6 @@
         #main-content{ flex:1; min-height:0; display:flex; overflow:hidden; }
         .map-wrapper{ flex:1; display:flex; overflow:hidden; min-height:0; }
 
-        /* Sidebar */
-        .map-sidebar{ width:312px; flex-shrink:0; background:var(--warm-white); border-right:1px solid var(--smoke); display:flex; flex-direction:column; overflow:hidden; }
-        .sidebar-head{ padding:30px 28px 24px; background:var(--ink); color:var(--warm-white); }
-        .sidebar-head h1{ font-family:var(--serif); font-size:40px; font-style:italic; font-weight:300; line-height:1; color:var(--warm-white); }
-        .sidebar-head p{ font-size:13px; font-weight:300; color:rgba(255,255,255,.6); margin-top:8px; letter-spacing:.04em; }
-
-        .floor-tabs{ display:flex; flex-wrap:wrap; background:var(--mid); }
-        .floor-tab{ flex:1 1 50%; font-family:var(--sans); font-size:11.5px; font-weight:400; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.55); background:transparent; border:none; cursor:pointer; padding:14px 6px; transition:color .25s, background .25s; }
-        .floor-tab:hover{ color:var(--warm-white); }
-        .floor-tab.active{ color:var(--warm-white); background:rgba(255,255,255,.08); }
-
-        /* Filtro por categoría con botones */
-        .cat-filters{ display:flex; flex-wrap:wrap; gap:7px; padding:14px 16px 4px; }
-        .cat-fbtn{ font-family:var(--sans); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--mid); background:var(--smoke); border:1px solid transparent; padding:8px 13px; cursor:pointer; transition:background .2s, color .2s, border-color .2s; }
-        .cat-fbtn:hover{ border-color:var(--silver); }
-        .cat-fbtn.active{ background:var(--ink); color:var(--warm-white); border-color:var(--ink); }
-
-        .sidebar-filters{ padding:10px 16px 14px; border-bottom:1px solid var(--smoke); display:flex; flex-direction:column; gap:10px; }
-        .sidebar-filters select, .sidebar-search input{ width:100%; font-family:var(--sans); font-size:13px; color:var(--mid); background:var(--smoke); border:none; padding:13px 16px; outline:none; }
-        .sidebar-filters select{ letter-spacing:.1em; text-transform:uppercase; cursor:pointer; -webkit-appearance:none; appearance:none; }
-        .sidebar-search{ position:relative; }
-        .sidebar-search input{ padding-left:38px; }
-        .sidebar-search svg{ position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--grey); }
-
-        .store-list{ flex:1; overflow-y:auto; padding:4px 0 20px; }
-        .store-list::-webkit-scrollbar{ width:4px; } .store-list::-webkit-scrollbar-thumb{ background:var(--silver); }
-        .sl-group-label{ font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--grey); padding:18px 24px 8px; }
-        .store-item{ display:flex; align-items:center; gap:14px; padding:12px 24px; cursor:pointer; border-bottom:1px solid var(--smoke); background:transparent; transition:background .2s, padding-left .2s; position:relative; }
-        .store-item::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--grey); transition:width .2s; }
-        .store-item:hover, .store-item.active{ background:rgba(133,127,120,.10); padding-left:30px; }
-        .store-item:hover::before, .store-item.active::before{ width:4px; }
-        .store-num{ font-family:var(--serif); font-style:italic; font-size:15px; color:var(--grey); min-width:26px; }
-        .store-item.unassigned .store-num{ color:var(--silver); }
-        .store-name{ font-family:var(--serif); font-size:17px; font-weight:300; color:var(--ink); line-height:1.15; }
-        .store-cat{ font-family:var(--sans); font-size:11px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:var(--grey); margin-top:2px; }
-        .store-item.unassigned .store-name{ color:var(--grey); font-style:italic; }
-
         /* Canvas */
         .map-canvas{ flex:1; position:relative; background:#fbfaf8; overflow:hidden; }
         #map-stage{ position:absolute; inset:0; overflow:hidden; cursor:grab; touch-action:none; }
@@ -170,12 +133,6 @@
         @media(max-width:880px){
             *,*::before,*::after{ cursor:auto !important; }
             a,button,input,select{ cursor:pointer !important; }
-            .map-wrapper{ flex-direction:column; }
-            /* En móvil el MAPA va primero (con su selector de piso visible); la lista, debajo. */
-            .map-canvas{ order:1; }
-            .map-sidebar{ order:2; width:100%; border-right:none; border-top:1px solid var(--smoke); max-height:52vh; }
-            .floor-tabs{ position:sticky; top:0; z-index:5; }
-            .store-list{ max-height:none; }
             .map-canvas{ height:60vh; min-height:360px; }
             .floor-svg{ inset:10px; }
             nav.main-nav, .nav-links{ display:none; }
@@ -218,10 +175,6 @@
         </div>
     <main id="main-content">
     <div class="map-wrapper">
-        <aside class="map-sidebar">
-            <div class="store-list" id="store-list"></div>
-        </aside>
-
         <div class="map-canvas">
             <div class="map-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Arrastra para mover · rueda para acercar · clic en un local</div>
             <div class="floor-switch" id="floor-switch" role="tablist" aria-label="Selecciona el nivel de la plaza">
@@ -1404,50 +1357,13 @@
             document.getElementById('pi-action').innerHTML = '';
         }
         info.classList.add('show');
-        // sync sidebar
-        document.querySelectorAll('.store-item.active').forEach(i=>i.classList.remove('active'));
-        const si = document.querySelector('.store-item[data-floor="'+floor+'"][data-local="'+local+'"]');
-        if (si){ si.classList.add('active'); si.scrollIntoView({block:'nearest', behavior:'smooth'}); }
     }
     function clearSelection(){
         document.querySelectorAll('.store-zone.is-active').forEach(z=>z.classList.remove('is-active'));
-        document.querySelectorAll('.store-item.active').forEach(i=>i.classList.remove('active'));
         info.classList.remove('show'); selectedZone=null;
     }
     document.getElementById('map-stage').addEventListener('click', e=>{ if(justDragged) return; if(e.target.id==='map-stage'||e.target.id==='map-pan'||e.target.tagName==='svg') clearSelection(); });
 
-    // ---------- listado por PISO (estilo oficial: "local. NOMBRE") ----------
-    function buildList(){
-        const wrap = document.getElementById('store-list');
-        const _se = document.getElementById('store-search');
-        const q = ((_se && _se.value)||'').trim().toLowerCase();
-        let html = '';
-        // Todos los niveles, uno tras otro (sin tabs). Solo tiendas reales, alfabético por nombre.
-        FLOOR_ORDER.forEach(floor => {
-            const codes = [...new Set(FLOOR_META[floor].locals.map(String))];
-            const items = codes
-                .filter(c => storeFor(floor, c))
-                .map(c => ({ code:c, st:storeFor(floor, c) }))
-                .sort((a,b) => a.st.name.localeCompare(b.st.name,'es',{sensitivity:'base'}));
-            let rows = '';
-            items.forEach(({code, st}) => {
-                const name = st.name;
-                if (q && !(name.toLowerCase().includes(q) || (''+code).toLowerCase().includes(q))) return;
-                rows += '<div class="store-item" data-floor="'+floor+'" data-local="'+code+'">'
-                     + '<span class="store-num">'+code+'</span><div class="store-name">'+name+'</div></div>';
-            });
-            if (rows) html += '<div class="sl-group-label">'+FLOOR_LABELS[floor]+'</div>' + rows;
-        });
-        if (!html) html = '<div class="sl-group-label">Sin resultados</div>';
-        wrap.innerHTML = html;
-        wrap.querySelectorAll('.store-item').forEach(el => {
-            const f=el.getAttribute('data-floor'), l=el.getAttribute('data-local');
-            el.addEventListener('click', ()=>selectZone(f,l));
-            el.addEventListener('mouseenter', ()=>{ const z=document.querySelector('#floor-'+f+' .store-zone[data-local="'+l+'"]'); if(z) z.classList.add('is-active'); });
-            el.addEventListener('mouseleave', ()=>{ if(!selectedZone||selectedZone.local!=l){ const z=document.querySelector('#floor-'+f+' .store-zone[data-local="'+l+'"]'); if(z) z.classList.remove('is-active'); } });
-        });
-    }
-    function onSearch(){ buildList(); }
     function applyCatTint(){
         document.querySelectorAll('.store-zone').forEach(z=>{ z.classList.remove('cat-on','cat-dim'); });
         if(!activeCat) return;
@@ -1602,7 +1518,6 @@
     // deep link: ?floor=primer&local=33  O  ?store=Nombre (desde "Ver en el plano" del directorio)
     (function init(){
         buildFloorSwitch();
-        buildList();
         resetView();
         const p = new URLSearchParams(location.search);
         const f = p.get('floor'), l = p.get('local'), storeName = p.get('store');

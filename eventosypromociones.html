@@ -31,6 +31,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/carso.css?v=20260603g">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <style>
         /* Tab bar */
         .tab-bar {
@@ -132,10 +133,65 @@
             margin: 0 auto;
         }
 
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
+        /* Carrusel infinito (Swiper) — no depende de saber cuántos eventos habrá */
+        .e-swiper {
+            position: relative;
+            padding: 0 4px 54px;
+        }
+
+        .e-swiper .swiper-slide {
+            height: auto;
+        }
+
+        .e-swiper .swiper-pagination {
+            position: static;
+            margin-top: 22px;
+        }
+
+        .e-swiper .swiper-pagination-bullet {
+            background: var(--grey);
+            opacity: .35;
+        }
+
+        .e-swiper .swiper-pagination-bullet-active {
+            background: var(--ink);
+            opacity: 1;
+        }
+
+        .e-nav {
+            position: absolute;
+            top: calc(50% - 27px);
+            z-index: 20;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--warm-white);
+            border: 1px solid var(--smoke);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink);
+            transition: background .2s;
+        }
+
+        .e-nav:hover {
+            background: var(--smoke);
+        }
+
+        .e-nav.e-prev {
+            left: -6px;
+        }
+
+        .e-nav.e-next {
+            right: -6px;
+        }
+
+        @media(max-width:640px) {
+            .e-nav {
+                display: none;
+            }
         }
 
         /* Card sizes */
@@ -391,61 +447,82 @@
             display: flex;
         }
 
+        /* Detalle al dar clic: panel dividido imagen/texto, igual que promociones.html de Plaza Universidad */
         .lb-figure {
             margin: 0;
-            max-width: 92vw;
-            max-height: 90vh;
+            max-width: 960px;
+            width: 100%;
+            max-height: 88vh;
+            background: var(--warm-white);
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6);
+        }
+
+        @media (min-width: 768px) {
+            .lb-figure { flex-direction: row; max-height: 80vh; }
+        }
+
+        .lb-img-wrap {
+            flex: 0 0 50%;
+            background: var(--smoke);
+            display: flex;
             align-items: center;
-            gap: 0;
+            justify-content: center;
+            min-height: 240px;
+            padding: 16px;
         }
 
         #lb-img {
-            max-width: 92vw;
-            max-height: 76vh;
+            max-width: 100%;
+            max-height: 60vh;
             width: auto;
             height: auto;
             object-fit: contain;
             display: block;
-            background: #111;
-            box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8);
+        }
+
+        @media (min-width: 768px) {
+            #lb-img { max-height: 76vh; }
         }
 
         .lb-cap {
-            background: var(--warm-white);
-            width: 100%;
-            padding: 18px 24px;
-            text-align: center;
+            flex: 0 0 50%;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .lb-tag {
             font-family: var(--sans);
             font-size: 11px;
             font-weight: 500;
-            letter-spacing: .35em;
+            letter-spacing: .32em;
             text-transform: uppercase;
-            color: var(--grey);
+            color: var(--accent);
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 14px;
         }
 
         .lb-title {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(22px, 3vw, 32px);
+            font-size: clamp(26px, 3vw, 38px);
             font-weight: 300;
             color: var(--ink);
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 16px;
+            line-height: 1.15;
         }
 
         .lb-desc {
             font-family: var(--sans);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 300;
             color: var(--grey);
-            line-height: 1.7;
+            line-height: 1.8;
             display: block;
         }
 
@@ -469,12 +546,6 @@
 
         .lb-close:hover {
             background: rgba(255, 255, 255, .28);
-        }
-
-        @media(max-width:1024px) {
-            .editorial-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media(max-width:768px) {
@@ -501,10 +572,6 @@
             .t-btn {
                 min-height: 44px;
                 padding: 14px 14px;
-            }
-
-            .editorial-grid {
-                grid-template-columns: 1fr;
             }
 
             .e-card img {
@@ -608,7 +675,19 @@
     <section class="nov-section">
         <div class="nov-section-inner">
             <!-- INTEGRATION: <?php echo publicaciones($CentroComercial); ?> genera .e-card con class="publicidad" -->
-            <div class="editorial-grid" id="editGrid"><a class="e-card" data-tab="eventos" onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','publicaciones/pub14.jpg',event)"><img src="publicaciones/pub14.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Primavera en el Roof Garden</div></div></a><a class="e-card" data-tab="eventos" onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','publicaciones/pub15.jpg',event)"><img src="publicaciones/pub15.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Arte y cultura, todo el año</div></div></a><a class="e-card" data-tab="promociones" onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','publicaciones/pub16.jpg',event)"><img src="publicaciones/pub16.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Rebajas 2026</div></div></a><a class="e-card" data-tab="eventos" onclick="openPub('Fashion Show Primavera','Moda','Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.','publicaciones/pub17.jpg',event)"><img src="publicaciones/pub17.jpg" alt="Desfile de moda Fashion Show en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Fashion Show · Primavera</div></div></a><a class="e-card" data-tab="promociones" onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','publicaciones/pub18.jpg',event)"><img src="publicaciones/pub18.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Gourmet Weekend</div></div></a><a class="e-card" data-tab="eventos" onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','publicaciones/pub19.jpg',event)"><img src="publicaciones/pub19.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Bienvenidas al Directorio</div></div></a></div>
+            <div class="e-swiper swiper" id="eSwiper">
+                <div class="swiper-wrapper" id="editGrid">
+                    <div class="swiper-slide"><a class="e-card" data-tab="eventos" onclick="openPub('Primavera en el Roof Garden','Temporada','El Roof Garden inaugura la temporada de primavera con música en vivo, gastronomía de autor y la silueta del Museo Soumaya como telón de fondo.','publicaciones/pub14.jpg',event)"><img src="publicaciones/pub14.jpg" alt="Primavera en el Roof Garden de Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Primavera en el Roof Garden</div></div></a></div>
+                    <div class="swiper-slide"><a class="e-card" data-tab="eventos" onclick="openPub('Arte y cultura, todo el año','Cultura','Exploración de arte contemporáneo en los espacios interiores de Plaza Carso. Una experiencia donde la arquitectura y el arte dialogan.','publicaciones/pub15.jpg',event)"><img src="publicaciones/pub15.jpg" alt="Arte y cultura en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Arte y cultura, todo el año</div></div></a></div>
+                    <div class="swiper-slide"><a class="e-card" data-tab="promociones" onclick="openPub('Rebajas 2026','Temporada','Las marcas del directorio con descuentos de temporada. Hasta 40% en tiendas seleccionadas, por tiempo limitado.','publicaciones/pub16.jpg',event)"><img src="publicaciones/pub16.jpg" alt="Temporada de rebajas en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Rebajas 2026</div></div></a></div>
+                    <div class="swiper-slide"><a class="e-card" data-tab="eventos" onclick="openPub('Fashion Show Primavera','Moda','Desfile de las nuevas colecciones de temporada en los pasillos de Plaza Carso. Chefs, diseñadores y artistas en un único evento.','publicaciones/pub17.jpg',event)"><img src="publicaciones/pub17.jpg" alt="Desfile de moda Fashion Show en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Fashion Show · Primavera</div></div></a></div>
+                    <div class="swiper-slide"><a class="e-card" data-tab="promociones" onclick="openPub('Gourmet Weekend','Gastronomía','Un fin de semana dedicado a la gastronomía. Chefs invitados, maridajes y degustaciones en el Roof Garden.','publicaciones/pub18.jpg',event)"><img src="publicaciones/pub18.jpg" alt="Festival gastronomico Gourmet Weekend en Plaza Carso" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Gourmet Weekend</div></div></a></div>
+                    <div class="swiper-slide"><a class="e-card" data-tab="eventos" onclick="openPub('Nuevas Aperturas','Novedad','Nuevas marcas llegan a Plaza Carso. Descubre las tiendas que se suman al directorio esta temporada.','publicaciones/pub19.jpg',event)"><img src="publicaciones/pub19.jpg" alt="Nuevas aperturas de tiendas en Plaza Carso Polanco" loading="lazy"><div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">Bienvenidas al Directorio</div></div></a></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="e-nav e-prev" id="ePrev" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
+                <div class="e-nav e-next" id="eNext" aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+            </div>
         </div>
     </section>
 
@@ -618,8 +697,9 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
         </button>
         <figure class="lb-figure" onclick="event.stopPropagation()">
-            <img id="lb-img" src="" alt="">
+            <div class="lb-img-wrap"><img id="lb-img" src="" alt=""></div>
             <figcaption class="lb-cap">
+                <span class="lb-tag" id="lb-tag"></span>
                 <span class="lb-title" id="lb-title"></span>
                 <span class="lb-desc" id="lb-desc"></span>
             </figcaption>
@@ -662,6 +742,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="Scripts/main.js"></script>
     <script>
         window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('s', window.scrollY > 50), {passive:true});
@@ -669,12 +750,28 @@
         // (Categorías Eventos/Promociones removidas a petición del cliente — jul 2026: todas las publicaciones se muestran juntas)
         document.querySelectorAll('.e-card').forEach((c, i) => { c.style.animationDelay = (i * 70) + 'ms'; c.classList.add('is-in'); });
 
+        // Carrusel infinito de eventos y promociones: no depende de cuántas tarjetas haya
+        new Swiper('#eSwiper', {
+            loop: true,
+            slidesPerView: 1.08,
+            spaceBetween: 3,
+            autoplay: { delay: 4500, disableOnInteraction: false },
+            pagination: { el: '.e-swiper .swiper-pagination', clickable: true },
+            navigation: { nextEl: '#eNext', prevEl: '#ePrev' },
+            breakpoints: {
+                640: { slidesPerView: 1.6 },
+                900: { slidesPerView: 2.3 },
+                1200: { slidesPerView: 3 }
+            }
+        });
+
         // Lightbox: abre la imagen COMPLETA del evento/promoción
         function openPub(title, tag, desc, img, e) {
             if (e) e.preventDefault();
             const lb = document.getElementById('img-lightbox');
             const im = document.getElementById('lb-img');
             im.src = img; im.alt = title;
+            document.getElementById('lb-tag').textContent = tag || '';
             document.getElementById('lb-title').textContent = title || '';
             document.getElementById('lb-desc').textContent = desc || '';
             lb.classList.add('open');

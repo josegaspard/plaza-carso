@@ -1241,6 +1241,7 @@
             soc.style.display = 'flex';
             // Carrusel de la imagen izquierda (administrable: s.imgs = [..]; si no hay, usa la principal)
             _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
+            _galImgs = _padImgs(_galImgs); // clona la portada si hay pocas fotos → carrusel siempre visible
             _mainIdx = 0;
             _curName = s.name;
             document.getElementById('smod-plano').href = 'mapa.html?store=' + encodeURIComponent(s.name);
@@ -1279,6 +1280,15 @@
         function mainNext(e) { if (e) e.stopPropagation(); if (_galImgs.length < 2) return; _mainIdx = (_mainIdx + 1) % _galImgs.length; _renderMain(); }
         function mainPrev(e) { if (e) e.stopPropagation(); if (_galImgs.length < 2) return; _mainIdx = (_mainIdx - 1 + _galImgs.length) % _galImgs.length; _renderMain(); }
         function setMain(i, e) { if (e) e.stopPropagation(); if (i < 0 || i >= _galImgs.length) return; _mainIdx = i; _renderMain(); }
+
+        // Mínimo de slides: si la tienda tiene menos fotos, se CLONA la portada para que el carrusel se vea siempre.
+        var _MIN_SLIDES = 3;
+        function _padImgs(arr) {
+            if (!arr.length) return arr;
+            var out = arr.slice(), i = 0;
+            while (out.length < _MIN_SLIDES) { out.push(arr[i % arr.length]); i++; }
+            return out;
+        }
 
         // Tira de miniaturas (carrusel visible): portada #1 + fotos #2, #3…
         function _renderThumbs() {

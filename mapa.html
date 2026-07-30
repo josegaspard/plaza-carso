@@ -1343,7 +1343,7 @@
         const zr = zoneEl.getBoundingClientRect();
         const zx = zr.left + zr.width / 2 - r.left;
         const zy = zr.top + zr.height / 2 - r.top;
-        const target = 2.4;
+        const target = 2.0;
         tx = r.width / 2 - target * zx;
         ty = r.height / 2 - target * zy;
         scale = target;
@@ -1377,19 +1377,31 @@
         info.classList.add('show');
         if (focus && zoneEl) focusZone(floor, local, zoneEl);
     }
+    // Adivina el nivel por el texto "loc" de la tienda cuando su zona no está vectorizada,
+    // para al menos dejar el mapa en el piso correcto en vez del piso por defecto.
+    function guessFloorFromLoc(locText){
+        if (!locText) return null;
+        if (locText.indexOf('Roof Garden') !== -1) return 'segundo';
+        if (locText.indexOf('Segundo Nivel') !== -1) return 'segundo';
+        if (locText.indexOf('Primer Nivel') !== -1) return 'primer';
+        if (locText.indexOf('Planta Baja') !== -1) return 'planta_baja';
+        return null;
+    }
     // La tienda existe en el directorio pero el plano SVG aún no tiene su zona dibujada
     // (locales nuevos / ampliación aún no vectorizada) — se avisa en vez de fallar en silencio.
     function showUnmappedStore(name){
         document.querySelectorAll('.store-zone.is-active').forEach(z=>z.classList.remove('is-active'));
         selectedZone = null;
         const st = STORES_BY_NAME[name];
+        const guessedFloor = guessFloorFromLoc(st && st.loc);
+        if (guessedFloor && guessedFloor !== activeFloor) switchFloor(guessedFloor);
         const imgEl = document.getElementById('pi-img');
         document.getElementById('pi-local').textContent = '';
         document.getElementById('pi-cat').textContent = '';
         document.getElementById('pi-name').textContent = (st && st.name) || name;
         if (st && st.img){ imgEl.src = st.img; imgEl.alt = st.name; imgEl.style.display = 'block'; }
         else { imgEl.removeAttribute('src'); imgEl.style.display = 'none'; }
-        document.getElementById('pi-meta').innerHTML = '<span class="pi-empty">Esta tienda todavía no tiene su ubicación marcada en el plano interactivo.</span>';
+        document.getElementById('pi-meta').innerHTML = '<span class="pi-empty">Esta tienda todavía no tiene su ubicación exacta marcada en el plano interactivo'+(guessedFloor ? ' de este nivel' : '')+'.</span>';
         document.getElementById('pi-action').innerHTML = '<a class="pi-btn" href="directorio.html?store='+encodeURIComponent((st && st.name) || name)+'">Ver en directorio <i class="fa-solid fa-arrow-right"></i></a>';
         info.classList.add('show');
     }

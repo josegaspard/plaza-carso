@@ -82,6 +82,51 @@
             font-weight: 500;
         }
 
+
+        /* ── Filtros de directorio (categoría · subcategoría · nivel · zona · abierto) ── */
+        .filter-sel {
+            display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center;
+            gap: 10px 18px; padding: 0 0 16px;
+        }
+        .fs-item { display: flex; flex-direction: column; gap: 5px; }
+        .fs-item > span {
+            font-family: var(--sans); font-size: 9.5px; letter-spacing: .2em;
+            text-transform: uppercase; color: var(--grey);
+        }
+        .fs-item select {
+            font-family: var(--sans); font-size: 12.5px; color: var(--ink);
+            background: transparent; border: none; border-bottom: 1px solid var(--smoke);
+            padding: 5px 22px 5px 2px; min-width: 150px; max-width: 230px; cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 4px center; background-size: 9px;
+        }
+        .fs-item select:focus { outline: none; border-bottom-color: var(--ink); }
+        .fs-open, .fs-clear {
+            font-family: var(--sans); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+            background: none; cursor: pointer; padding: 7px 14px; transition: all .2s;
+        }
+        .fs-open { border: 1px solid var(--smoke); color: var(--grey); border-radius: 999px; }
+        .fs-open.on { border-color: var(--ink); color: var(--warm-white); background: var(--ink); }
+        .fs-clear { border: none; color: var(--grey); text-decoration: underline; text-underline-offset: 3px; }
+        .fs-clear:hover { color: var(--ink); }
+        .fs-item.off, .fs-open.off { display: none; }
+        @media (max-width: 720px) {
+            .filter-sel { gap: 8px 12px; padding-bottom: 14px; }
+            .fs-item select { min-width: 132px; max-width: 46vw; font-size: 12px; }
+        }
+        /* ── Acciones de la ficha ── */
+        .smod-acts { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+        .smod-acts a {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-family: var(--sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+            color: var(--ink); border: 1px solid var(--smoke); border-radius: 999px;
+            padding: 9px 15px; text-decoration: none; transition: all .2s; white-space: nowrap;
+        }
+        .smod-acts a:hover { border-color: var(--ink); background: var(--ink); color: var(--warm-white); }
+        .smod-acts a.wa:hover { border-color: #25d366; background: #25d366; color: #fff; }
+        @media (max-width: 620px) { .smod-acts a { font-size: 10px; padding: 8px 12px; } }
+
         /* Categorías padre con subdivisiones (dropdown al hover/tap) */
         .dir-cat { position: relative; flex-shrink: 0; }
         .dir-parent::after { content: '\25BE'; margin-left: 7px; font-size: 9px; opacity: .5; transition: opacity .2s; }
@@ -978,49 +1023,25 @@
 
     <div class="filter-bar">
         <div class="filter-inner" id="fi">
-            <button id="btnTodos" class="f-btn active" onclick="filt('Todos',this)">Todos</button>
-            <button class="f-btn" onclick="filt('Entretenimiento',this)">Entretenimiento</button>
-            <div class="dir-cat">
-                <button class="f-btn dir-parent" onclick="filt('Gastronomía',this)">Gastronomía</button>
-                <div class="dir-drop">
-                    <button class="dir-sub" onclick="filt('Cafeterías',this)">Cafeterías</button>
-                    <button class="dir-sub" onclick="filt('Fast food',this)">Fast food</button>
-                    <button class="dir-sub" onclick="filt('Restaurantes',this)">Restaurantes</button>
-                    <button class="dir-sub" onclick="filt('Snacks',this)">Snacks</button>
-                </div>
-            </div>
-            <div class="dir-cat">
-                <button class="f-btn dir-parent" onclick="filt('Retail / Tiendas',this)">Retail / Tiendas</button>
-                <div class="dir-drop">
-                    <button class="dir-sub" onclick="filt('Beauty &amp; wellness',this)">Beauty &amp; wellness</button>
-                    <button class="dir-sub" onclick="filt('Casa',this)">Casa</button>
-                    <button class="dir-sub" onclick="filt('Departamentales',this)">Departamentales</button>
-                    <button class="dir-sub" onclick="filt('Joyería',this)">Joyería</button>
-                    <button class="dir-sub" onclick="filt('Moda y estilo',this)">Moda y estilo</button>
-                    <button class="dir-sub" onclick="filt('Vinos y licores',this)">Vinos y licores</button>
-                </div>
-            </div>
-            <div class="dir-cat">
-                <button class="f-btn dir-parent" onclick="filt('Servicios',this)">Servicios</button>
-                <div class="dir-drop">
-                    <button class="dir-sub" onclick="filt('Bancos',this)">Bancos</button>
-                    <button class="dir-sub" onclick="filt('Fitness',this)">Fitness</button>
-                </div>
-            </div>
-            <div class="dir-cat">
-                <button class="f-btn dir-parent" onclick="filt('Telefonía y Tecnología',this)">Telefonía y Tecnología</button>
-                <div class="dir-drop">
-                    <button class="dir-sub" onclick="filt('Automotriz',this)">Automotriz</button>
-                    <button class="dir-sub" onclick="filt('Tecnología',this)">Tecnología</button>
-                    <button class="dir-sub" onclick="filt('Telefonía',this)">Telefonía</button>
-                </div>
-            </div>
+            <button id="btnTodos" class="f-btn active" onclick="filtFam('Todos',this)">Todos</button>
             <div class="search-wrap">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input id="search-in" type="text" placeholder="Buscar..." oninput="doSearch(this.value)">
+            </div>
+            <div class="filter-sel" id="filterSel">
+                <label class="fs-item" id="fsCatWrap"><span>Categoría</span>
+                    <select id="fsCat" onchange="filtSel()"></select></label>
+                <label class="fs-item" id="fsSubWrap"><span>Subcategoría</span>
+                    <select id="fsSub" onchange="filtSel()"></select></label>
+                <label class="fs-item" id="fsNivWrap"><span>Nivel</span>
+                    <select id="fsNiv" onchange="filtSel()"></select></label>
+                <label class="fs-item" id="fsZonWrap"><span>Zona</span>
+                    <select id="fsZon" onchange="filtSel()"></select></label>
+                <button type="button" class="fs-open" id="fsOpen" onclick="filtOpen(this)">Abierto ahora</button>
+                <button type="button" class="fs-clear" id="fsClear" onclick="filtReset()">Limpiar</button>
             </div>
         </div>
     </div>
@@ -1060,6 +1081,7 @@
                     <div class="smod-meta-item" id="smod-tel-row"><span>Teléfono</span><span><a id="smod-tel" href="tel:5511037300">55 1103 7300</a></span></div>
                 </div>
                 <div class="smod-socials" id="smod-socials" style="display:none;"></div>
+                <div class="smod-acts" id="smod-acts"></div>
                 <a class="smod-plano-btn" id="smod-plano" href="#">Ver en el plano <i class="fa-solid fa-arrow-right"></i></a>
                 <!-- CARRUSEL de fotos del local (DEBAJO de "Ver en el plano") -->
                 <div class="smod-thumbs-wrap" id="smod-thumbs-wrap" style="display:none;">
@@ -1141,33 +1163,133 @@
         // El modal muestra automáticamente sólo los datos que existan.
         const STORES = [{"name": "54D", "cat": "Fitness", "img": "images/Locatarios/91/1.jpg", "logo": "images/logos/brands/54d.webp", "num": 91, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/54d.mx/", "fb": "https://www.facebook.com/the54d/", "web": "https://54d.com", "imgs": ["images/Locatarios/91/1.jpg"]}, {"name": "Academia Europea", "cat": "Servicios", "logoBig": true, "img": "images/Locatarios/89/1.jpg", "logo": "images/logos/brands/academia-europea.webp?v=2", "num": 89, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/academiaeuropea.mexico/", "fb": "https://www.facebook.com/AcademiaEuropeaMexico/", "web": "https://academiaeuropea.com/mexico/", "imgs": ["images/Locatarios/89/1.jpg"]}, {"name": "Acuario Interactivo", "cat": "Entretenimiento", "img": "images/Locatarios/41/1.jpg", "logo": "images/logos/brands/acuario-interactivo.webp", "num": 41, "desc": "Aquadoc Interactivo: experiencia inmersiva con vida marina y túnel acuático para toda la familia.", "loc": "Primer Nivel", "time": "11:00–20:00", "ig": "https://www.instagram.com/acuariolnbursa/", "fb": "https://www.facebook.com/acuarioinbursa/", "web": "https://www.acuarioinbursa.com.mx", "imgs": ["images/Locatarios/41/1.jpg"]}, {"name": "Applebee's", "cat": "Restaurantes", "img": "images/Locatarios/6/1.jpg", "logo": "images/logos/brands/applebees.webp", "num": 6, "desc": "Cocina americana relajada para compartir. Pastas, costillas y hamburguesas en un ambiente casual.", "loc": "Roof Garden", "time": "12:00–23:00", "ig": "https://www.instagram.com/applebeesmxoficial/", "fb": "https://www.facebook.com/applebeesmexico/", "web": "https://applebees.com.mx", "imgs": ["images/Locatarios/6/1.jpg"]}, {"name": "Asadero Beef", "cat": "Restaurantes", "img": "images/Locatarios/36/1.jpg", "logo": "images/logos/brands/asadero.webp", "num": 36, "desc": "", "loc": "Primer y Segundo Nivel", "time": "", "fb": "https://www.facebook.com/p/Asadero-beef-y-Taco-Beef-100063713434969/", "web": "https://www.restaurantesbeef.com", "imgs": ["images/Locatarios/36/1.jpg"]}, {"name": "Asaderos Grill", "cat": "Restaurantes", "img": "images/Locatarios/19/1.jpg", "logo": "images/logos/brands/asaderos-grill.webp", "num": 19, "desc": "Cortes de carne a la parrilla con tradición norteña.", "loc": "Segundo Nivel", "time": "12:00–22:00", "ig": "https://www.instagram.com/asaderosgrillmx/", "fb": "https://www.facebook.com/AsaderosGrillmx/", "web": "https://www.asaderosgrill.com.mx", "imgs": ["images/Locatarios/19/1.jpg"]}, {"name": "Barber Street", "cat": "Beauty & wellness", "img": "images/Locatarios/79/1.jpg", "logo": "images/logos/brands/barber-street.webp", "num": 79, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/barberstreetmx/", "fb": "https://www.facebook.com/barberstreetmx/", "imgs": ["images/Locatarios/79/1.jpg"]}, {"name": "BestDay", "cat": "Servicios", "img": "images/Locatarios/67/1.jpg", "logo": "images/logos/brands/bestday.webp", "num": 67, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/bestday_travel/", "fb": "https://www.facebook.com/BestDay.Com.Mx/", "web": "https://www.bestday.com.mx", "imgs": ["images/Locatarios/67/1.jpg"]}, {"name": "Biscotto", "cat": "Restaurantes", "img": "images/Locatarios/84/1.jpg", "logo": "images/logos/brands/biscotto.webp", "num": 84, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/biscottocarsomx/", "fb": "https://www.facebook.com/BiscottoCarsoMX/", "imgs": ["images/Locatarios/84/1.jpg"]}, {"name": "Burger King", "cat": "Fast food", "img": "images/Locatarios/20/1.jpg", "logo": "images/logos/brands/burger-king.webp", "num": 20, "desc": "", "loc": "Segundo Nivel", "time": "", "ig": "https://www.instagram.com/burgerkingmx/", "fb": "https://www.facebook.com/burgerkingmexico/", "web": "https://www.burgerking.com.mx", "imgs": ["images/Locatarios/20/1.jpg"]}, {"name": "BYD", "cat": "Automotriz", "img": "images/Locatarios/96/1.jpg", "logo": "images/logos/brands/byd.webp", "num": 96, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/bydautomexico/", "fb": "https://www.facebook.com/BYDAutoMex/", "web": "https://www.byd.com/mx", "imgs": ["images/Locatarios/96/1.jpg"]}, {"name": "Caballo Bayo", "cat": "Restaurantes", "img": "images/Locatarios/4/1.jpg", "logo": "images/logos/brands/caballo-bayo.webp", "num": 4, "desc": "", "loc": "Roof Garden", "time": "", "ig": "https://www.instagram.com/caballobayo_/", "fb": "https://www.facebook.com/MesonDelCaballoBayo/", "web": "https://www.caballobayo.com", "imgs": ["images/Locatarios/4/1.jpg"]}, {"name": "Carolo", "cat": "Restaurantes", "img": "images/Locatarios/5/1.jpg", "logo": "images/logos/brands/carolo.webp", "num": 5, "desc": "Restaurante italiano de inspiración contemporánea. Pastas, pizzas al horno y carta de vinos.", "loc": "Roof Garden", "time": "13:00–23:00", "ig": "https://www.instagram.com/carolo.mx/", "fb": "https://www.facebook.com/CaroloMx/", "web": "https://www.grupocarolo.com.mx", "imgs": ["images/Locatarios/5/1.jpg"]}, {"name": "Chilim Balam", "cat": "Snacks", "img": "images/Locatarios/37/1.jpg", "logo": "images/logos/brands/chilim-balam.webp", "num": 37, "desc": "", "loc": "Planta Baja y Planta Carso II", "time": "", "ig": "https://www.instagram.com/soychilimbalam/", "fb": "https://www.facebook.com/SoyChilimBalam/", "web": "https://www.chilimbalam.mx", "imgs": ["images/Locatarios/37/1.jpg", "images/Locatarios/37/2.jpg"]}, {"name": "Cinépolis", "cat": "Entretenimiento", "img": "images/Locatarios/53/1.jpg", "logo": "images/logos/brands/cinepolis.webp", "num": 53, "desc": "Experiencia cinematográfica de primer nivel con salas VIP y formato premium.", "loc": "Primer Nivel", "time": "11:00–23:00", "ig": "https://www.instagram.com/cinepolismx/", "fb": "https://www.facebook.com/cinepolisonline/", "web": "https://cinepolis.com", "imgs": ["images/Locatarios/53/1.jpg"]}, {"name": "City Café", "cat": "Cafeterías", "img": "images/Locatarios/9/1.jpg", "logo": "images/logos/brands/city-cafe.webp", "num": 9, "desc": "Comida saludable, jugos prensados, desayunos y café de especialidad.", "loc": "Segundo Nivel", "time": "07:30–22:00", "ig": "https://www.instagram.com/citycafenatural/", "fb": "https://www.facebook.com/CityCafeNatural/", "web": "https://www.citycafe.mx", "imgs": ["images/Locatarios/9/1.jpg"]}, {"name": "City Market", "cat": "Departamentales", "img": "images/Locatarios/97/1.jpg", "logo": "images/logos/brands/city-market.webp", "num": 97, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/citymarketmx/", "fb": "https://www.facebook.com/citymarketoficial/", "web": "https://www.citymarket.com.mx", "imgs": ["images/Locatarios/97/1.jpg"]}, {"name": "Coffee Tree", "cat": "Cafeterías", "img": "images/Locatarios/12/1.jpg", "logo": "images/logos/brands/coffee-tree.webp", "num": 12, "desc": "", "loc": "Segundo Nivel", "time": "", "imgs": ["images/Locatarios/12/1.jpg"]}, {"name": "Cosecha Sana", "cat": "Fast food", "img": "images/Locatarios/31/1.jpg", "logo": "images/logos/brands/cosecha-sana.webp", "num": 31, "desc": "", "loc": "Segundo Nivel", "time": "", "imgs": ["images/Locatarios/31/1.jpg"]}, {"name": "DAX", "cat": "Beauty & wellness", "img": "images/Locatarios/61/1.jpg", "logo": "images/logos/brands/dax.webp", "num": 61, "desc": "Perfumería, cosméticos y dermocosmética. Marcas internacionales y servicio de asesoría.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/dax_mexico/", "fb": "https://www.facebook.com/dax.bellezaymas/", "web": "https://www.dax.com.mx", "imgs": ["images/Locatarios/61/1.jpg"]}, {"name": "Daylight Salads", "cat": "Fast food", "img": "images/Locatarios/28/1.jpg", "logo": "images/logos/brands/daylight-salads.webp", "num": 28, "desc": "", "loc": "Primer y Segundo Nivel", "time": "", "ig": "https://www.instagram.com/daylightsaladsoficial/", "fb": "https://www.facebook.com/DayLightSaladsMexico/", "web": "https://www.daylightsalads.com", "imgs": ["images/Locatarios/28/1.jpg"]}, {"name": "Dentalia", "cat": "Servicios", "img": "images/Locatarios/90/1.jpg", "logo": "images/logos/brands/dentalia.webp", "num": 90, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/dentalia_mx/", "fb": "https://www.facebook.com/dentalia.mx/", "web": "https://www.dentalia.com", "imgs": ["images/Locatarios/90/1.jpg"]}, {"name": "Dolphy", "cat": "Snacks", "img": "images/Locatarios/16/1.jpg", "logo": "images/logos/brands/dolphy.webp", "num": 16, "desc": "Heladería clásica. Helados artesanales, malteadas y postres helados para toda la familia.", "loc": "Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/dolphyoficial/", "fb": "https://www.facebook.com/dolphyoficial/", "web": "https://dolphy.com.mx", "imgs": ["images/Locatarios/16/1.jpg"]}, {"name": "Domino's Pizza", "cat": "Fast food", "img": "images/Locatarios/22/1.jpg", "logo": "images/logos/brands/dominos.webp", "num": 22, "desc": "La pizza favorita del mundo, lista en minutos. Para comer aquí o llevar.", "loc": "Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/dominosmexico/", "fb": "https://www.facebook.com/DominosMexico/", "web": "https://www.dominos.com.mx", "imgs": ["images/Locatarios/22/1.jpg"]}, {"name": "Dynasty", "cat": "Fast food", "img": "images/Locatarios/30/1.jpg", "logo": "images/logos/brands/dynasty.webp", "num": 30, "desc": "Legendary Chinese Food. Cocina cantonesa lista para llevar en el food court.", "loc": "Primer y Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/dynasty_mexico/", "fb": "https://www.facebook.com/DynastyLegendaryChineseeFood/", "web": "https://dynastychinesefood.com.mx", "imgs": ["images/Locatarios/30/1.jpg"]}, {"name": "Enrique Bricker", "cat": "Beauty & wellness", "img": "images/Locatarios/94/1.jpg", "logo": "images/logos/brands/enrique-bricker.webp", "num": 94, "desc": "", "loc": "Planta Carso II", "time": "", "web": "http://www.enriquebricker.com.mx", "imgs": ["images/Locatarios/94/1.jpg"]}, {"name": "FlyOver México", "cat": "Entretenimiento", "img": "images/Locatarios/54/1.jpg", "logo": "images/logos/brands/fly-over-mexico.webp", "num": 54, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/flyovermx/", "fb": "https://www.facebook.com/flyovermexico/", "web": "https://www.flyovermexico.com.mx", "imgs": ["images/Locatarios/54/1.jpg"]}, {"name": "Ford", "cat": "Automotriz", "img": "images/Locatarios/95/1.jpg", "logo": "images/logos/brands/ford.webp", "num": 95, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/fordmx/", "fb": "https://www.facebook.com/fordmx/", "web": "https://www.ford.mx", "imgs": ["images/Locatarios/95/1.jpg"]}, {"name": "Garmin", "cat": "Tecnología", "img": "images/Locatarios/58/1.jpg", "logo": "images/logos/brands/garmin.webp", "num": 58, "desc": "Tecnología wearable, GPS y relojes Fénix para deporte, golf, outdoor y aventura.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/garminmexico/", "fb": "https://www.facebook.com/GarminMexico/", "web": "https://www.garmin.com/es-MX/", "imgs": ["images/Locatarios/58/1.jpg"]}, {"name": "GoKart Manía", "cat": "Entretenimiento", "img": "images/Locatarios/92/1.jpg", "logo": "images/logos/brands/gokart-mania.webp", "num": 92, "desc": "", "loc": "Planta Carso II", "time": "", "ig": "https://www.instagram.com/gokartmania/", "fb": "https://www.facebook.com/gokartmaniaracing/", "web": "https://gokartmania.com.mx", "imgs": ["images/Locatarios/92/1.jpg"]}, {"name": "Hello Kitty Café", "cat": "Cafeterías", "img": "images/Locatarios/43/1.jpg", "logo": "images/logos/brands/hello-kitty-cafe.webp", "num": 43, "desc": "Café temático del universo Sanrio. Postres, malteadas y desayunos en un set de Instagram.", "loc": "Primer Nivel", "time": "11:00–21:00", "ig": "https://www.instagram.com/hellokittycafemx/", "fb": "https://www.facebook.com/HelloKittyCafeMx/", "web": "https://hellokitty.cafe", "imgs": ["images/Locatarios/43/1.jpg"]}, {"name": "Inbursa", "cat": "Bancos", "img": "images/Locatarios/55/1.jpg", "logo": "images/logos/brands/inbursa.webp", "num": 55, "desc": "Banco, Seguros y Casa de Bolsa Inbursa. Sucursal de servicios financieros.", "loc": "Planta Baja", "time": "09:00–17:00", "ig": "https://www.instagram.com/inbursa/", "fb": "https://www.facebook.com/InbursaGfi/", "web": "https://www.inbursa.com", "imgs": ["images/Locatarios/55/1.jpg"]}, {"name": "Inspark", "cat": "Entretenimiento", "img": "images/Locatarios/42/1.jpg", "logo": "images/logos/brands/inspark.webp", "num": 42, "desc": "", "loc": "Primer Nivel", "time": "", "ig": "https://www.instagram.com/insparkmx/", "fb": "https://www.facebook.com/insparkmx/", "web": "https://inspark.com.mx", "imgs": ["images/Locatarios/42/1.jpg"]}, {"name": "iShop", "cat": "Tecnología", "img": "images/Locatarios/70/1.jpg", "logo": "images/logos/brands/ishop.webp", "num": 70, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/ishop_mixup/", "fb": "https://www.facebook.com/iShopMixupMX/", "web": "https://www.ishopmixup.com", "imgs": ["images/Locatarios/70/1.jpg"]}, {"name": "Ivonne", "cat": "Moda y estilo", "img": "images/Locatarios/69/1.jpg", "logo": "images/logos/brands/ivonne.webp", "num": 69, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/ivonnefashion/", "fb": "https://www.facebook.com/IVONNEmx/", "web": "https://ivonne.com", "imgs": ["images/Locatarios/69/1.jpg"]}, {"name": "Izlah", "cat": "Cafeterías", "img": "images/Locatarios/85/1.jpg", "logo": "images/logos/brands/izlah.webp", "num": 85, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/izlahmx/", "fb": "https://www.facebook.com/IzlahMx/", "web": "https://izlah.mx", "imgs": ["images/Locatarios/85/1.jpg"]}, {"name": "Jimmy Joe Chicken & Grill", "cat": "Fast food", "img": "images/Locatarios/29/1.jpg", "logo": "images/logos/brands/jimmy-joe.webp", "num": 29, "desc": "Pollo a la parrilla y antojitos al carbón con opciones healthy.", "loc": "Primer y Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/jimmyjoemexico/", "fb": "https://www.facebook.com/jimmyjoemexico/", "web": "https://jimmyjoe.com.mx", "imgs": ["images/Locatarios/29/1.jpg"]}, {"name": "Julio", "cat": "Moda y estilo", "img": "images/Locatarios/46/1.jpg", "logo": "images/logos/brands/julio.webp", "num": 46, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/grupojulio/", "fb": "https://www.facebook.com/JULIOModa/", "web": "https://julio.com", "imgs": ["images/Locatarios/46/1.jpg"]}, {"name": "La Crêpe Parisienne", "cat": "Snacks", "img": "images/Locatarios/38/1.jpg", "logo": "images/logos/brands/la-crepe-parisienne.webp", "num": 38, "desc": "Crêpes dulces y salados al estilo francés. Una pausa parisina en Polanco.", "loc": "Primer y Segundo Nivel", "time": "08:00–22:00", "ig": "https://www.instagram.com/lacrepeparisienne/", "fb": "https://www.facebook.com/lacrepeparisienne/", "web": "https://www.lacrepeparisienne.com"}, {"name": "La Europea", "cat": "Vinos y licores", "img": "images/Locatarios/81/1.jpg", "logo": "images/logos/brands/la-europea.webp", "num": 81, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/laeuropeamexico/", "web": "https://laeuropea.com.mx", "imgs": ["images/Locatarios/81/1.jpg"]}, {"name": "La Imperial", "cat": "Restaurantes", "img": "images/Locatarios/17/1.jpg", "logo": "images/logos/brands/la-imperial.webp", "num": 17, "desc": "Cocina mexicana contemporánea en un comedor de inspiración clásica.", "loc": "Segundo Nivel", "time": "13:00–23:00", "ig": "https://www.instagram.com/laimperial/", "fb": "https://www.facebook.com/LaImperialCarso/", "web": "https://www.laimperialcantina.com", "imgs": ["images/Locatarios/17/1.jpg", "images/Locatarios/17/3.jpg", "images/Locatarios/17/4.jpg"]}, {"name": "La Raclette", "cat": "Restaurantes", "img": "images/Locatarios/3/1.jpg", "logo": "images/logos/brands/la-raclette.webp", "num": 3, "desc": "", "loc": "Segundo Nivel", "time": "", "ig": "https://www.instagram.com/raclettemx/", "fb": "https://www.facebook.com/laraclettemx/", "web": "https://www.raclette.com.mx", "imgs": ["images/Locatarios/3/1.jpg"]}, {"name": "Las Flautas", "cat": "Fast food", "img": "images/Locatarios/35/1.jpg", "logo": "images/logos/brands/las-flautas.webp", "num": 35, "desc": "", "loc": "Primer y Segundo Nivel", "time": "", "ig": "https://www.instagram.com/lasflautasmx/", "web": "https://www.las-flautas.com", "imgs": ["images/Locatarios/35/1.jpg"]}, {"name": "Le Macaron", "cat": "Snacks", "img": "images/Locatarios/14/1.jpg", "logo": "images/logos/brands/le-macaron.webp", "num": 14, "desc": "", "loc": "Planta Baja, Planta Alta y Planta Carso II", "time": "", "ig": "https://www.instagram.com/lemacaronboutique/", "fb": "https://www.facebook.com/LeMacaronBoutique/", "web": "https://lemacaron.mx", "imgs": ["images/Locatarios/14/1.jpg", "images/Locatarios/14/2.jpg"]}, {"name": "Loma Linda", "cat": "Restaurantes", "img": "images/Locatarios/2/1.jpg", "logo": "images/logos/brands/loma-linda.webp", "num": 2, "desc": "Steakhouse mexicano con más de un siglo de tradición. Cortes premium y carta clásica.", "loc": "Roof Garden", "time": "13:00–24:00", "ig": "https://www.instagram.com/restlomalinda/", "fb": "https://www.facebook.com/RestLomaLinda/", "web": "https://lomalinda.com.mx", "imgs": ["images/Locatarios/2/1.jpg"]}, {"name": "Lomas Studio", "cat": "Fitness", "img": "images/Locatarios/87/1.jpg", "logo": "images/logos/brands/lomas-studio.webp", "num": 87, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/lomasstudio/", "fb": "https://www.facebook.com/lomasstudio/", "web": "http://www.lomasstudio.com", "imgs": ["images/Locatarios/87/1.jpg"]}, {"name": "Masters", "cat": "Joyería", "logoBig": true, "img": "images/Locatarios/48/1.jpg", "logo": "images/logos/brands/masters.webp?v=2", "num": 48, "desc": "", "loc": "Primer Nivel", "time": "", "ig": "https://www.instagram.com/mastersjoyeros/", "fb": "https://www.facebook.com/mastersjoyeros.masters/", "web": "https://mastersjoyeros.com", "imgs": ["images/Locatarios/48/1.jpg"]}, {"name": "Miniso", "cat": "Casa", "img": "images/Locatarios/77/1.jpg", "logo": "images/logos/brands/miniso.webp", "num": 77, "desc": "Marca lifestyle japonesa con productos de diseño minimalista: hogar, belleza, electrónicos, papelería y accesorios.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/minisomexico/", "fb": "https://www.facebook.com/MinisoMexico/", "web": "https://www.miniso.com.mx", "imgs": ["images/Locatarios/77/1.jpg"]}, {"name": "Mixup", "cat": "Tecnología", "img": "images/Locatarios/56/1.jpg", "logo": "images/logos/brands/mixup.webp", "num": 56, "desc": "Música, audio, gadgets y cultura pop. Audífonos, parlantes y novedades tech-lifestyle.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/mixupteam/", "fb": "https://www.facebook.com/MixupMusicStore/", "web": "http://www.mixup.com.mx", "imgs": ["images/Locatarios/56/1.jpg"]}, {"name": "Moor Spa & Nails", "cat": "Beauty & wellness", "img": "images/Locatarios/78/1.jpg", "logo": "images/logos/brands/moor-spa.webp", "num": 78, "desc": "Spa boutique con servicios de manicura, pedicura, masajes y tratamientos faciales. Una pausa de bienestar en Polanco.", "loc": "Planta Baja", "time": "10:00–21:00", "ig": "https://www.instagram.com/moorspanails/", "fb": "https://www.facebook.com/moorspanails/", "imgs": ["images/Locatarios/78/1.jpg"]}, {"name": "Nardo", "cat": "Joyería", "img": "images/Locatarios/51/1.jpg", "logo": "images/logos/brands/nardo.webp", "num": 51, "desc": "", "loc": "Primer Nivel", "time": "", "ig": "https://www.instagram.com/oficialnardo/", "fb": "https://www.facebook.com/nardo.jewelry/", "web": "https://nardomexico.com", "imgs": ["images/Locatarios/51/1.jpg"]}, {"name": "Nutrisa", "cat": "Snacks", "img": "images/Locatarios/27/1.jpg", "logo": "images/logos/brands/nutrisa.webp", "num": 27, "desc": "Yogurt helado, smoothies y productos naturistas. Una opción ligera y saludable.", "loc": "Primer y Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/nutrisamx/", "fb": "https://www.facebook.com/NutrisaMx/", "web": "https://www.nutrisa.com", "imgs": ["images/Locatarios/27/1.jpg", "images/Locatarios/27/4.jpg"]}, {"name": "O'Kai Poke Bowls", "cat": "Fast food", "img": "images/Locatarios/24/1.jpg", "logo": "images/logos/brands/okai-poke.webp", "num": 24, "desc": "Poke bowls hawaianos con ingredientes premium. Combinaciones personalizadas.", "loc": "Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/okaipoke/", "web": "https://okaipoke.com.mx", "imgs": ["images/Locatarios/24/1.jpg"]}, {"name": "P.F. Chang's", "cat": "Restaurantes", "img": "images/Locatarios/7/1.jpg", "logo": "images/logos/brands/pf-changs.webp", "num": 7, "desc": "Cocina asiática contemporánea. Wok tradicional con presentación moderna.", "loc": "Segundo Nivel", "time": "13:00–23:00", "ig": "https://www.instagram.com/pfchangsmx/", "fb": "https://www.facebook.com/PFChangsMX/", "web": "https://pfchangsmexico.com.mx", "imgs": ["images/Locatarios/7/1.jpg", "images/Locatarios/7/2.jpg", "images/Locatarios/7/3.jpg"]}, {"name": "Pandora", "cat": "Joyería", "img": "images/Locatarios/65/1.jpg", "logo": "images/logos/brands/pandora.webp", "num": 65, "desc": "", "loc": "Planta Baja", "time": "", "ig": "https://www.instagram.com/pandoramexico/", "fb": "https://www.facebook.com/PandoraMexicoOficial/", "web": "https://www.pandoraoficial.com.mx", "imgs": ["images/Locatarios/65/1.jpg"]}, {"name": "Pineda Covalín", "cat": "Moda y estilo", "img": "images/Locatarios/75/1.jpg", "logo": "images/logos/brands/pineda-covalin.webp", "num": 75, "desc": "Casa mexicana de seda y accesorios. Mascadas, corbatas y artículos de regalo inspirados en el arte mexicano.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/pinedacovalin/", "fb": "https://www.facebook.com/PinedaCovalin/", "web": "https://pinedacovalin.com", "imgs": ["images/Locatarios/75/1.jpg"]}, {"name": "Pío Grill", "cat": "Fast food", "img": "images/Locatarios/21/1.jpg", "logo": "images/logos/brands/pio-grill.webp", "num": 21, "desc": "Pollo a la parrilla con receta de la casa, guarniciones frescas y antojos urbanos.", "loc": "Segundo Nivel", "time": "12:00–22:00", "ig": "https://www.instagram.com/piogrillofficial/", "fb": "https://www.facebook.com/PioGrillOfficial/", "imgs": ["images/Locatarios/21/1.jpg"]}, {"name": "Pizza Maestra", "cat": "Fast food", "img": "images/Locatarios/33/1.jpg", "logo": "images/logos/brands/pizza-maestra.webp", "num": 33, "desc": "", "loc": "Segundo Nivel", "time": "", "ig": "https://www.instagram.com/pizzamaestra/", "fb": "https://www.facebook.com/PizzaMaestraMx/", "web": "https://pizzamaestra.com", "imgs": ["images/Locatarios/33/1.jpg"]}, {"name": "Poxtli", "cat": "Fast food", "img": "images/Locatarios/40/1.jpg", "logo": "images/logos/brands/poxtli.webp", "num": 40, "desc": "Cocina mexicana de raíces con presentación contemporánea, en la terraza Poxtli.", "loc": "Primer y Segundo Nivel", "time": "13:00–23:00", "imgs": ["images/Locatarios/40/1.jpg"]}, {"name": "Samsung", "cat": "Tecnología", "img": "images/Locatarios/59/1.jpg", "logo": "images/logos/brands/samsung.webp", "num": 59, "desc": "Electrónica y gadgets Samsung.", "loc": "Planta Baja", "time": "11:00 - 21:00", "ig": "https://www.instagram.com/samsungmexico/", "fb": "https://www.facebook.com/SamsungMexico/", "web": "https://www.samsung.com/mx", "imgs": ["images/Locatarios/59/1.jpg"]}, {"name": "Sanborns", "cat": "Departamentales", "img": "images/Locatarios/73/1.jpg", "logo": "images/logos/brands/sanborns.webp", "num": 73, "desc": "Café, restaurante, librería, perfumería y tienda departamental icónica de México.", "loc": "Planta Baja", "time": "08:00–22:00", "ig": "https://www.instagram.com/solosanborns/", "fb": "https://www.facebook.com/solosanborns/", "web": "https://www.sanborns.com.mx", "imgs": ["images/Locatarios/73/1.jpg"]}, {"name": "Santa Clara", "cat": "Snacks", "img": "images/Locatarios/26/1.jpg", "logo": "images/logos/brands/santa-clara.webp", "num": 26, "desc": "", "loc": "Segundo Nivel", "time": "", "ig": "https://www.instagram.com/santaclaramx/", "fb": "https://www.facebook.com/SantaClaraMex/", "web": "https://www.coca-cola.com/mx/es/brands/santa-clara", "imgs": ["images/Locatarios/26/1.jpg"]}, {"name": "Scappino", "cat": "Moda y estilo", "img": "images/Locatarios/47/1.jpg", "logo": "images/logos/brands/scappino.webp", "num": 47, "desc": "Sastrería italiana desde 1938. Trajes a la medida en 72 horas y vestir formal para caballero.", "loc": "Primer Nivel", "time": "11:00–21:00", "ig": "https://www.instagram.com/scappino/", "fb": "https://www.facebook.com/scappino/", "web": "https://www.scappino.com", "imgs": ["images/Locatarios/47/1.jpg"]}, {"name": "Showroom", "cat": "Servicios", "img": "images/Locatarios/86/1.jpg", "logo": "images/logos/brands/showroom-carso.webp", "num": 86, "desc": "", "loc": "Planta Baja", "time": "", "imgs": ["images/Locatarios/86/1.jpg"]}, {"name": "Sport City", "cat": "Fitness", "img": "images/Locatarios/8/1.jpg", "logo": "images/logos/brands/sport-city.webp", "num": 8, "desc": "Fitness Club premium con equipo de última generación, clases grupales y áreas funcionales.", "loc": "Segundo Nivel", "time": "05:30–22:30", "ig": "https://www.instagram.com/sportcity_mx/", "fb": "https://www.facebook.com/SportCityFitness/", "web": "https://sportcity.com.mx", "imgs": ["images/Locatarios/8/1.jpg"]}, {"name": "Spyral", "cat": "Snacks", "img": "images/Locatarios/13/1.jpg", "logo": "images/logos/brands/spyral.webp", "num": 13, "desc": "Helados suaves, conos, malteadas y postres helados al estilo americano.", "loc": "Segundo Nivel", "time": "11:00–22:00", "ig": "https://www.instagram.com/spyral_mx/", "fb": "https://www.facebook.com/SpyralMex/", "imgs": ["images/Locatarios/13/1.jpg"]}, {"name": "Starbucks", "cat": "Cafeterías", "img": "images/Locatarios/15/1.jpg", "logo": "images/logos/brands/starbucks.webp", "num": 15, "desc": "Café de especialidad, bebidas frías y un lugar para encontrarse.", "loc": "Segundo Nivel", "time": "06:30–22:00", "ig": "https://www.instagram.com/starbucksmex/", "fb": "https://www.facebook.com/StarbucksMexico/", "web": "https://www.starbucks.com.mx", "imgs": ["images/Locatarios/15/1.jpg"]}, {"name": "Steren", "cat": "Tecnología", "img": "images/Locatarios/57/1.jpg", "logo": "images/logos/brands/steren.webp", "num": 57, "desc": "Electrónica, accesorios y soluciones tecnológicas para el hogar y la oficina.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/steren.oficial/", "fb": "https://www.facebook.com/Steren.Mexico/", "web": "https://www.steren.com.mx", "imgs": ["images/Locatarios/57/1.jpg"]}, {"name": "Subway", "cat": "Fast food", "img": "images/Locatarios/32/1.jpg", "logo": "images/logos/brands/subway.webp", "num": 32, "desc": "", "loc": "Primer y Segundo Nivel", "time": "", "ig": "https://www.instagram.com/subwaymexico/", "fb": "https://www.facebook.com/SubwayMexico/", "web": "https://subway.com.mx", "imgs": ["images/Locatarios/32/1.jpg"]}, {"name": "Sushi Itto", "cat": "Fast food", "img": "images/Locatarios/39/1.jpg", "logo": "images/logos/brands/sushi-itto.webp", "num": 39, "desc": "Sushi fusión con rolls clásicos y creaciones de la casa. Hora Japi 2x1.", "loc": "Primer y Segundo Nivel", "time": "12:00–22:00", "ig": "https://www.instagram.com/sushiittooficial/", "fb": "https://www.facebook.com/SushiIttoOficial/", "web": "https://sushi-itto.com.mx", "imgs": ["images/Locatarios/39/1.jpg"]}, {"name": "Svenson", "cat": "Beauty & wellness", "img": "images/Locatarios/76/1.jpg", "logo": "images/logos/brands/svenson.webp", "num": 76, "desc": "Clínica capilar líder en tratamientos contra la caída del cabello, diagnóstico tricológico y micropigmentación.", "loc": "Planta Baja", "time": "10:00–20:00", "ig": "https://www.instagram.com/svensonmx/", "fb": "https://www.facebook.com/SvensonMexico/", "web": "https://www.svenson.com.mx", "imgs": ["images/Locatarios/76/1.jpg"]}, {"name": "Telcel", "cat": "Telefonía", "img": "images/Locatarios/63/1.jpg", "logo": "images/logos/brands/telcel.webp", "num": 63, "desc": "Conectividad 5G y tecnología móvil de vanguardia. Planes, equipos y servicios.", "loc": "Planta Baja", "time": "11:00–21:00", "ig": "https://www.instagram.com/telcel/", "fb": "https://www.facebook.com/Telcel/", "web": "https://www.telcel.com", "imgs": ["images/Locatarios/63/1.jpg"]}, {"name": "Vapiano", "cat": "Restaurantes", "img": "images/Locatarios/1/1.jpg", "logo": "images/logos/brands/vapiano.webp", "num": 1, "desc": "Pasta y pizza italianas frescas, preparadas frente a ti al momento.", "loc": "Segundo Nivel", "time": "12:00–23:00", "ig": "https://www.instagram.com/vapiano_mx/", "fb": "https://www.facebook.com/VapianoMexico/", "web": "https://mx.vapiano.com", "imgs": ["images/Locatarios/1/1.jpg"]}, {"name": "Wings Army", "cat": "Fast food", "img": "images/Locatarios/25/1.jpg", "logo": "images/logos/brands/wings-army.webp", "num": 25, "desc": "", "loc": "Segundo Nivel", "time": "", "ig": "https://www.instagram.com/wingsarmymx/", "fb": "https://www.facebook.com/WingsArmyTheBestWings/", "web": "https://wingsarmy.mx", "imgs": ["images/Locatarios/25/1.jpg"]}];
 
-        // Taxonomía: cada tienda tiene s.cat = subcategoría (hoja). Filtrar por una
-        // categoría PADRE incluye todas sus subcategorías (idéntica a hgroup-plaza-universidad).
-        const DIR_CATS = {
-            'Entretenimiento': [],
-            'Gastronomía': ['Cafeterías', 'Fast food', 'Restaurantes', 'Snacks'],
-            'Retail / Tiendas': ['Beauty & wellness', 'Casa', 'Departamentales', 'Joyería', 'Moda y estilo', 'Vinos y licores'],
-            'Servicios': ['Bancos', 'Fitness'],
-            'Telefonía y Tecnología': ['Automotriz', 'Tecnología', 'Telefonía']
-        };
-        function _dirCatMatch(itemCat, active) {
-            if (active === 'Todos') return true;
-            if (itemCat === active) return true;
-            const subs = DIR_CATS[active];
-            return subs ? subs.indexOf(itemCat) >= 0 : false;
+        // ── TAXONOMÍA OFICIAL DE CENTROS COMERCIALES (Inmuebles Carso, ago-2026) ──
+        // 4 familias › 24 categorías › subcategorías. El directorio SOLO muestra las
+        // ramas que tienen locatarios: una categoría vacía no se pinta nunca.
+        const CARSO_DIR = 'Lago Zúrich 245, Ampliación Granada, 11529, Miguel Hidalgo, CDMX';
+        const TAXO = {"Compras":{"Tiendas Departamentales":["Tiendas departamentales"],"Moda":["Mujer","Hombre","Infantil y bebés","Ropa interior y lencería","Calzado","Bolsas y accesorios","Moda deportiva","Trajes de baño","Uniformes"],"Joyería, Relojería y Accesorios":["Joyerías","Relojerías","Bisutería","Accesorios"],"Belleza y Cuidado Personal":["Cosméticos","Perfumerías","Skincare","Productos para el cabello","Barberías","Salones de belleza","Uñas","Spas","Depilación y tratamientos estéticos"],"Hogar, Decoración y Diseño":["Muebles","Decoración","Iluminación","Blancos","Cocina y mesa","Organización","Diseño e interiorismo","Florerías"],"Tecnología y Electrónica":["Telefonía celular","Computación","Electrónica","Audio y video","Accesorios tecnológicos","Reparación y soporte"],"Deportes y Bienestar":["Ropa y calzado deportivo","Artículos deportivos","Gimnasios","Estudios especializados","Nutrición y bienestar"],"Niños":["Moda infantil","Jugueterías","Bebés y maternidad","Educación y actividades"],"Regalos, Cultura y Entretenimiento":["Librerías","Papelerías","Regalos","Arte y galerías","Música","Coleccionables","Hobbies"],"Mascotas":["Tiendas para mascotas","Veterinarias","Estética canina","Alimentos y accesorios"],"Tiendas Especializadas":["Supermercados","Tiendas gourmet","Vinos y productos especializados","Conveniencia","Productos orgánicos","Tiendas de variedad"]},"Gastronomía":{"Restaurantes":["Cocina mexicana","Internacional","Italiana","Asiática","Japonesa","Mediterránea","Cortes y parrilla","Mariscos","Casual dining"],"Cafés y Desayunos":["Cafeterías","Coffee shops","Desayunos y brunch","Panaderías"],"Dulces y Postres":["Pastelerías","Chocolaterías","Dulcerías","Heladerías","Reposterías"],"Comida Rápida y Casual":["Fast food","Snacks"],"Bares y Vida Social":["Bares","Terrazas","Wine bars","Coctelería"]},"Servicios":{"Bancos y Servicios Financieros":["Bancos","Cajeros automáticos","Casas de cambio","Seguros","Servicios financieros"],"Salud y Medicina":["Consultorios médicos","Clínicas","Dentistas","Laboratorios","Farmacias","Fisioterapia y rehabilitación","Psicología","Nutrición"],"Ópticas y Audición":["Ópticas","Lentes y accesorios","Audiología"],"Educación":["Escuelas y academias","Idiomas","Arte y música","Cursos y talleres","Actividades infantiles","Capacitación"],"Servicios Personales":["Tintorerías","Lavanderías","Sastrerías y composturas","Zapaterías y reparación","Cerrajerías","Fotografía","Paquetería y mensajería"],"Servicios Profesionales":["Oficinas","Coworking","Agencias","Consultorías","Servicios jurídicos","Servicios contables","Inmobiliarias"],"Automotriz":["Agencias y showrooms","Lavado de autos","Detallado automotriz","Accesorios automotrices","Valet parking"]},"Entretenimiento":{"Entretenimiento":["Cines","Boliche","Juegos y arcades","Experiencias","Entretenimiento familiar","Entretenimiento infantil","Centros de diversión","Eventos y exposiciones"]}};
+        // Clasificación por locatario (gana siempre; sobrevive al gestor)
+        const CAT_FIX = {"byd":"Agencias y showrooms","ford":"Agencias y showrooms","inbursa":"Bancos","barber street":"Barberías","dax":"Productos para el cabello","enrique bricker":"Salones de belleza","moor spa & nails":"Uñas","svenson":"Depilación y tratamientos estéticos","city cafe":"Cafeterías","coffee tree":"Coffee shops","hello kitty cafe":"Cafeterías","izlah":"Cafeterías","starbucks":"Coffee shops","miniso":"Tiendas de variedad","city market":"Supermercados","sanborns":"Tiendas departamentales","acuario interactivo":"Experiencias","cinepolis":"Cines","flyover mexico":"Experiencias","gokart mania":"Centros de diversión","inspark":"Entretenimiento familiar","burger king":"Fast food","cosecha sana":"Fast food","daylight salads":"Fast food","domino's pizza":"Fast food","dynasty":"Asiática","jimmy joe chicken & grill":"Fast food","las flautas":"Cocina mexicana","o'kai poke bowls":"Japonesa","pizza maestra":"Italiana","poxtli":"Cocina mexicana","pio grill":"Fast food","subway":"Fast food","sushi itto":"Japonesa","wings army":"Casual dining","54d":"Estudios especializados","lomas studio":"Estudios especializados","sport city":"Gimnasios","masters":"Relojerías","nardo":"Joyerías","pandora":"Joyerías","ivonne":"Mujer","julio":"Hombre","pineda covalin":"Bolsas y accesorios","scappino":"Hombre","applebee's":"Casual dining","asadero beef":"Cortes y parrilla","asaderos grill":"Cortes y parrilla","biscotto":"Italiana","caballo bayo":"Cocina mexicana","carolo":"Italiana","la imperial":"Cocina mexicana","la raclette":"Internacional","loma linda":"Cortes y parrilla","p.f. chang's":"Asiática","vapiano":"Italiana","academia europea":"Escuelas y academias","bestday":"Agencias","dentalia":"Dentistas","showroom":"Tiendas departamentales","chilim balam":"Dulcerías","dolphy":"Dulcerías","la crepe parisienne":"Reposterías","le macaron":"Pastelerías","nutrisa":"Heladerías","santa clara":"Heladerías","spyral":"Snacks","garmin":"Electrónica","mixup":"Música","samsung":"Electrónica","steren":"Electrónica","ishop":"Computación","telcel":"Telefonía celular","la europea":"Vinos y productos especializados","park n wash":"Lavado de autos","banco santander":"Bancos","banorte":"Bancos","cibanco":"Bancos","hsbc":"Bancos","+ vision por menos precio":"Ópticas","centro de belleza":"Salones de belleza","estetica imagen":"Salones de belleza","gnc general nutrition center":"Nutrición y bienestar","grenitas":"Salones de belleza","nailkery":"Uñas","trendy accesories":"Accesorios","villa bella salon":"Salones de belleza","opticas devlyn":"Ópticas","cassava roots":"Coffee shops","cielito querido cafe":"Cafeterías","luuna":"Blancos","mumuso":"Tiendas de variedad","deportes marti":"Artículos deportivos","neria's deportes":"Artículos deportivos","sears":"Tiendas departamentales","suburbia":"Tiendas departamentales","yak":"Juegos y arcades","free life":"Productos orgánicos","green grass addictive salads":"Fast food","kentucky fried chicken (kfc)":"Fast food","king wok & grill":"Asiática","mcdonald's":"Fast food","sbarro":"Fast food","sukiya tokio bowls & noodles":"Japonesa","sushi roll":"Japonesa","bizzarro":"Joyerías","cristal joyas":"Joyerías","aldo conti":"Hombre","antela rossi":"Mujer","bari":"Calzado","bio-relax":"Calzado","dorothy gaynor":"Calzado","el borcegui":"Calzado","fajas ann chery":"Ropa interior y lencería","ferrioni":"Hombre","flexi":"Calzado","fullsand":"Moda deportiva","giolini":"Calzado","innvictus":"Calzado","jarking":"Calzado","la milagresa":"Mujer","liz minelli":"Mujer","men's fashion":"Hombre","michel domit":"Calzado","new era":"Bolsas y accesorios","quirelli":"Calzado","robert's":"Hombre","samsonite":"Bolsas y accesorios","shasa":"Mujer","skechers":"Calzado","soley":"Mujer","taf":"Calzado","tactical 5.11":"Uniformes","todo moda":"Bisutería","vans":"Calzado","vittorio forti":"Calzado","chili's":"Casual dining","el porton":"Cocina mexicana","italianni's":"Italiana","vips":"Casual dining","business & therapy place":"Oficinas","medicor":"Consultorios médicos","chocolates turin":"Chocolaterías","krispy kreme":"Reposterías","monkey papas":"Snacks","game planet":"Hobbies","steren shop":"Electrónica","la casa de las carcasas":"Accesorios tecnológicos","mobo shop":"Accesorios tecnológicos"};
+        // Giros antiguos del gestor → hoja nueva (red de seguridad para altas nuevas)
+        const LEGACY = {"Fast food":"Fast food","Snacks":"Snacks","Restaurantes":"Casual dining","Cafeterías":"Cafeterías","Beauty & wellness":"Salones de belleza","Casa":"Decoración","Departamentales":"Tiendas departamentales","Joyería":"Joyerías","Moda y estilo":"Mujer","Vinos y licores":"Vinos y productos especializados","Bancos":"Bancos","Fitness":"Gimnasios","Automotriz":"Agencias y showrooms","Tecnología":"Electrónica","Telefonía":"Telefonía celular","Entretenimiento":"Experiencias","Especialidades":"Tiendas especializadas","Servicios":"Oficinas"};
+        // Datos que el gestor todavía no guarda (zona, WhatsApp, horario por día).
+        // Clave = nombre normalizado. En cuanto se llenen, los filtros se encienden solos.
+        const EXTRA = {};
+        // Horario general de la plaza, usado cuando la tienda no tiene el suyo.
+        const PLAZA_HOR = { abre: 11 * 60, cierra: 21 * 60 };
+
+        function _norm(t) {
+            return (t || '').toString().toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
         }
-        let _activeCat = 'Todos';
+        const _PADRE = {};   // hoja → [familia, categoría]
+        for (const fam in TAXO) for (const cat in TAXO[fam])
+            for (const h of TAXO[fam][cat]) _PADRE[h] = [fam, cat];
+
+        // Normaliza cada tienda: hoja definitiva + su categoría y familia + extras.
+        (function _clasificar() {
+            for (const s of STORES) {
+                const hoja = CAT_FIX[_norm(s.name)] || LEGACY[s.cat] || s.cat;
+                s.cat = hoja;
+                const p = _PADRE[hoja];
+                s.par = p ? p[1] : 'Otros';
+                s.fam = p ? p[0] : 'Otros';
+                const x = EXTRA[_norm(s.name)] || {};
+                if (x.zona) s.zona = x.zona;
+                if (x.wa) s.wa = x.wa;
+                if (x.hor) s.hor = x.hor;
+                if (x.tel && !s.tel) s.tel = x.tel;
+            }
+        })();
+
+        // ¿abierto ahora? usa el horario de la tienda si existe; si no, el de la plaza.
+        function _abierto(s) {
+            const d = new Date(), min = d.getHours() * 60 + d.getMinutes();
+            const dias = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
+            let r = s.hor && (s.hor[dias[d.getDay()]] || s.hor.todos);
+            if (!r && s.time) r = s.time;
+            if (r && typeof r === 'string') {
+                const m = r.match(/(\d{1,2})[:.](\d{2})\s*[-–—a]+\s*(\d{1,2})[:.](\d{2})/);
+                if (m) {
+                    const a = +m[1] * 60 + +m[2], b = +m[3] * 60 + +m[4];
+                    return min >= a && min < b;
+                }
+                if (/cerrado/i.test(r)) return false;
+            }
+            return min >= PLAZA_HOR.abre && min < PLAZA_HOR.cierra;
+        }
+
+        let _activeFam = 'Todos', _activeCat = '', _activeSub = '';
+        let _activeNiv = '', _activeZon = '', _soloAbierto = false;
         let _activeSearch = '';
-        let _visible = []; // filtered subset (objects from STORES)
+        let _visible = [];
         let _modalIdx = 0;
 
-        function _matches(s) {
-            const catOk = _dirCatMatch(s.cat, _activeCat);
-            const q = _activeSearch.trim().toLowerCase();
-            const qOk = !q || s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q);
-            return catOk && qOk;
+        // Ramas realmente ocupadas, calculadas desde los locatarios cargados.
+        function _ramasVivas() {
+            const fams = {};
+            for (const s of STORES) {
+                if (!fams[s.fam]) fams[s.fam] = {};
+                if (!fams[s.fam][s.par]) fams[s.fam][s.par] = new Set();
+                fams[s.fam][s.par].add(s.cat);
+            }
+            return fams;
         }
+        const VIVAS = _ramasVivas();
 
+        function _pintarFamilias() {
+            const fi = document.getElementById('fi');
+            const buscador = fi.querySelector('.search-wrap');
+            const orden = Object.keys(TAXO).filter(f => VIVAS[f]);
+            if (VIVAS['Otros']) orden.push('Otros');
+            for (const fam of orden) {
+                const b = document.createElement('button');
+                b.className = 'f-btn';
+                b.textContent = fam;
+                b.onclick = function () { filtFam(fam, b); };
+                fi.insertBefore(b, buscador);
+            }
+        }
+        function _opts(sel, lista, etiqueta, valor) {
+            sel.innerHTML = '<option value="">' + etiqueta + '</option>'
+                + lista.map(v => '<option value="' + v.replace(/"/g, '&quot;') + '">' + v + '</option>').join('');
+            sel.value = lista.indexOf(valor) >= 0 ? valor : '';
+        }
+        function _pintarSelects() {
+            const cats = _activeFam === 'Todos'
+                ? [].concat(...Object.keys(VIVAS).map(f => Object.keys(VIVAS[f])))
+                : Object.keys(VIVAS[_activeFam] || {});
+            _opts(document.getElementById('fsCat'), cats.sort((a, b) => a.localeCompare(b, 'es')), 'Todas', _activeCat);
+            let subs = [];
+            if (_activeCat) {
+                for (const f in VIVAS) if (VIVAS[f][_activeCat]) subs = subs.concat([...VIVAS[f][_activeCat]]);
+            } else {
+                for (const f in VIVAS) if (_activeFam === 'Todos' || f === _activeFam)
+                    for (const c in VIVAS[f]) subs = subs.concat([...VIVAS[f][c]]);
+            }
+            subs = [...new Set(subs)].sort((a, b) => a.localeCompare(b, 'es'));
+            _opts(document.getElementById('fsSub'), subs, 'Todas', _activeSub);
+            const nivs = [...new Set(STORES.map(s => s.loc).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+            _opts(document.getElementById('fsNiv'), nivs, 'Todos', _activeNiv);
+            document.getElementById('fsNivWrap').classList.toggle('off', nivs.length < 2);
+            const zons = [...new Set(STORES.map(s => s.zona).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+            _opts(document.getElementById('fsZon'), zons, 'Todas', _activeZon);
+            document.getElementById('fsZonWrap').classList.toggle('off', zons.length < 2);
+        }
+        function _matches(s) {
+            if (_activeFam !== 'Todos' && s.fam !== _activeFam) return false;
+            if (_activeCat && s.par !== _activeCat) return false;
+            if (_activeSub && s.cat !== _activeSub) return false;
+            if (_activeNiv && s.loc !== _activeNiv) return false;
+            if (_activeZon && s.zona !== _activeZon) return false;
+            if (_soloAbierto && !_abierto(s)) return false;
+            const q = _activeSearch.trim().toLowerCase();
+            if (!q) return true;
+            return (s.name + ' ' + s.cat + ' ' + (s.par || '') + ' ' + (s.fam || '')).toLowerCase().includes(q);
+        }
+        function _etiquetaActiva() {
+            return _activeSub || _activeCat || (_activeFam !== 'Todos' ? _activeFam : '');
+        }
         function _renderGrid() {
             _visible = STORES.filter(_matches).sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
             const grid = document.getElementById('store-grid');
@@ -1188,39 +1310,54 @@
             }
             const n = _visible.length;
             const ct = document.getElementById('dir-count');
+            const et = _etiquetaActiva();
             if (_activeSearch) {
                 ct.textContent = `${n} resultado${n !== 1 ? 's' : ''} para "${_activeSearch}"`;
-            } else if (_activeCat === 'Todos') {
+            } else if (!et && !_soloAbierto) {
                 ct.textContent = '';
             } else {
-                ct.textContent = `${n} tienda${n !== 1 ? 's' : ''} en ${_activeCat}`;
+                ct.textContent = `${n} tienda${n !== 1 ? 's' : ''}` + (et ? ` en ${et}` : '') + (_soloAbierto ? ' abiertas ahora' : '');
             }
         }
 
-        function filt(cat, btn) {
-            document.querySelectorAll('.f-btn, .dir-sub').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.dir-cat').forEach(c => c.classList.remove('dir-open'));
-            _activeCat = cat;
-            if (btn) {
-                btn.classList.add('active');
-                // si se eligió una subcategoría, también resalta su categoría padre
-                const parentDrop = btn.closest('.dir-cat');
-                if (parentDrop) parentDrop.querySelector('.dir-parent').classList.add('active');
+        function filtFam(fam, btn) {
+            document.querySelectorAll('#fi .f-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            _activeFam = fam; _activeCat = ''; _activeSub = '';
+            _pintarSelects(); _renderGrid();
+        }
+        function filtSel() {
+            const c = document.getElementById('fsCat').value;
+            if (c !== _activeCat) _activeSub = '';
+            _activeCat = c;
+            _activeSub = document.getElementById('fsSub').value;
+            _activeNiv = document.getElementById('fsNiv').value;
+            _activeZon = document.getElementById('fsZon').value;
+            if (_activeCat) {
+                for (const f in VIVAS) if (VIVAS[f][_activeCat] && _activeFam !== f) {
+                    _activeFam = f;
+                    document.querySelectorAll('#fi .f-btn').forEach(b =>
+                        b.classList.toggle('active', b.textContent === f));
+                }
             }
+            _pintarSelects(); _renderGrid();
+        }
+        function filtOpen(btn) {
+            _soloAbierto = !_soloAbierto;
+            btn.classList.toggle('on', _soloAbierto);
             _renderGrid();
         }
-        // Tap en categoría padre (móvil/táctil): abre su desplegable de subcategorías
-        // Y también filtra por la categoría completa (todas sus subcategorías).
-        document.querySelectorAll('.dir-parent').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                const wrap = btn.closest('.dir-cat');
-                document.querySelectorAll('.dir-cat').forEach(function (c) {
-                    if (c !== wrap) c.classList.remove('dir-open');
-                });
-                if (wrap) wrap.classList.toggle('dir-open');
-            });
-        });
-
+        function filtReset() {
+            _activeFam = 'Todos'; _activeCat = _activeSub = _activeNiv = _activeZon = '';
+            _soloAbierto = false; _activeSearch = '';
+            document.getElementById('search-in').value = '';
+            document.getElementById('fsOpen').classList.remove('on');
+            document.querySelectorAll('#fi .f-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btnTodos').classList.add('active');
+            _pintarSelects(); _renderGrid();
+        }
+        _pintarFamilias();
+        _pintarSelects();
         function doSearch(q) {
             _activeSearch = q || '';
             _renderGrid();
@@ -1259,6 +1396,21 @@
             if (s.tel) sh += `<a href="tel:${s.tel}" aria-label="Teléfono" title="Teléfono">${ICON.tel}</a>`;
             soc.innerHTML = sh;
             soc.style.display = 'flex';
+            // ── Acciones de la ficha (Llamar · WhatsApp · Sitio web · Cómo llegar) ──
+            // Solo se pinta el botón cuyo dato existe: nada de botones muertos.
+            const IA = {
+                tel: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+                wa:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.5-.6a2 2 0 0 0 .3-.5.6.6 0 0 0 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4A3.4 3.4 0 0 0 5.8 9c0 1.5 1.1 3 1.2 3.2a12 12 0 0 0 4.7 4.1c1.7.7 2 .6 2.4.5a3 3 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2z"/></svg>',
+                web: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>',
+                map: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+            };
+            const acts = document.getElementById('smod-acts');
+            let ah = '';
+            if (s.tel) ah += `<a href="tel:${s.tel}">${IA.tel} Llamar</a>`;
+            if (s.wa) ah += `<a class="wa" target="_blank" rel="noopener" href="https://wa.me/${String(s.wa).replace(/\D/g,'')}">${IA.wa} WhatsApp</a>`;
+            if (s.web) ah += `<a href="${s.web}" target="_blank" rel="noopener">${IA.web} Sitio web</a>`;
+            ah += `<a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('Plaza Carso, ' + CARSO_DIR)}">${IA.map} Cómo llegar</a>`;
+            acts.innerHTML = ah;
             // Carrusel de la imagen izquierda (administrable: s.imgs = [..]; si no hay, usa la principal)
             _galImgs = (s.imgs && s.imgs.length) ? s.imgs.slice() : (s.img ? [s.img] : []);
             _galImgs = _padImgs(_galImgs); // clona la portada si hay pocas fotos → carrusel siempre visible

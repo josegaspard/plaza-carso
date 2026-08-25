@@ -106,6 +106,10 @@
         .fs-clear:hover { color:var(--ink); }
         @media (max-width:720px){ .filter-sel{gap:8px 12px;padding-bottom:14px;} .fs-item select{min-width:132px;max-width:46vw;font-size:12px;} }
         /* ── Acciones de la ficha ── */
+        .smod-desc-label {
+            display: block; font-family: var(--sans); font-size: 9.5px; letter-spacing: .2em;
+            text-transform: uppercase; color: var(--grey); margin-bottom: 6px;
+        }
         .smod-acts { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; }
         .smod-acts a {
             display:inline-flex; align-items:center; gap:7px; font-family:var(--sans); font-size:11px;
@@ -1060,6 +1064,7 @@
                 </button>
                 <span id="smod-cat"></span>
                 <h2 id="smod-name"></h2>
+                <span class="smod-desc-label" id="smod-desc-label">Descripción</span>
                 <p id="smod-desc"></p>
                 <div class="smod-meta">
                     <div class="smod-meta-item" id="smod-loc-row"><span>Ubicación</span><span id="smod-loc"></span></div>
@@ -1329,9 +1334,11 @@
             document.getElementById('smod-name').textContent = s.name;
             // Categoría de la ficha: categoría padre · subcategoría
             document.getElementById('smod-cat').textContent = s.par ? (s.par + ' · ' + s.cat) : s.cat;
+            // Descripción: campo etiquetado, como lo pide la ficha del cliente.
             const descEl = document.getElementById('smod-desc');
-            if (s.desc) { descEl.textContent = s.desc; descEl.style.display = ''; }
-            else { descEl.style.display = 'none'; }
+            descEl.textContent = s.desc || 'Sin descripción cargada';
+            descEl.style.display = '';
+            document.getElementById('smod-desc-label').style.display = '';
             // ── Ficha del correo: Ubicación = Nivel · Local · Zona ──
             const _ub = [s.loc, s.num ? ('Local ' + s.num) : '', s.zona].filter(Boolean).join(' · ');
             document.getElementById('smod-loc').textContent = _ub || 'Consultar en informes';

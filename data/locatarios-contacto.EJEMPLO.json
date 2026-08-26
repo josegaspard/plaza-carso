@@ -1,0 +1,11 @@
+{
+  "Cinépolis": {
+    "tel": "5512345678",
+    "wa": "5512345678",
+    "web": "https://www.cinepolis.com",
+    "ig": "https://www.instagram.com/cinepolis/",
+    "fb": "https://www.facebook.com/cinepolis/",
+    "zona": "Zona A",
+    "hor": { "lunvie": "11:00–23:00", "sabado": "10:00–23:30", "domingo": "10:00–22:00" }
+  }
+}

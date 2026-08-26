@@ -55,6 +55,16 @@
             display: none;
         }
 
+        .fi-fam {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0 4px;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
         .f-btn {
             flex-shrink: 0;
             font-family: var(--sans);
@@ -1016,8 +1026,11 @@
     </section>
 
     <div class="filter-bar">
+        <!-- Fila 1: familias + buscador · Fila 2: los filtros. Misma disposición que Plaza Universidad -->
         <div class="filter-inner" id="fi">
-            <button id="btnTodos" class="f-btn active" onclick="filtFam('Todos',this)">Todos</button>
+            <div class="fi-fam" id="fam-bar">
+                <button id="btnTodos" class="f-btn active" onclick="filtFam('Todos',this)">Todo</button>
+            </div>
             <div class="search-wrap">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -1025,14 +1038,14 @@
                 </svg>
                 <input id="search-in" type="text" placeholder="Buscar..." oninput="doSearch(this.value)">
             </div>
-            <div class="filter-sel" id="filterSel">
+        </div>
+        <div class="filter-sel" id="filterSel">
                 <label class="fs-item"><span>Categoría</span><select id="fsCat" onchange="filtSel()"></select></label>
                 <label class="fs-item"><span>Subcategoría</span><select id="fsSub" onchange="filtSel()"></select></label>
                 <label class="fs-item"><span>Piso / nivel</span><select id="fsNiv" onchange="filtSel()"></select></label>
                 <label class="fs-item"><span>Zona</span><select id="fsZon" onchange="filtSel()"></select></label>
                 <button type="button" class="fs-open" id="fsOpen" onclick="filtOpen(this)">Abierto ahora</button>
-                <button type="button" class="fs-clear" onclick="filtReset()">Limpiar</button>
-            </div>
+            <button type="button" class="fs-clear" onclick="filtReset()">Limpiar</button>
         </div>
     </div>
 
@@ -1180,6 +1193,51 @@
                 if (x.desc && !s.desc) s.desc = x.desc;
             }
         })();
+        // ── Horario por día (lun–vie · sábado · domingo), como lo pide el cliente ──
+        // Si el dato viene por día se arma la línea; si sólo hay un horario suelto, se usa ese.
+        function _horTexto(s) {
+            const h = s.hor;
+            if (h && typeof h === 'object') {
+                const p = [];
+                if (h.lunvie) p.push('Lun–Vie ' + h.lunvie);
+                if (h.sabado) p.push('Sáb ' + h.sabado);
+                if (h.domingo) p.push('Dom ' + h.domingo);
+                if (p.length) return p.join(' · ');
+                if (h.todos) return /lun|dom/i.test(h.todos) ? h.todos : 'Lunes a domingo, ' + h.todos;
+            }
+            if (typeof h === 'string' && h) return h;
+            if (s.time) return (/lun|dom/i.test(s.time) ? s.time : 'Lunes a domingo, ' + s.time);
+            return PLAZA.horario;
+        }
+
+        // ── ENLACE CON LA BASE DE DATOS DEL CLIENTE ────────────────────────────────
+        // Sus ingenieros dejan en data/locatarios-contacto.json un objeto con forma
+        //   { "Nombre de la tienda": { tel, wa, web, ig, fb, zona, hor:{lunvie,sabado,domingo} } }
+        // y la ficha se rellena SOLA. Lo que ya venga del gestor siempre gana: esto
+        // sólo completa huecos. Si el fichero no existe, la web se comporta igual que hoy.
+        (function _enlazarBD() {
+            const CAMPOS = ['tel', 'wa', 'web', 'ig', 'fb', 'zona', 'hor', 'local', 'desc'];
+            fetch('data/locatarios-contacto.json?v=' + Date.now())
+                .then(r => r.ok ? r.json() : null)
+                .then(d => {
+                    if (!d || typeof d !== 'object') return;
+                    let n = 0;
+                    for (const nombre in d) {
+                        const clave = _norm(nombre), fila = d[nombre] || {};
+                        const x = EXTRA[clave] || (EXTRA[clave] = {});
+                        for (const c of CAMPOS) if (fila[c] && !x[c]) { x[c] = fila[c]; n++; }
+                    }
+                    for (const s of STORES) {
+                        const x = EXTRA[_norm(s.name)] || {};
+                        for (const c of CAMPOS) if (x[c] && !s[c]) s[c] = x[c];
+                        if (x.local && !s.num) s.num = x.local;
+                    }
+                    if (n) { _pintarSelects(); _renderGrid(); }
+                    console.info('[INCARSO] datos de contacto enlazados: ' + n + ' campos');
+                })
+                .catch(() => { /* sin fichero: nada cambia */ });
+        })();
+
         // Cuántos locatarios hay en cada rama (para mostrarlo en el desplegable)
         const _NCAT = {}, _NSUB = {}, _NFAM = {};
         for (const s of STORES) {
@@ -1204,13 +1262,12 @@
         let _visible = [], _modalIdx = 0;
 
         function _pintarFamilias() {
-            const fi = document.getElementById('fi');
-            const buscador = fi.querySelector('.search-wrap');
+            const barra = document.getElementById('fam-bar');
             for (const fam of Object.keys(TAXO)) {
                 const b = document.createElement('button');
                 b.className = 'f-btn'; b.textContent = fam;
                 b.onclick = function () { filtFam(fam, b); };
-                fi.insertBefore(b, buscador);
+                barra.appendChild(b);
             }
         }
         function _opts(sel, lista, etiqueta, valor, conteo) {
@@ -1338,9 +1395,7 @@
             document.getElementById('smod-loc').textContent = _ub || 'Consultar en informes';
             document.getElementById('smod-loc-row').style.display = '';
             // Horario: el de la tienda; si no lo tiene, el general de la plaza (lunes a domingo)
-            document.getElementById('smod-time').textContent = s.time
-                ? (/lun|dom|–|-/i.test(s.time) && /[a-z]/i.test(s.time) ? s.time : 'Lunes a domingo, ' + s.time)
-                : PLAZA.horario;
+            document.getElementById('smod-time').textContent = _horTexto(s);
             document.getElementById('smod-time-row').style.display = '';
             // Zona: fila propia, como la pide el correo
             document.getElementById('smod-zona').textContent = s.zona || 'Por definir';

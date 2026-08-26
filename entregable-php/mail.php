@@ -23,19 +23,21 @@
 									<div class="col-md-3 col-xs-1">
 									</div>
 									<div class="col-md-6 col-xs-10">
+										<!-- tipoMensaje oculto: 1 enruta al correo de la plaza (peticion del cliente 26-ago-2026) -->
+										<input type="hidden" id="tipoMensaje" name="tipoMensaje" value="1">
 										<div class="form-group">
 											<div class="col-md-12">
-												<select class="form-control inputForm text-center" id="tipoMensaje" name="tipoMensaje">
-													<option value="1">Quejas y Sugerencias</option>
-													<option value="2">Espacios Disponibles</option>
-												</select>
+												<div class="input-group">
+													<span class="input-group-addon glyphicon glyphicon-pencil inputForm"></span>
+													<textarea class="form-control inputForm" id="Mensaje" name="Mensaje" placeholder="Comentario" rows="4" style="resize:none" required></textarea>
+												</div>
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="input-group">
 													<span class="input-group-addon glyphicon glyphicon-user inputForm"></span>
-													<input class="form-control inputForm " id="NombreContacto" name="NombreContacto" placeholder="Nombre:" type="text" value="" required>
+													<input class="form-control inputForm " id="NombreContacto" name="NombreContacto" placeholder="Nombre" type="text" value="" required>
 												</div>
 											</div>
 										</div>
@@ -43,26 +45,11 @@
 											<div class="col-md-12">
 												<div class="input-group">
 													<span class="input-group-addon glyphicon glyphicon-envelope inputForm"></span>
-													<input class="form-control inputForm " id="EmailContacto" name="EmailContacto" placeholder="Email:" type="email" value="" required>
+													<input class="form-control inputForm " id="EmailContacto" name="EmailContacto" placeholder="Email" type="email" value="" required>
 												</div>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-md-12">
-												<div class="input-group">
-													<span class="input-group-addon glyphicon glyphicon-phone inputForm"></span>
-													<input class="form-control inputForm " id="TelefonoContacto" name="TelefonoContacto" onkeypress="return soloNumeros(event)" placeholder="Telefono:" type="tel" value="" maxlength="10" required>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-md-12">
-												<div class="input-group">
-													<span class="input-group-addon glyphicon glyphicon-pencil inputForm"></span>
-													<textarea class="form-control inputForm" id="Mensaje" name="Mensaje" placeholder="Mensaje..." rows="4" style="resize:none" required></textarea>
-												</div>
-											</div>
-										</div>
+										<input type="hidden" id="TelefonoContacto" name="TelefonoContacto" value="">
 									</div>
 									<div class="col-md-3 col-xs-1">
 									</div>

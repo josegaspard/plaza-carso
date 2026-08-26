@@ -30,7 +30,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&amp;family=Outfit:wght@200;300;400;500;600&amp;display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/carso.css?v=20260603g">
+    <link rel="stylesheet" href="css/carso.css?v=20260826a">
     <style>
         .contact-section {
             padding: 100px 52px;
@@ -523,6 +523,7 @@
                 text-align: center;
             }
         }
+
     </style>
 </head>
 
@@ -604,27 +605,21 @@
                     <!-- Campos ocultos requeridos por enviarCorreo.php -->
                     <input type="hidden" name="EmailPlaza" value="contacto@plazacarso.com.mx">
                     <input type="hidden" name="NombrePlaza" value="Plaza Carso">
+                    <!-- Comentario, Nombre y Email — los 3 campos que pidió el cliente (26-ago-2026), idénticos a Plaza Universidad -->
+                    <div class="fg"><textarea id="Mensaje" name="Mensaje" placeholder="Comentario" aria-label="Comentario" required=""></textarea></div>
                     <div class="form-row">
-                        <div class="fg"><label for="NombreContacto">Nombre</label><input type="text" id="NombreContacto" name="NombreContacto" placeholder="Tu nombre completo" required=""></div>
-                        <div class="fg"><label for="EmailContacto">Email</label><input type="email" id="EmailContacto" name="EmailContacto" placeholder="correo@ejemplo.com" required=""></div>
+                        <div class="fg"><input type="text" id="NombreContacto" name="NombreContacto" placeholder="Nombre" aria-label="Nombre" required=""></div>
+                        <div class="fg"><input type="email" id="EmailContacto" name="EmailContacto" placeholder="Email" aria-label="Email" required=""></div>
                     </div>
-                    <div class="fg"><label for="TelefonoContacto">Teléfono</label><input type="tel" id="TelefonoContacto" name="TelefonoContacto" placeholder="10 dígitos" maxlength="10" required=""></div>
-                    <!-- tipoMensaje: 1=Quejas y Sugerencias, 2=Espacios Disponibles -->
-                    <div class="fg"><label for="tipoMensaje">Tipo de mensaje</label>
-                        <select id="tipoMensaje" name="tipoMensaje" required="">
-                            <option value="" disabled="" selected="">Selecciona una opción</option>
-                            <option value="1">Quejas y Sugerencias</option>
-                            <option value="2">Espacios Disponibles</option>
-                        </select>
-                    </div>
-                    <div class="fg"><label for="Mensaje">Mensaje</label><textarea id="Mensaje" name="Mensaje" placeholder="Escribe tu mensaje aquí..." required=""></textarea></div>
+                    <!-- enviarCorreo.php sigue recibiendo los 7 campos de siempre: tipoMensaje=1 enruta al correo de la plaza -->
+                    <input type="hidden" id="tipoMensaje" name="tipoMensaje" value="1">
+                    <input type="hidden" id="TelefonoContacto" name="TelefonoContacto" value="">
                     <div class="privacy-row">
                         <input type="checkbox" id="chkAviso" name="AvisoPrivacidad" value="true" required="">
-                        <label for="chkAviso">He leído y acepto el <a href="AvisodePrivacidad.php" target="_blank">Aviso
-                                de Privacidad</a> de Plaza Carso.</label>
+                        <label for="chkAviso">He leído y acepto el <a href="AvisodePrivacidad.php" target="_blank">Aviso de Privacidad</a></label>
                     </div>
                     <button type="submit" class="btn-submit" id="btnSub">
-                        Enviar mensaje
+                        Enviar comentario
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -633,6 +628,47 @@
                     <div class="success-box" id="sBox">Mensaje enviado. Te contactaremos pronto.</div>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <section class="renta-section">
+        <div class="renta-inner">
+            <p class="section-label">Renta de locales</p>
+            <h2 class="renta-h2">Plaza Carso. El lugar para tu marca.</h2>
+
+            <!-- Teléfono y correo de contacto: se respetan tal cual pidió el cliente -->
+            <div class="renta-contacts">
+                <a href="tel:5511037300" class="renta-chip">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.6 10.24a16 16 0 0 0 6.16 6.16l1.26-1.25a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>
+                    <span><span class="rc-lab">Teléfono</span><span class="rc-val">55 1103 7300</span></span>
+                </a>
+                <a href="mailto:contacto@plazacarso.com.mx" class="renta-chip">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span><span class="rc-lab">Correo</span><span class="rc-val">contacto@plazacarso.com.mx</span></span>
+                </a>
+            </div>
+
+            <!-- Solicitud de renta: mismos campos que el formulario de arriba; tipoMensaje=2 la enruta a informacion.comercial@incarso.com -->
+            <form id="rForm" class="renta-form" action="enviarCorreo.php" method="post">
+                <input type="hidden" name="EmailPlaza" value="contacto@plazacarso.com.mx">
+                <input type="hidden" name="NombrePlaza" value="Plaza Carso">
+                <input type="hidden" name="tipoMensaje" value="2">
+                <div class="fg"><textarea name="Mensaje" placeholder="Comentario" aria-label="Comentario" required=""></textarea></div>
+                <div class="form-row">
+                    <div class="fg"><input type="text" name="NombreContacto" placeholder="Nombre" aria-label="Nombre" required=""></div>
+                    <div class="fg"><input type="email" name="EmailContacto" placeholder="Email" aria-label="Email" required=""></div>
+                </div>
+                <div class="fg"><input type="tel" name="TelefonoContacto" placeholder="Teléfono" aria-label="Teléfono" maxlength="10"></div>
+                <button type="submit" class="btn-submit">
+                    Enviar solicitud
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+
+            <p class="renta-cierre">Tu marca. Tu espacio. Plaza Carso.</p>
         </div>
     </section>
 
@@ -657,7 +693,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="footer-copy">© 2026 Plaza Carso. Todos los derechos reservados.</p>
+            <p class="footer-copy">© Plaza Carso. Todos los derechos reservados.</p>
             <div class="footer-socials">
                 <a href="https://www.facebook.com/plazacarsomx" target="_blank" rel="noopener" aria-label="Facebook">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
@@ -682,7 +718,7 @@
                 e.preventDefault();
                 const btn = document.getElementById('btnSub');
                 btn.innerHTML = 'Enviando... <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>';
-                setTimeout(() => { btn.innerHTML = 'Enviar mensaje <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>'; document.getElementById('sBox').style.display = 'block'; document.getElementById('cForm').reset(); }, 1400);
+                setTimeout(() => { btn.innerHTML = 'Enviar comentario <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>'; document.getElementById('sBox').style.display = 'block'; document.getElementById('cForm').reset(); }, 1400);
             }
         });
     </script>

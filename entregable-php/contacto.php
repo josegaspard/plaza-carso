@@ -134,36 +134,24 @@
             <!-- FORMULARIO: Campos con names/IDs que espera enviarCorreo.php -->
             <div class="form-card">
                 <div class="form-card-head">
-                    <h2>Escribenos.</h2>
-                    <p>Nos encantara recibir tu mensaje.</p>
+                    <h2>Cuéntanos tu experiencia</h2>
                 </div>
                 <form id="formulario" method="POST" action="enviarCorreo.php">
+                    <!-- Comentario, Nombre y Email: los 3 campos que pidio el cliente (26-ago-2026) -->
                     <div class="fg">
-                        <label for="tipoMensaje">Motivo</label>
-                        <select id="tipoMensaje" name="tipoMensaje" required>
-                            <option value="">Elige una opcion</option>
-                            <option value="1">Quejas y Sugerencias</option>
-                            <option value="2">Espacios Disponibles</option>
-                        </select>
+                        <textarea id="Mensaje" name="Mensaje" placeholder="Comentario" aria-label="Comentario" rows="4" required></textarea>
                     </div>
                     <div class="form-row">
                         <div class="fg">
-                            <label for="NombreContacto">Nombre</label>
-                            <input type="text" id="NombreContacto" name="NombreContacto" placeholder="Tu nombre completo" required>
+                            <input type="text" id="NombreContacto" name="NombreContacto" placeholder="Nombre" aria-label="Nombre" required>
                         </div>
                         <div class="fg">
-                            <label for="EmailContacto">Email</label>
-                            <input type="email" id="EmailContacto" name="EmailContacto" placeholder="correo@ejemplo.com" required>
+                            <input type="email" id="EmailContacto" name="EmailContacto" placeholder="Email" aria-label="Email" required>
                         </div>
                     </div>
-                    <div class="fg">
-                        <label for="TelefonoContacto">Telefono</label>
-                        <input type="tel" id="TelefonoContacto" name="TelefonoContacto" placeholder="55 1234 5678" maxlength="10" onKeypress="if(event.keyCode<45||event.keyCode>57) event.returnValue=false;">
-                    </div>
-                    <div class="fg">
-                        <label for="Mensaje">Mensaje</label>
-                        <textarea id="Mensaje" name="Mensaje" placeholder="Escribe tu mensaje..." rows="4" required></textarea>
-                    </div>
+                    <!-- enviarCorreo.php sigue recibiendo los 7 campos: tipoMensaje=1 enruta al correo de la plaza -->
+                    <input type="hidden" id="tipoMensaje" name="tipoMensaje" value="1">
+                    <input type="hidden" id="TelefonoContacto" name="TelefonoContacto" value="">
 
                     <!-- Hidden fields requeridos por enviarCorreo.php -->
                     <input type="hidden" id="EmailPlaza" name="EmailPlaza" value="<?php echo emailCC($CentroComercial); ?>">
@@ -174,13 +162,54 @@
                         <label for="privacy">Acepto el <a href="#" onclick="$('#miModal').modal('show');$('#miModalContenido').load('AvisodePrivacidad.php');return false;">Aviso de Privacidad</a></label>
                     </div>
                     <button type="submit" id="btnSub" class="btn-submit">
-                        Enviar mensaje
+                        Enviar comentario
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     </button>
                     <div class="success-box" id="sBox">Mensaje enviado correctamente. Nos pondremos en contacto pronto.</div>
                 </form>
             </div>
 
+        </div>
+    </section>
+
+
+    <!-- RENTA DE LOCALES: sutil y solo en contacto (peticion del cliente 26-ago-2026) -->
+    <section class="renta-section">
+        <div class="renta-inner">
+            <p class="section-label">Renta de locales</p>
+            <h2 class="renta-h2"><?php echo $nombrePlaza; ?>. El lugar para tu marca.</h2>
+
+            <!-- Telefono y correo de contacto: se respetan tal cual pidio el cliente -->
+            <div class="renta-contacts">
+                <a href="tel:<?php echo str_replace(' ','',telefonoCC($CentroComercial)); ?>" class="renta-chip">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.6 10.24a16 16 0 0 0 6.16 6.16l1.26-1.25a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>
+                    <span><span class="rc-lab">Telefono</span><span class="rc-val"><?php echo telefonoCC($CentroComercial); ?></span></span>
+                </a>
+                <a href="mailto:<?php echo emailCC($CentroComercial); ?>" class="renta-chip">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span><span class="rc-lab">Correo</span><span class="rc-val"><?php echo emailCC($CentroComercial); ?></span></span>
+                </a>
+            </div>
+
+            <!-- Solicitud de renta: mismos campos; tipoMensaje=2 la enruta a informacion.comercial@incarso.com -->
+            <form id="rForm" class="renta-form" method="POST" action="enviarCorreo.php">
+                <input type="hidden" name="EmailPlaza" value="<?php echo emailCC($CentroComercial); ?>">
+                <input type="hidden" name="NombrePlaza" value="<?php echo $nombrePlaza; ?>">
+                <input type="hidden" name="tipoMensaje" value="2">
+                <div class="fg"><textarea name="Mensaje" placeholder="Comentario" aria-label="Comentario" rows="3" required></textarea></div>
+                <div class="form-row">
+                    <div class="fg"><input type="text" name="NombreContacto" placeholder="Nombre" aria-label="Nombre" required></div>
+                    <div class="fg"><input type="email" name="EmailContacto" placeholder="Email" aria-label="Email" required></div>
+                </div>
+                <div class="fg"><input type="tel" name="TelefonoContacto" placeholder="Telefono" aria-label="Telefono" maxlength="10"></div>
+                <button type="submit" id="btnRen" class="btn-submit">
+                    Enviar solicitud
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+                <div class="success-box" id="sBoxRen">Solicitud enviada correctamente. Nos pondremos en contacto pronto.</div>
+            </form>
+
+            <p class="renta-cierre">Tu marca. Tu espacio. <?php echo $nombrePlaza; ?>.</p>
         </div>
     </section>
 
@@ -208,7 +237,7 @@
                     type:'POST',
                     data:$(this).serialize(),
                     success:function(){
-                        btn.html('Enviar mensaje <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>');
+                        btn.html('Enviar comentario <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>');
                         btn.prop('disabled',false);
                         $('#sBox').fadeIn();
                         $('#formulario')[0].reset();
@@ -216,8 +245,19 @@
                     error:function(){
                         btn.html('Error, intenta de nuevo');
                         btn.prop('disabled',false);
-                        setTimeout(function(){btn.html('Enviar mensaje');},3000);
+                        setTimeout(function(){btn.html('Enviar comentario');},3000);
                     }
+                });
+            });
+
+            /* Solicitud de renta: mismo envio por AJAX */
+            $('#rForm').on('submit',function(e){
+                e.preventDefault();
+                var btn=$('#btnRen'), original=btn.html();
+                btn.prop('disabled',true).text('Enviando...');
+                $.ajax({url:'enviarCorreo.php',type:'POST',data:$(this).serialize(),
+                    success:function(){btn.prop('disabled',false).html(original);$('#sBoxRen').fadeIn();$('#rForm')[0].reset();},
+                    error:function(){btn.prop('disabled',false).text('Error, intenta de nuevo');setTimeout(function(){btn.html(original);},3000);}
                 });
             });
 

@@ -126,3 +126,17 @@ footer :focus-visible { outline-color: var(--warm-white); }
   /* Prevent horizontal overflow */
   html, body { overflow-x: hidden; }
 }
+
+/* RENTA DE LOCALES — sutil y solo en contacto (petición del cliente 26-ago-2026) */
+.renta-section{padding:0 52px 100px;background:var(--smoke);}
+.renta-inner{max-width:1200px;margin:0 auto;background:var(--warm-white);border:1px solid var(--silver);padding:56px 52px;}
+.renta-h2{font-family:var(--serif);font-style:italic;font-size:clamp(26px,3vw,38px);font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:36px;}
+.renta-contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:40px;}
+.renta-chip{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--smoke);padding:14px 18px;transition:border-color .2s;}
+.renta-chip:hover{border-color:var(--silver);}
+.renta-chip svg{flex-shrink:0;color:var(--grey);}
+.rc-lab{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--grey);display:block;margin-bottom:4px;}
+.rc-val{font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);word-break:break-word;}
+.renta-form{border-top:1px solid var(--silver);padding-top:40px;}
+.renta-cierre{margin-top:32px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);}
+@media(max-width:768px){.renta-section{padding:0 20px 60px;}.renta-inner{padding:28px 20px;}}

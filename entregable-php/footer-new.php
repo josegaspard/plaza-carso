@@ -52,6 +52,7 @@ $email = emailCC($CentroComercial);
                     // Fallback si no hay redes en BD
                     echo '<a href="https://www.facebook.com/plazacarsomx/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>';
                     echo '<a href="https://www.instagram.com/plazacarsomx/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>';
+                    echo '<a href="https://x.com/PlazaCarsoMx" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>';
                 }
             ?>
         </div>

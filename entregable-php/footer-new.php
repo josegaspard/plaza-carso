@@ -41,7 +41,6 @@ $email = emailCC($CentroComercial);
         </div>
     </div>
     <div class="footer-bottom">
-        <p class="footer-copy">&copy; <?php echo $nombre; ?>. Todos los derechos reservados.</p>
         <div class="footer-socials">
             <?php
                 // Redes sociales desde BD

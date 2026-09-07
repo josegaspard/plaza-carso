@@ -60,8 +60,7 @@ footer{background:var(--ink);padding:80px 52px 36px;position:relative;overflow:h
 .footer-col ul li{margin-bottom:12px;}
 .footer-col ul li a,.footer-col address{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,.35);font-style:normal;transition:color .2s;line-height:2;}
 .footer-col ul li a:hover{color:rgba(255,255,255,.8);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;position:relative;z-index:1;}
-.footer-copy{font-family:var(--sans);font-size:10px;font-weight:300;color:rgba(255,255,255,.2);letter-spacing:.06em;}
+.footer-bottom{display:flex;justify-content:flex-end;align-items:center;padding-top:28px;position:relative;z-index:1;}
 .footer-socials{display:flex;gap:18px;}
 .footer-socials a{width:30px;height:30px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:11px;transition:border-color .2s,color .2s;}
 .footer-socials a:hover{border-color:rgba(255,255,255,.5);color:rgba(255,255,255,.8);}

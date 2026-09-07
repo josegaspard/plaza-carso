@@ -1280,9 +1280,9 @@
             if (_activeNiv && s.loc !== _activeNiv) return false;
             if (_activeZon && s.zona !== _activeZon) return false;
             if (_soloAbierto && !_abierto(s)) return false;
-            const q = _activeSearch.trim().toLowerCase();
+            const q = _norm(_activeSearch); // sin acentos: «cinepolis» encuentra «Cinépolis»
             if (!q) return true;
-            return (s.name + ' ' + s.cat + ' ' + (s.par || '') + ' ' + (s.fam || '')).toLowerCase().includes(q);
+            return _norm(s.name + ' ' + s.cat + ' ' + (s.par || '') + ' ' + (s.fam || '')).includes(q);
         }
         function _renderGrid() {
             _visible = STORES.filter(_matches).sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));

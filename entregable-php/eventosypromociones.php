@@ -46,13 +46,11 @@
         .pub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;}
         .pub-empty{font-family:var(--sans);font-size:13px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);text-align:center;padding:8px 0 12px;}
 
-        /* Tarjeta de publicación (misma que el diseño estático). El gestor la enlaza con class="publicidad" para abrir su modal */
+        /* Cartel de publicación ENTERO (sin recorte ni capa oscura), como en Plaza Universidad: los carteles del gestor
+           llevan su propio texto. El gestor lo enlaza con class="publicidad" para abrir su modal. */
         .e-card{position:relative;overflow:hidden;cursor:pointer;background:var(--silver);display:block;}
-        .e-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:grayscale(20%);transition:transform .7s ease,filter .5s;}
-        .e-card:hover img{transform:scale(1.06);filter:grayscale(0%);}
-        .e-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,9,.78) 0%,rgba(10,9,9,.1) 55%,transparent 100%);pointer-events:none;}
-        .e-card-body{position:absolute;bottom:0;left:0;right:0;padding:28px 24px;}
-        .e-title{font-family:var(--serif);font-weight:300;color:var(--warm);line-height:1.2;font-size:clamp(19px,1.5vw,24px);}
+        .e-card img{width:100%;height:auto;display:block;transition:transform .7s ease;}
+        .e-card:hover img{transform:scale(1.02);}
 
         /* SOCIAL SECTION */
         .social-section{background:var(--ink);padding:80px 52px;}
@@ -70,7 +68,7 @@
             .page-hero{margin-top:60px;min-height:280px;}.page-hero-content{padding:32px 20px;}
             .social-section{padding-left:20px;padding-right:20px;}
             .pub-section{padding:56px 20px 28px;}.pub-section+.pub-section{padding-top:16px;padding-bottom:72px;}
-            .pub-grid{grid-template-columns:1fr;gap:20px;}.pub-h2{margin-bottom:28px;}.e-card img{aspect-ratio:16/10;}.e-card-body{padding:20px 16px;}
+            .pub-grid{grid-template-columns:1fr;gap:20px;}.pub-h2{margin-bottom:28px;}
             .social-inner{flex-direction:column;align-items:flex-start;}
             .mob-close{min-width:44px;min-height:44px;}#mob-menu a{padding:8px 0;min-height:48px;display:flex;align-items:center;justify-content:center;}
         }
@@ -125,8 +123,7 @@
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $titulo = htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8');
                 $html .= '<a href="publicidadModal.php?CentroComercial='.$CentroComercial.'&idPublicacion='.$row['idPublicacion'].'" class="e-card publicidad">'
-                       . '<img src="publicaciones/'.$row['contenido'].'" alt="'.$titulo.'" loading="lazy">'
-                       . '<div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">'.$titulo.'</div></div></a>';
+                       . '<img src="publicaciones/'.$row['contenido'].'" alt="'.$titulo.'" loading="lazy"></a>';
             }
             return $html;
         }

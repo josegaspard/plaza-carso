@@ -38,24 +38,21 @@
         .page-h1{font-family:var(--serif);font-style:italic;font-size:clamp(52px,8vw,96px);font-weight:300;color:var(--warm);line-height:.92;}
         .page-sub{font-family:var(--sans);font-size:13px;font-weight:300;color:rgba(246,244,240,.6);margin-top:16px;max-width:480px;line-height:1.8;}
 
-        /* TAB BAR */
-        .tab-bar{position:sticky;top:68px;z-index:50;background:rgba(246,244,240,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--smoke);}
-        .tab-inner{max-width:1400px;margin:0 auto;padding:0 52px;display:flex;gap:0;}
-        .t-btn{font-family:var(--sans);font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--grey);background:none;border:none;cursor:pointer;padding:18px 20px;border-bottom:1.5px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;}
-        .t-btn:hover{color:var(--mid);}.t-btn.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:500;}
+        /* EVENTOS y PROMOCIONES: dos secciones con rejilla de carteles, igual que Plaza Universidad (cliente, 7-sep-2026) */
+        .pub-section{padding:80px 52px 40px;background:var(--smoke);}
+        .pub-section+.pub-section{padding-top:24px;padding-bottom:100px;}
+        .pub-inner{max-width:1024px;margin:0 auto;}
+        .pub-h2{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(30px,3.4vw,44px);line-height:1.1;color:var(--ink);text-align:center;margin:0 0 40px;}
+        .pub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;}
+        .pub-empty{font-family:var(--sans);font-size:13px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);text-align:center;padding:8px 0 12px;}
 
-        /* PUBLICACIONES SECTION */
-        .nov-section{padding:80px 52px 100px;background:var(--smoke);}
-        .nov-section-inner{max-width:1400px;margin:0 auto;}
-
-        /*
-         * BACKEND COMPAT: publicaciones() genera HTML con links class="publicidad"
-         * Restyle para que encajen con el nuevo diseno
-         */
-        #publicaciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:3px;}
-        #publicaciones a.publicidad,#publicaciones .publicidad{position:relative;overflow:hidden;display:block;background:var(--silver);min-height:300px;}
-        #publicaciones img{width:100%;height:100%;object-fit:cover;min-height:300px;filter:grayscale(20%);transition:transform .7s,filter .5s;}
-        #publicaciones a:hover img{transform:scale(1.06);filter:grayscale(0%);}
+        /* Tarjeta de publicación (misma que el diseño estático). El gestor la enlaza con class="publicidad" para abrir su modal */
+        .e-card{position:relative;overflow:hidden;cursor:pointer;background:var(--silver);display:block;}
+        .e-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:grayscale(20%);transition:transform .7s ease,filter .5s;}
+        .e-card:hover img{transform:scale(1.06);filter:grayscale(0%);}
+        .e-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,9,.78) 0%,rgba(10,9,9,.1) 55%,transparent 100%);pointer-events:none;}
+        .e-card-body{position:absolute;bottom:0;left:0;right:0;padding:28px 24px;}
+        .e-title{font-family:var(--serif);font-weight:300;color:var(--warm);line-height:1.2;font-size:clamp(19px,1.5vw,24px);}
 
         /* SOCIAL SECTION */
         .social-section{background:var(--ink);padding:80px 52px;}
@@ -71,9 +68,9 @@
             *,*::before,*::after{cursor:auto!important;}a,button{cursor:pointer!important;}
             #nav{padding:0 20px;height:60px;}.nav-links{display:none;}.nav-ham{display:flex;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
             .page-hero{margin-top:60px;min-height:280px;}.page-hero-content{padding:32px 20px;}
-            .tab-bar{top:60px;}.tab-inner{padding:0 12px;overflow-x:auto;}.t-btn{min-height:44px;padding:14px 14px;}
-            .nov-section,.social-section{padding-left:20px;padding-right:20px;}
-            #publicaciones{grid-template-columns:1fr;}
+            .social-section{padding-left:20px;padding-right:20px;}
+            .pub-section{padding:56px 20px 28px;}.pub-section+.pub-section{padding-top:16px;padding-bottom:72px;}
+            .pub-grid{grid-template-columns:1fr;gap:20px;}.pub-h2{margin-bottom:28px;}.e-card img{aspect-ratio:16/10;}.e-card-body{padding:20px 16px;}
             .social-inner{flex-direction:column;align-items:flex-start;}
             .mob-close{min-width:44px;min-height:44px;}#mob-menu a{padding:8px 0;min-height:48px;display:flex;align-items:center;justify-content:center;}
         }
@@ -98,25 +95,66 @@
         </div>
     </section>
 
-    <!-- TAB BAR -->
-    <div class="tab-bar">
-        <div class="tab-inner">
-            <button class="t-btn active" onclick="switchTab('todos',this)">Todos</button>
-            <button class="t-btn" onclick="switchTab('eventos',this)">Eventos</button>
-            <button class="t-btn" onclick="switchTab('promociones',this)">Promociones</button>
-            <button class="t-btn" onclick="switchTab('aperturas',this)">Aperturas</button>
-        </div>
-    </div>
+    <?php
+    /*
+     * Publicaciones vigentes de UN tipo, con el mismo criterio de vigencia y estatus que
+     * publicaciones() del gestor (fechaInicio <= hoy <= fechaFin, estatus 1). Vive sólo en esta
+     * página: el gestor no se toca.
+     *   'evento'    -> las publicaciones de tipo evento
+     *   'promocion' -> todo lo demás que el gestor publica en esta sección (promoción y cualquier
+     *                  otro tipo distinto de evento, kiosko, galería y video), para que nada
+     *                  publicado se quede sin mostrar.
+     * Cada tarjeta lleva class="publicidad": el modal del gestor (publicidadModal.php) sigue funcionando igual.
+     */
+    if (!function_exists('publicacionesPorTipo')) {
+        function publicacionesPorTipo($CentroComercial, $tipo) {
+            $conne = connectDB();
+            $filtro = ($tipo === 'evento')
+                ? "and b.nombre = 'evento'"
+                : "and b.nombre != 'evento' and b.nombre != 'kiosko' and b.nombre != 'galeria' and b.nombre != 'video'";
+            $sql = "select a.idPublicacion, a.titulo, a.contenido from publicacion a
+                inner join catPublicacion b on a.idCatPublicacion = b.idCatPublicacion
+                where a.idCatCentroComercial = '".$CentroComercial."'
+                and a.fechaFin >= (CONVERT(VARCHAR(10), getDate(), 112))
+                and a.fechaInicio <= (CONVERT(VARCHAR(10), getDate(), 112))
+                and a.estatus = '1' ".$filtro."
+                order by a.idPublicacion desc";
+            $stmt = sqlsrv_query($conne, $sql);
+            if ($stmt === false) { return ''; }
+            $html = '';
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $titulo = htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8');
+                $html .= '<a href="publicidadModal.php?CentroComercial='.$CentroComercial.'&idPublicacion='.$row['idPublicacion'].'" class="e-card publicidad">'
+                       . '<img src="publicaciones/'.$row['contenido'].'" alt="'.$titulo.'" loading="lazy">'
+                       . '<div class="e-card-overlay"></div><div class="e-card-body"><div class="e-title">'.$titulo.'</div></div></a>';
+            }
+            return $html;
+        }
+    }
+    $pubEventos = publicacionesPorTipo($CentroComercial, 'evento');
+    $pubPromociones = publicacionesPorTipo($CentroComercial, 'promocion');
+    ?>
 
-    <!-- PUBLICACIONES: Contenido generado por el backend -->
-    <section class="nov-section">
-        <div class="nov-section-inner">
-            <div id="publicaciones">
-                <?php
-                    $publicaciones = publicaciones($CentroComercial);
-                    echo $publicaciones;
-                ?>
-            </div>
+    <!-- EVENTOS y PROMOCIONES en dos secciones con rejilla, igual que Plaza Universidad (cliente, 7-sep-2026) -->
+    <section class="pub-section" id="eventos">
+        <div class="pub-inner">
+            <h2 class="pub-h2">Eventos</h2>
+            <?php if ($pubEventos !== '') { ?>
+            <div class="pub-grid" id="grid-eventos"><?php echo $pubEventos; ?></div>
+            <?php } else { ?>
+            <p class="pub-empty">Sin eventos vigentes</p>
+            <?php } ?>
+        </div>
+    </section>
+
+    <section class="pub-section" id="promociones">
+        <div class="pub-inner">
+            <h2 class="pub-h2">Promociones</h2>
+            <?php if ($pubPromociones !== '') { ?>
+            <div class="pub-grid" id="grid-promociones"><?php echo $pubPromociones; ?></div>
+            <?php } else { ?>
+            <p class="pub-empty">Sin promociones vigentes</p>
+            <?php } ?>
         </div>
     </section>
 
@@ -151,12 +189,6 @@
     <script>
         window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50),{passive:true});
         function toggleMob(){var m=document.getElementById('mob-menu');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';var b=document.querySelector('.nav-ham');if(b) b.setAttribute('aria-expanded',m.classList.contains('open'));}
-
-        function switchTab(tab,btn){
-            document.querySelectorAll('.t-btn').forEach(function(b){b.classList.remove('active');});
-            btn.classList.add('active');
-            // Filtro visual — el backend ya genera todo el contenido
-        }
 
         /* BACKEND: Handler para abrir modal de publicidad via AJAX */
         $(document).ready(function(){

@@ -93,28 +93,6 @@
         }
 
 
-        /* ── Filtros del directorio: Categoría · Subcategoría · Piso/nivel · Zona · Abierto ahora ── */
-        .filter-sel { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:center; gap:10px 18px; padding:0 0 16px; }
-        .fs-item { display:flex; flex-direction:column; gap:5px; }
-        .fs-item > span { font-family:var(--sans); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--grey); }
-        .fs-item select {
-            font-family:var(--sans); font-size:12.5px; color:var(--ink); background:transparent; border:none;
-            border-bottom:1px solid var(--smoke); padding:5px 22px 5px 2px; min-width:158px; max-width:240px;
-            cursor:pointer; appearance:none;
-            background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.4'/%3E%3C/svg%3E");
-            background-repeat:no-repeat; background-position:right 4px center; background-size:9px;
-        }
-        .fs-item select:focus { outline:none; border-bottom-color:var(--ink); }
-        .fs-item select option.vacia { color:#b3ada3; }
-        .fs-open, .fs-clear {
-            font-family:var(--sans); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase;
-            background:none; cursor:pointer; padding:7px 14px; transition:all .2s;
-        }
-        .fs-open { border:1px solid var(--smoke); color:var(--grey); border-radius:999px; }
-        .fs-open.on { border-color:var(--ink); color:var(--warm-white); background:var(--ink); }
-        .fs-clear { border:none; color:var(--grey); text-decoration:underline; text-underline-offset:3px; }
-        .fs-clear:hover { color:var(--ink); }
-        @media (max-width:720px){ .filter-sel{gap:8px 12px;padding-bottom:14px;} .fs-item select{min-width:132px;max-width:46vw;font-size:12px;} }
         /* ── Acciones de la ficha ── */
         .smod-desc-label {
             display: block; font-family: var(--sans); font-size: 9.5px; letter-spacing: .2em;
@@ -1026,7 +1004,8 @@
     </section>
 
     <div class="filter-bar">
-        <!-- Fila 1: familias + buscador · Fila 2: los filtros. Misma disposición que Plaza Universidad -->
+        <!-- Familias + buscador, misma disposición que Plaza Universidad. La fila de filtros (Categoría · Subcategoría ·
+             Piso/nivel · Zona · Abierto ahora · Limpiar) se retiró a petición del cliente el 7-sep-2026. -->
         <div class="filter-inner" id="fi">
             <div class="fi-fam" id="fam-bar">
                 <button id="btnTodos" class="f-btn active" onclick="filtFam('Todos',this)">Todo</button>
@@ -1038,14 +1017,6 @@
                 </svg>
                 <input id="search-in" type="text" placeholder="Buscar..." oninput="doSearch(this.value)">
             </div>
-        </div>
-        <div class="filter-sel" id="filterSel">
-                <label class="fs-item"><span>Categoría</span><select id="fsCat" onchange="filtSel()"></select></label>
-                <label class="fs-item"><span>Subcategoría</span><select id="fsSub" onchange="filtSel()"></select></label>
-                <label class="fs-item"><span>Piso / nivel</span><select id="fsNiv" onchange="filtSel()"></select></label>
-                <label class="fs-item"><span>Zona</span><select id="fsZon" onchange="filtSel()"></select></label>
-                <button type="button" class="fs-open" id="fsOpen" onclick="filtOpen(this)">Abierto ahora</button>
-            <button type="button" class="fs-clear" onclick="filtReset()">Limpiar</button>
         </div>
     </div>
 
@@ -1271,6 +1242,7 @@
             }
         }
         function _opts(sel, lista, etiqueta, valor, conteo) {
+            if (!sel) return; // la fila de filtros ya no está en la página
             sel.innerHTML = '<option value="">' + etiqueta + '</option>' + lista.map(function (v) {
                 const n = conteo ? (conteo[v] || 0) : null;
                 const txt = n === null ? v : v + ' (' + n + ')';
@@ -1350,6 +1322,7 @@
             _pintarSelects(); _renderGrid();
         }
         function filtSel() {
+            if (!document.getElementById('fsCat')) return;
             const c = document.getElementById('fsCat').value;
             if (c !== _activeCat) _activeSub = '';
             _activeCat = c;
@@ -1369,7 +1342,7 @@
         function filtReset() {
             _activeFam = 'Todos'; _activeCat = _activeSub = _activeNiv = _activeZon = ''; _soloAbierto = false; _activeSearch = '';
             document.getElementById('search-in').value = '';
-            document.getElementById('fsOpen').classList.remove('on');
+            const _fo = document.getElementById('fsOpen'); if (_fo) _fo.classList.remove('on');
             document.querySelectorAll('#fi .f-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btnTodos').classList.add('active');
             _pintarSelects(); _renderGrid();
